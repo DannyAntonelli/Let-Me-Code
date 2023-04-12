@@ -18,13 +18,6 @@ from .permissions import (
 )
 
 
-class TestIsAuth(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request: HttpRequest):
-        return Response({"message": "You are authenticated"})
-
-
 class Register(APIView):
     def post(self, request: HttpRequest):
         username = request.data.get("username")
