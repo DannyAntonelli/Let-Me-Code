@@ -44,7 +44,7 @@ class Register(APIView):
 
 
 class GetUser(APIView):
-    def get(self, request: HttpRequest, username: int):
+    def get(self, request: HttpRequest, username: str):
         user = User.objects.get(username=username)
         project_ids = [project.id for project in user.projects.all()]
         shared_project_ids = [project.id for project in user.shared_projects.all()]
