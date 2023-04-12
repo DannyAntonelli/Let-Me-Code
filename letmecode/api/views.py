@@ -87,7 +87,6 @@ class GetFile(APIView):
 
 class CreateProject(APIView):
     def post(self, request: Request) -> Response:
-        print(request.data)
         name = request.data.get("name")
         description = request.data.get("description")
         is_public = request.data.get("is_public")
@@ -113,7 +112,7 @@ class CreateProject(APIView):
             project.save()
         except IntegrityError:
             return Response(
-                {"message": "File with this name already exists"},
+                {"message": "Project with this name already exists for this user"},
                 status=status.HTTP_409_CONFLICT,
             )
 
@@ -121,5 +120,109 @@ class CreateProject(APIView):
             {
                 "message": "Project created successfully",
                 "project_id": project.id,
+            }
+        )
+
+
+class CreateFile(APIView):
+    def post(self, request: Request, project_id: int) -> Response:
+        name = request.data.get("name")
+        language = request.data.get("language")
+        if not request.user.is_authenticated:
+            return Response(
+                {"message": "You must be logged in to create a file"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        if not name or not language:
+            return Response(
+                {"message": "Name and language are required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        project = get_object_or_404(Project, id=project_id)
+        if not IsPublicOrCreatorOrShared.has_object_permission(
+            self, request, None, project
+        ):
+            return Response(
+                {
+                    "message": "You do not have permission to create a file in this project"
+                },
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        file = File(name=name, language=language, content="", project=project)
+        try:
+            file.save()
+        except IntegrityError:
+            return Response(
+                {"message": "File with this name already exists in this project"},
+                status=status.HTTP_409_CONFLICT,
+            )
+        return Response(
+            {
+                "message": "File created successfully",
+                "file_id": file.id,
+            }
+        )
+
+
+class SyncFile(APIView):
+    def post(self, request: Request, file_id: int) -> Response:
+        content = request.data.get("content")
+        file = get_object_or_404(File, id=file_id)
+        self.check_object_permissions(request, file)
+        file.content = content
+        file.save()
+        return Response(
+            {
+                "message": "File synced successfully",
+            }
+        )
+
+
+class ShareProject(APIView):
+    def post(self, request: Request, project_id: int) -> Response:
+        username = request.data.get("username")
+        if not request.user.is_authenticated:
+            return Response(
+                {"message": "You must be logged in to share a project"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        project = get_object_or_404(Project, id=project_id)
+        if not IsPublicOrCreatorOrShared.has_object_permission(
+            self, request, None, project
+        ):
+            return Response(
+                {"message": "You do not have permission to share this project"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        user = get_object_or_404(User, username=username)
+        project.shared_users.add(user)
+        return Response(
+            {
+                "message": "Project shared successfully",
+            }
+        )
+
+
+class MakePublic(APIView):
+    def post(self, request: Request, project_id: int) -> Response:
+        public = request.data.get("public")
+        if not request.user.is_authenticated:
+            return Response(
+                {"message": "You must be logged in to make a project public"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        project = get_object_or_404(Project, id=project_id)
+        if not IsPublicOrCreatorOrShared.has_object_permission(
+            self, request, None, project
+        ):
+            return Response(
+                {"message": "You do not have permission to make this project public"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        project.is_public = public
+        project.save()
+        return Response(
+            {
+                "message": f"Project status changed successfully, public= {public}",
             }
         )
