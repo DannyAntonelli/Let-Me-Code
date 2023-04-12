@@ -83,3 +83,43 @@ class GetFile(APIView):
         file = get_object_or_404(File, id=file_id)
         self.check_object_permissions(request, file)
         return Response(FileSerializer(file).data)
+
+
+class CreateProject(APIView):
+    def post(self, request: Request) -> Response:
+        print(request.data)
+        name = request.data.get("name")
+        description = request.data.get("description")
+        is_public = request.data.get("is_public")
+        if not request.user.is_authenticated:
+            return Response(
+                {"message": "You must be logged in to create a project"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+        if not name:
+            return Response(
+                {"message": "Name is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        project = Project(
+            name=name,
+            description=description if description else "",
+            is_public=is_public if is_public else False,
+            user=request.user,
+        )
+        try:
+            project.save()
+        except IntegrityError:
+            return Response(
+                {"message": "File with this name already exists"},
+                status=status.HTTP_409_CONFLICT,
+            )
+
+        return Response(
+            {
+                "message": "Project created successfully",
+                "project_id": project.id,
+            }
+        )
