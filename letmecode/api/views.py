@@ -1,9 +1,9 @@
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from django.http import HttpRequest
 
 from rest_framework.views import APIView
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -16,7 +16,7 @@ from .permissions import (
 
 
 class Register(APIView):
-    def post(self, request: HttpRequest):
+    def post(self, request: Request) -> Response:
         username = request.data.get("username")
         email = request.data.get("email")
         password = request.data.get("password")
@@ -39,7 +39,7 @@ class Register(APIView):
 
 
 class GetUser(APIView):
-    def get(self, request: HttpRequest, username: str):
+    def get(self, request: Request, username: str) -> Response:
         user = get_object_or_404(User, username=username)
         return Response(
             {
@@ -65,7 +65,7 @@ class GetUser(APIView):
 class GetProject(APIView):
     permission_classes = [IsPublicOrCreatorOrShared]
 
-    def get(self, request: HttpRequest, project_id: int):
+    def get(self, request: Request, project_id: int) -> Response:
         project = get_object_or_404(Project, id=project_id)
         self.check_object_permissions(request, project)
         return Response(
@@ -79,7 +79,7 @@ class GetProject(APIView):
 class GetFile(APIView):
     permission_classes = [IsFileInPermittedProject]
 
-    def get(self, request: HttpRequest, file_id: int):
+    def get(self, request: Request, file_id: int) -> Response:
         file = get_object_or_404(File, id=file_id)
         self.check_object_permissions(request, file)
         return Response(FileSerializer(file).data)
