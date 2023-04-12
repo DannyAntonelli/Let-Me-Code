@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Project(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     is_public = models.BooleanField(default=True)
@@ -11,9 +12,16 @@ class Project(models.Model):
         User, blank=True, related_name="shared_projects"
     )
 
+    class Meta:
+        unique_together = ["name", "user"]
+
 
 class File(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     content = models.TextField(blank=True)
     language = models.CharField(max_length=100)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="files")
+
+    class Meta:
+        unique_together = ["name", "project"]
