@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 
 class File(models.Model):
     name = models.CharField(max_length=100)
-    content = models.TextField()
+    content = models.TextField(blank=True)
     language = models.CharField(max_length=100)
 
 
 class Project(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     is_public = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
     shared_users = models.ManyToManyField(
