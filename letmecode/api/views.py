@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from .models import File, Project
+from .serializers import UserSerializer, FileSerializer, ProjectSerializer
 
 
 class TestIsAuth(APIView):
@@ -20,8 +21,6 @@ class TestIsAuth(APIView):
 
 
 class Register(APIView):
-    permission_classes = []
-
     def post(self, request: HttpRequest):
         username = request.data.get("username")
         email = request.data.get("email")
@@ -42,3 +41,18 @@ class Register(APIView):
                 {"message": "Username already taken"},
                 status=status.HTTP_409_CONFLICT,
             )
+
+
+class GetUser(APIView):
+    def get(self, request: HttpRequest, username: int):
+        user = User.objects.get(username=username)
+        project_ids = [project.id for project in user.projects.all()]
+        shared_project_ids = [project.id for project in user.shared_projects.all()]
+
+        return Response(
+            {
+                "user": UserSerializer(user).data,
+                "project_ids": project_ids,
+                "shared_project_ids": shared_project_ids,
+            }
+        )
