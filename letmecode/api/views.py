@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest
 
 from rest_framework.views import APIView
@@ -11,6 +11,7 @@ from rest_framework import status
 
 from .models import File, Project
 from .serializers import UserSerializer, FileSerializer, ProjectSerializer
+from .permissions import IsCreatorOrShared, IsPublicOrCreatorOrShared
 
 
 class TestIsAuth(APIView):
@@ -45,23 +46,19 @@ class Register(APIView):
 
 class GetUser(APIView):
     def get(self, request: HttpRequest, username: str):
-        user = User.objects.get(username=username)
+        user = get_object_or_404(User, username=username)
         project_ids = [
             project.id
             for project in user.projects.all()
-            if (
-                project.is_public
-                or user == request.user
-                or user in project.shared_users.all()
+            if IsPublicOrCreatorOrShared.has_object_permission(
+                self, request, None, project
             )
         ]
         shared_project_ids = [
             project.id
             for project in user.shared_projects.all()
-            if (
-                project.is_public
-                or user == request.user
-                or user in project.shared_users.all()
+            if IsPublicOrCreatorOrShared.has_object_permission(
+                self, request, None, project
             )
         ]
 
@@ -72,3 +69,12 @@ class GetUser(APIView):
                 "shared_project_ids": shared_project_ids,
             }
         )
+
+
+class GetProject(APIView):
+    permission_classes = [IsPublicOrCreatorOrShared]
+
+    def get(self, request: HttpRequest, project_id: int):
+        project = get_object_or_404(Project, id=project_id)
+        self.check_object_permissions(request, project)
+        return Response(ProjectSerializer(project).data)
