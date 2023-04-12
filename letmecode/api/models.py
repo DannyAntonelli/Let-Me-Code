@@ -2,12 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class File(models.Model):
-    name = models.CharField(max_length=100)
-    content = models.TextField(blank=True)
-    language = models.CharField(max_length=100)
-
-
 class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -16,4 +10,10 @@ class Project(models.Model):
     shared_users = models.ManyToManyField(
         User, blank=True, related_name="shared_projects"
     )
-    files = models.ManyToManyField(File, blank=True, related_name="projects")
+
+
+class File(models.Model):
+    name = models.CharField(max_length=100)
+    content = models.TextField(blank=True)
+    language = models.CharField(max_length=100)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="files")
