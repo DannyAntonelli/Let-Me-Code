@@ -11,4 +11,5 @@ urlpatterns = [
     path("test-is-auth/", views.TestIsAuth.as_view()),
     path("user/<str:username>/", views.GetUser.as_view()),
     path("project/<int:project_id>/", views.GetProject.as_view()),
+    path("file/<int:file_id>/", views.GetFile.as_view()),
 ]
