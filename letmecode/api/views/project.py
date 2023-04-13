@@ -67,7 +67,7 @@ class ShareProject(APIView):
         username = request.data.get("username")
         project = get_object_or_404(Project, id=project_id)
         self.check_object_permissions(request, project)
-        user = get_object_or_404(User, username=username)
+        user = User.objects.get(username=username)
         project.shared_users.add(user)
         return Response(
             {
