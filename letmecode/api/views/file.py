@@ -1,5 +1,6 @@
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
+
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -7,8 +8,8 @@ from rest_framework.views import APIView
 
 from ..models import File, Project
 from ..permissions import (
+    IsFileInEditableProject,
     IsFileInPermittedProject,
-    IsPublicOrCreatorOrShared,
 )
 from ..serializers import FileSerializer
 
@@ -23,8 +24,10 @@ class GetFile(APIView):
 
 
 class SyncFile(APIView):
+    permission_classes = [IsFileInEditableProject]
+
     def post(self, request: Request, file_id: int) -> Response:
-        content = request.data.get("content")
+        content = request.data.get("content", "")
         file = get_object_or_404(File, id=file_id)
         self.check_object_permissions(request, file)
         file.content = content
@@ -37,30 +40,19 @@ class SyncFile(APIView):
 
 
 class CreateFile(APIView):
+    permission_classes = [IsFileInEditableProject]
+
     def post(self, request: Request, project_id: int) -> Response:
         name = request.data.get("name")
         language = request.data.get("language")
-        if not request.user.is_authenticated:
-            return Response(
-                {"message": "You must be logged in to create a file"},
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
         if not name or not language:
             return Response(
                 {"message": "Name and language are required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         project = get_object_or_404(Project, id=project_id)
-        if not IsPublicOrCreatorOrShared.has_object_permission(
-            self, request, None, project
-        ):
-            return Response(
-                {
-                    "message": "You do not have permission to create a file in this project"
-                },
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
         file = File(name=name, language=language, content="", project=project)
+        self.check_object_permissions(request, file)
         try:
             file.save()
         except IntegrityError:
