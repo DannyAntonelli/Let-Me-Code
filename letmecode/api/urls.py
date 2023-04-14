@@ -24,4 +24,5 @@ urlpatterns = [
     ),
     path("file/<int:file_id>/", file.GetFile.as_view()),
     path("file/<int:file_id>/sync/", file.SyncFile.as_view()),
+    path("file/<int:file_id>/delete/", file.DeleteFile.as_view()),
 ]

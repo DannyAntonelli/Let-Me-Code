@@ -66,3 +66,17 @@ class CreateFile(APIView):
                 "file_id": file.id,
             }
         )
+
+
+class DeleteFile(APIView):
+    permission_classes = [IsFileInEditableProject]
+
+    def delete(self, request: Request, file_id: int) -> Response:
+        file = get_object_or_404(File, id=file_id)
+        self.check_object_permissions(request, file)
+        file.delete()
+        return Response(
+            {
+                "message": "File deleted successfully",
+            }
+        )
