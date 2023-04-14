@@ -1,12 +1,10 @@
 <template>
-  <p>Hello</p>
+  <router-view :key="$route.path" />
 </template>
 
 <script>
 export default {
-  name: 'App',
-  components: {
-  }
+  name: 'App'
 }
 </script>
 
