@@ -90,3 +90,17 @@ class MakePublic(APIView):
                 "message": f"Project status changed successfully, public = {str(public).lower()}",
             }
         )
+
+
+class DeleteProject(APIView):
+    permission_classes = [IsCreator]
+
+    def delete(self, request: Request, project_id: int) -> Response:
+        project = get_object_or_404(Project, id=project_id)
+        self.check_object_permissions(request, project)
+        project.delete()
+        return Response(
+            {
+                "message": "Project deleted successfully",
+            }
+        )

@@ -22,6 +22,7 @@ urlpatterns = [
         "project/<int:project_id>/create_file/",
         file.CreateFile.as_view(),
     ),
+    path("project/<int:project_id>/delete/", project.DeleteProject.as_view()),
     path("file/<int:file_id>/", file.GetFile.as_view()),
     path("file/<int:file_id>/sync/", file.SyncFile.as_view()),
     path("file/<int:file_id>/delete/", file.DeleteFile.as_view()),
