@@ -26,7 +26,7 @@ class GetFile(APIView):
 class SyncFile(APIView):
     permission_classes = [IsFileInEditableProject]
 
-    def post(self, request: Request, file_id: int) -> Response:
+    def patch(self, request: Request, file_id: int) -> Response:
         content = request.data.get("content", "")
         file = get_object_or_404(File, id=file_id)
         self.check_object_permissions(request, file)
