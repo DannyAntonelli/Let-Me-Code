@@ -18,7 +18,7 @@ async function login(username, password) {
 }
 
 async function register(username, password) {
-    return fetch('http://localhost:8000/api/user/register', {
+    return fetch('http://localhost:8000/api/user/register/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ function logout() {
 }
 
 async function getUser(username) {
-    return fetch('http://localhost:8000/api/user/' + username, {
+    return fetch(`http://localhost:8000/api/user/${username}/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 async function getProject(id) {
-    return fetch('http://localhost:8000/api/project/' + id, {
+    return fetch(`http://localhost:8000/api/project/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ async function getProject(id) {
 }
 
 async function createProject() {
-    return fetch('http://localhost:8000/api/project/create_project', {
+    return fetch('http://localhost:8000/api/project/create_project/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ async function createProject() {
 }
 
 async function shareProject(id) {
-    return fetch('http://localhost:8000/api/project/share/' + id, {
+    return fetch(`http://localhost:8000/api/project/share/${id}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ async function shareProject(id) {
 }
 
 async function changeProjectVisibility(id, makePublic) {
-    return fetch('http://localhost:8000/api/project/public/' + id, {
+    return fetch(`http://localhost:8000/api/project/public/${id}/`, {
         method: 'POST',
         body: {
             public: makePublic
@@ -66,7 +66,7 @@ async function changeProjectVisibility(id, makePublic) {
 }
 
 async function createFile(id) {
-    return fetch('http://localhost:8000/api/project/' + id + '/create_file', {
+    return fetch(`http://localhost:8000/api/project/${id}/create_file/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ async function createFile(id) {
 }
 
 async function deleteProject(id) {
-    return fetch('http://localhost:8000/api/project/' + id + '/delete', {
+    return fetch(`http://localhost:8000/api/project/${id}/delete/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

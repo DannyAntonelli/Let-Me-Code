@@ -1,5 +1,5 @@
 async function getFile(id) {
-    fetch('http://localhost:8000/api/file/' + id, {
+    fetch(`http://localhost:8000/api/file/${id}/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ async function getFile(id) {
 }
 
 async function syncFile(id, newContent) {
-    return fetch('http://localhost:8000/api/file/sync/' + id, {
+    return fetch(`http://localhost:8000/api/file/sync/${id}/`, {
         method: 'PATCH',
         body: {
             content: newContent
@@ -34,7 +34,7 @@ async function syncFile(id, newContent) {
 }
 
 async function deleteFile(id) {
-    return fetch('http://localhost:8000/api/file/' + id + '/delete', {
+    return fetch(`http://localhost:8000/api/file/${id}/delete/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
