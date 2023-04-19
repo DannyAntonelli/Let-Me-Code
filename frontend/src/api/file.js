@@ -3,7 +3,7 @@ async function getFile(id) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -22,7 +22,7 @@ async function syncFile(id, newContent) {
         },
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -38,7 +38,7 @@ async function deleteFile(id) {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {

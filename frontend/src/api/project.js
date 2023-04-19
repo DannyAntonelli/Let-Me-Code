@@ -3,7 +3,7 @@ async function getProject(id) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -19,7 +19,7 @@ async function createProject() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -35,7 +35,7 @@ async function shareProject(id) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -54,7 +54,7 @@ async function changeProjectVisibility(id, makePublic) {
         },
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -70,7 +70,7 @@ async function createFile(id) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {
@@ -86,7 +86,7 @@ async function deleteProject(id) {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
         if (response.ok) {

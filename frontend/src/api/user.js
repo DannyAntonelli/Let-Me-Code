@@ -45,9 +45,10 @@ async function getUser(username) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + JSON.parse(localStorage.getItem('token'))
+            'Authorization': 'Token ' + localStorage.getItem('token')
         }
     }).then(response => {
+        console.log(response)
         if (response.ok) {
             return response.json();
         } else {
