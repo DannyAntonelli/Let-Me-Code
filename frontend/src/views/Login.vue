@@ -36,6 +36,7 @@ export default {
             login(this.username, this.password)
                 .then(response => {
                     console.log(response)
+                    localStorage.setItem('username', this.username)
                     localStorage.setItem('token', response.token)
                     this.$router.push('/')
                 })
