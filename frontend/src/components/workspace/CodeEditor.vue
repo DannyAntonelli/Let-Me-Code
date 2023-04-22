@@ -7,6 +7,9 @@ import loader from '@monaco-editor/loader';
 
 export default {
     name: 'CodeEditor',
+    props: {
+        fileId: String,
+    },
     async mounted() {
         const editorOptions = {
             language: 'python',
@@ -14,6 +17,6 @@ export default {
         loader.init().then((monaco) => {
             monaco.editor.create(document.getElementById('code-editor'), editorOptions);
         });
-    }
+    },
 }
 </script>
