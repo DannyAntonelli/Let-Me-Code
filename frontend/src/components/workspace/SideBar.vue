@@ -1,16 +1,18 @@
 <template>
-    Side
-    <div v-for="file_id in files" :key="file_id">
-        {{ file_id }}
-    </div>
+Side
+<div v-for="file_id in files" :key="file_id">
+    {{ file_id }}
+</div>
 </template>
 
-<script >
+<script>
 // declare interface File {
 //     cod: string,
 //     param: string
 // }
-import { getFile } from '@/api/file.js'
+import {
+    getFile
+} from '@/api/file.js'
 
 export default {
     name: 'SideBar',
@@ -37,5 +39,5 @@ export default {
                 })
         }
     }
-} 
+}
 </script>

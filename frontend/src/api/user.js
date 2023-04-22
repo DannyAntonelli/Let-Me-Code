@@ -1,65 +1,60 @@
 async function login(username, password) {
-    return fetch('http://localhost:8000/api/user/login/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Error during login');
-        }
-    })
+  return fetch("http://localhost:8000/api/user/login/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during login");
+    }
+  });
 }
 
 async function register(username, password) {
-    return fetch('http://localhost:8000/api/user/register/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Error during register');
-        }
-    })
+  return fetch("http://localhost:8000/api/user/register/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during register");
+    }
+  });
 }
 
 function logout() {
-    localStorage.removeItem('token');
+  localStorage.removeItem("token");
 }
 
 async function getUser(username) {
-    return fetch(`http://localhost:8000/api/user/${username}/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ' + localStorage.getItem('token')
-        }
-    }).then(response => {
-        console.log(response)
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Error during get user');
-        }
-    })
+  return fetch(`http://localhost:8000/api/user/${username}/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Token " + localStorage.getItem("token"),
+    },
+  }).then((response) => {
+    console.log(response);
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during get user");
+    }
+  });
 }
 
-export {
-    login,
-    register,
-    logout,
-    getUser
-}
+export { login, register, logout, getUser };

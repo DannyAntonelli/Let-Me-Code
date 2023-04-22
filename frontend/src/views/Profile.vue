@@ -1,25 +1,27 @@
 <template>
-    <h1>{{ username }}</h1>
-    <p>email: {{ email }}</p>
-    <p>first name: {{ firstName }}</p>
-    <p>last name: {{ lastName }}</p>
-    <p>date joined: {{ dateJoined }}</p>
-    <ul>project ids:
-        <li v-for="projectId in projectIds" :key="projectId">
-            {{ projectId }}
-        </li>
-    </ul>
-    <ul>shared project ids:
-        <li v-for="sharedProjectId in sharedProjectIds" :key="sharedProjectId">
-            {{ sharedProjectId }}
-        </li>
-    </ul>
-    <p v-if="isCurrentUser">this is your profile</p>
-    <p v-else>this is not your profile</p>
+<h1>{{ username }}</h1>
+<p>email: {{ email }}</p>
+<p>first name: {{ firstName }}</p>
+<p>last name: {{ lastName }}</p>
+<p>date joined: {{ dateJoined }}</p>
+<ul>project ids:
+    <li v-for="projectId in projectIds" :key="projectId">
+        {{ projectId }}
+    </li>
+</ul>
+<ul>shared project ids:
+    <li v-for="sharedProjectId in sharedProjectIds" :key="sharedProjectId">
+        {{ sharedProjectId }}
+    </li>
+</ul>
+<p v-if="isCurrentUser">this is your profile</p>
+<p v-else>this is not your profile</p>
 </template>
 
 <script>
-import { getUser } from '@/api/user.js'
+import {
+    getUser
+} from '@/api/user.js'
 
 export default {
     name: 'Profile',

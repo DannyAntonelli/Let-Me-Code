@@ -1,5 +1,5 @@
 <template>
-    <!-- <div>
+<!-- <div>
         <h1>Workspace</h1>
         <p>{{ $route.params.id }}</p>
         <p>{{ name }}</p>
@@ -9,26 +9,28 @@
         <p>{{ shared_users }}</p>
         <p>{{ file_ids }}</p>
     </div> -->
-    <div class="container text-center">
-        <div class="row text-start">
-            <TopBar :workspaceName='this.name' :workspaceId='this.id' />
+<div class="container text-center">
+    <div class="row text-start">
+        <TopBar :workspaceName='this.name' :workspaceId='this.id' />
+    </div>
+    <div class="row align-items-start">
+        <div class="col-2">
+            <SideBar :file_ids='this.file_ids' />
         </div>
-        <div class="row align-items-start">
-            <div class="col-2">
-                <SideBar :file_ids='this.file_ids' />
-            </div>
-            <div class="col-10">
-                <CodeEditor />
-            </div>
-        </div>
-        <div class="row">
-            <BotBar />
+        <div class="col-10">
+            <CodeEditor />
         </div>
     </div>
+    <div class="row">
+        <BotBar />
+    </div>
+</div>
 </template>
 
 <script>
-import { getProject } from '@/api/project.js'
+import {
+    getProject
+} from '@/api/project.js'
 import CodeEditor from '@/components/workspace/CodeEditor.vue'
 import TopBar from '@/components/workspace/TopBar.vue'
 import BotBar from '@/components/workspace/BotBar.vue'

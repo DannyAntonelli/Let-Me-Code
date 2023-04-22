@@ -1,5 +1,5 @@
 <template>
-    <div id='code-editor' style='height: 500px'></div>
+<div id='code-editor' style='height: 500px'></div>
 </template>
 
 <script>
