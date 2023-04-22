@@ -1,6 +1,7 @@
 async function getProject(id) {
-    return fetch(`http://localhost:8000/api/project/${id}`, {
+    return fetch(`http://localhost:8000/api/project/${id}/`, {
         method: 'GET',
+        // mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Token ' + localStorage.getItem('token')

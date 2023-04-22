@@ -1,5 +1,5 @@
 async function getFile(id) {
-    fetch(`http://localhost:8000/api/file/${id}/`, {
+    return fetch(`http://localhost:8000/api/file/${id}/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ class GetFile(APIView):
     def get(self, request: Request, file_id: int) -> Response:
         file = get_object_or_404(File, id=file_id)
         self.check_object_permissions(request, file)
-        return Response(FileSerializer(file).data)
+        return Response({"file":FileSerializer(file).data})
 
 
 class SyncFile(APIView):
