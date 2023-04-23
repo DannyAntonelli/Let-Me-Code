@@ -1,10 +1,12 @@
 <template>
   <Navbar :profileRoute="profileRoute" />
   <router-view @login="updateUsername" :key="$route.path" />
+  <FooterComponent />
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
 
 export default {
   name: "App",
@@ -17,6 +19,7 @@ export default {
 
   components: {
     Navbar,
+    FooterComponent,
   },
 
   methods: {
