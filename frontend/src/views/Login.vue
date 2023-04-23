@@ -33,31 +33,35 @@
 </template>
 
 <script>
-  import { login } from "@/api/user.js";
+import { login } from "@/api/user.js";
 
-  export default {
-    name: "Login",
+export default {
+  name: "Login",
 
-    data() {
-      return {
-        username: "",
-        password: "",
-      };
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    handleLogin() {
+      login(this.username, this.password)
+        .then((response) => {
+          console.log(response);
+          localStorage.setItem("token", response.token);
+          this.$emit("login", this.username);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+  },
 
-    methods: {
-      handleLogin() {
-        login(this.username, this.password)
-          .then((response) => {
-            console.log(response);
-            localStorage.setItem("username", this.username);
-            localStorage.setItem("token", response.token);
-            this.$router.push("/");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
-    },
-  };
+  emits: {
+    login: null,
+  },
+};
 </script>

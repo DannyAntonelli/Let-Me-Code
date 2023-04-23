@@ -52,12 +52,13 @@
 </template>
 
 <script>
-  export default {
-    name: "Navbar",
-    data() {
-      return {
-        profileRoute: "/profile/" + localStorage.getItem("username"),
-      };
+export default {
+  name: "Navbar",
+  props: {
+    profileRoute: {
+      type: String,
+      required: true,
     },
-  };
+  },
+};
 </script>
