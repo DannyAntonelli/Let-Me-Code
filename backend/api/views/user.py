@@ -18,6 +18,8 @@ class Register(APIView):
     def post(self, request: Request) -> Response:
         username = request.data.get("username")
         email = request.data.get("email")
+        first_name = request.data.get("first_name")
+        last_name = request.data.get("last_name")
         password = request.data.get("password")
 
         if not username or not password:
@@ -27,7 +29,13 @@ class Register(APIView):
             )
 
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password=password,
+            )
             user.save()
             return Response({"message": "User created successfully"})
         except IntegrityError:

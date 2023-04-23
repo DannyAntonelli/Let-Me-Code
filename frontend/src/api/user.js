@@ -17,7 +17,7 @@ async function login(username, password) {
   });
 }
 
-async function register(username, password) {
+async function register(username, email, firstName, lastName, password) {
   return fetch("http://localhost:8000/api/user/register/", {
     method: "POST",
     headers: {
@@ -25,6 +25,9 @@ async function register(username, password) {
     },
     body: JSON.stringify({
       username: username,
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
       password: password,
     }),
   }).then((response) => {
