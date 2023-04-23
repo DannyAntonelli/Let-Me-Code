@@ -1,7 +1,6 @@
 async function getProject(id) {
   return fetch(`http://localhost:8000/api/project/${id}/`, {
     method: "GET",
-    // mode: 'no-cors',
     headers: {
       "Content-Type": "application/json",
       Authorization: "Token " + localStorage.getItem("token"),
@@ -15,13 +14,18 @@ async function getProject(id) {
   });
 }
 
-async function createProject() {
+async function createProject(name, description, isPublic) {
   return fetch("http://localhost:8000/api/project/create_project/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Token " + localStorage.getItem("token"),
     },
+    body: JSON.stringify({
+      name: name,
+      description: description,
+      is_public: isPublic.toString(),
+    }),
   }).then((response) => {
     if (response.ok) {
       return response.json();
