@@ -22,6 +22,10 @@ class GetProject(APIView):
             {
                 "project": ProjectSerializer(project).data,
                 "file_ids": [file.id for file in project.files.all()],
+                "creator_username": project.user.username,
+                "shared_usernames": [
+                    user.username for user in project.shared_users.all()
+                ],
             }
         )
 

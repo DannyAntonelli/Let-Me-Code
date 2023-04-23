@@ -8,11 +8,13 @@ import Navbar from "@/components/Navbar.vue";
 
 export default {
   name: "App",
+
   data() {
     return {
-      profileRoute: "",
+      profileRoute: "/profile/" + localStorage.getItem("username"),
     };
   },
+
   components: {
     Navbar,
   },
@@ -26,5 +28,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

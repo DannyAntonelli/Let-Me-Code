@@ -4,18 +4,17 @@
   <p>first name: {{ firstName }}</p>
   <p>last name: {{ lastName }}</p>
   <p>date joined: {{ dateJoined }}</p>
-  <ul>
-    project ids:
-    <li v-for="projectId in projectIds" :key="projectId">
-      {{ projectId }}
-    </li>
-  </ul>
-  <ul>
-    shared project ids:
-    <li v-for="sharedProjectId in sharedProjectIds" :key="sharedProjectId">
-      {{ sharedProjectId }}
-    </li>
-  </ul>
+  <p>Projects:</p>
+
+  <div class="row">
+    <div
+      class="col-sm-6 col-md-4 col-lg-3"
+      v-for="projectId in projectIds"
+      :key="projectId"
+    >
+      <ProjectCard :projectId="projectId" />
+    </div>
+  </div>
 
   <form @submit.prevent="handleCreateProject">
     <div class="form-outline mb-4">
@@ -61,11 +60,14 @@
 </template>
 
 <script>
+import ProjectCard from "@/components/ProjectCard.vue";
+
 import { getUser } from "@/api/user.js";
 import { createProject } from "@/api/project.js";
 
 export default {
   name: "Profile",
+
   data() {
     return {
       username: "",
@@ -74,7 +76,6 @@ export default {
       lastName: "",
       dateJoined: "",
       projectIds: [],
-      sharedProjectIds: [],
       isCurrentUser: false,
       newProjectName: "",
       newProjectDescription: "",
@@ -83,21 +84,7 @@ export default {
   },
 
   async created() {
-    getUser(this.$route.params.username)
-      .then((response) => {
-        console.log(response);
-        this.username = response.user.username;
-        this.email = response.user.email;
-        this.firstName = response.user.first_name;
-        this.lastName = response.user.last_name;
-        this.dateJoined = response.user.date_joined;
-        this.projectIds = response.project_ids;
-        this.sharedProjectIds = response.shared_project_ids;
-        this.isCurrentUser = this.username == localStorage.getItem("username");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.retrieveUserInfo();
   },
 
   methods: {
@@ -109,11 +96,36 @@ export default {
       )
         .then((response) => {
           console.log(response);
+          this.retrieveUserInfo();
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    async retrieveUserInfo() {
+      getUser(this.$route.params.username)
+        .then((response) => {
+          console.log(response);
+          this.username = response.user.username;
+          this.email = response.user.email;
+          this.firstName = response.user.first_name;
+          this.lastName = response.user.last_name;
+          this.dateJoined = response.user.date_joined;
+          this.projectIds = response.project_ids.concat(
+            response.shared_project_ids
+          );
+          this.isCurrentUser =
+            this.username == localStorage.getItem("username");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+
+  components: {
+    ProjectCard,
   },
 };
 </script>
