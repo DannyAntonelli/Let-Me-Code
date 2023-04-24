@@ -1,34 +1,47 @@
 <template>
-  <form @submit.prevent="handleLogin">
-    <div class="form-outline mb-4">
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    v-if="errorMessage"
+  >
+    <strong>Error during login:</strong> {{ errorMessage }}
+  </div>
+
+  <form
+    class="text-center"
+    style="max-width: 450px; margin: auto"
+    @submit.prevent="handleLogin"
+  >
+    <h2 class="text-center mb-4"><strong>Sign In</strong></h2>
+
+    <div class="mb-3">
       <input
         type="text"
         id="login-username"
         class="form-control"
         v-model="username"
+        placeholder="Username*"
         required
       />
-      <label class="form-label" for="login-username">Username</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="mb-3">
       <input
         type="password"
         id="login-password"
         class="form-control"
         v-model="password"
+        placeholder="Password*"
         required
       />
-      <label class="form-label" for="login-password">Password</label>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-block mb-4">
-      Sign in
-    </button>
+    <button type="submit" class="btn btn-primary btn-lg">Log In</button>
 
-    <div class="text-center">
-      <p>Not a member? <router-link to="/register">Register</router-link></p>
-    </div>
+    <p class="mt-3">
+      Don't have an account?
+      <router-link to="/register"><strong>Register</strong></router-link>
+    </p>
   </form>
 </template>
 
@@ -42,6 +55,7 @@ export default {
     return {
       username: "",
       password: "",
+      errorMessage: "",
     };
   },
 
@@ -56,6 +70,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.errorMessage = error.message;
         });
     },
   },

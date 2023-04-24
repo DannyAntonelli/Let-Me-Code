@@ -1,69 +1,88 @@
 <template>
-  <form @submit.prevent="handleRegister">
-    <div class="form-outline mb-4">
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    v-if="errorMessage"
+  >
+    <strong>Error during login:</strong> {{ errorMessage }}
+  </div>
+
+  <form
+    class="text-center"
+    style="max-width: 450px; margin: auto"
+    @submit.prevent="handleRegister"
+  >
+    <h2 class="text-center mb-4"><strong>Sign Up</strong></h2>
+
+    <div class="mb-3">
       <input
         type="text"
         id="register-username"
         class="form-control"
         v-model="username"
+        placeholder="Username*"
         required
       />
-      <label class="form-label" for="register-username">Username</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="mb-3">
       <input
         type="email"
         id="register-email"
         class="form-control"
         v-model="email"
-        required
+        placeholder="Email"
       />
-      <label class="form-label" for="register-email">Email</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="mb-3">
       <input
         type="text"
         id="register-first-name"
         class="form-control"
         v-model="firstName"
-        required
+        placeholder="First Name"
       />
-      <label class="form-label" for="register-first-name">First Name</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="mb-3">
       <input
         type="text"
         id="register-last-name"
         class="form-control"
         v-model="lastName"
-        required
+        placeholder="Last Name"
       />
-      <label class="form-label" for="register-last-name">Last Name</label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="mb-3">
       <input
         type="password"
         id="register-password"
         class="form-control"
         v-model="password"
+        placeholder="Password*"
         required
       />
-      <label class="form-label" for="register-password">Password</label>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-block mb-4">
-      Register
-    </button>
-
-    <div class="text-center">
-      <p>
-        Already have an account? <router-link to="/login">Login</router-link>
-      </p>
+    <div class="mb-4">
+      <input
+        type="password"
+        id="register-password"
+        class="form-control"
+        v-model="repeatedPassword"
+        placeholder="Repeat Password*"
+        required
+      />
     </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+
+    <p class="mt-3">
+      Already have an account?
+      <router-link to="/login"><strong>Login here</strong></router-link>
+    </p>
   </form>
 </template>
 
@@ -80,11 +99,17 @@ export default {
       firstName: "",
       lastName: "",
       password: "",
+      repeatedPassword: "",
+      errorMessage: "",
     };
   },
 
   methods: {
     handleRegister() {
+      if (this.password !== this.repeatedPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
       register(
         this.username,
         this.email,
@@ -102,10 +127,12 @@ export default {
             })
             .catch((error) => {
               console.log(error);
+              this.errorMessage = error.message;
             });
         })
         .catch((error) => {
           console.log(error);
+          this.errorMessage = error.message;
         });
     },
   },

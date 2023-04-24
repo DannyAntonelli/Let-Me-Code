@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <font-awesome-icon icon="fa-solid fa-terminal" />
-        Let Me Code
+        <strong> Let Me Code </strong>
       </a>
       <button
         class="navbar-toggler"
