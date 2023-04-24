@@ -1,7 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">
+        <font-awesome-icon icon="fa-solid fa-terminal" />
+        Let Me Code
+      </a>
       <button
         class="navbar-toggler"
         type="button"

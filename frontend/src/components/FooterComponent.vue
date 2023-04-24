@@ -57,14 +57,16 @@
               style="width: 60px; background-color: #7c4dff; height: 2px"
             />
             <p>
-              <i class="fas fa-home mr-3"></i> Rome, Viale dello Scalo S.
-              Lorenzo, 82
+              <font-awesome-icon icon="fa-solid fa-location-dot" />
+              Rome, Viale dello Scalo S. Lorenzo, 82
             </p>
             <p>
-              <i class="fas fa-envelope mr-3"></i>
+              <font-awesome-icon icon="fa-regular fa-envelope" />
               info@letmecode.com
             </p>
-            <p><i class="fas fa-phone mr-3"></i> +39 012 3456789</p>
+            <p>
+              <font-awesome-icon icon="fa-solid fa-phone" /> +39 012 3456789
+            </p>
           </div>
         </div>
       </div>

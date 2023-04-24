@@ -2,7 +2,10 @@
   <div class="card">
     <div class="card-body">
       <router-link :to="projectUrl"
-        ><h5 class="card-title">{{ title }}</h5></router-link
+        ><h5 class="card-title">
+          <font-awesome-icon icon="fa-solid fa-code" size="xs" />
+          {{ title }}
+        </h5></router-link
       >
       <router-link :to="profileUrl"
         ><h6 class="card-subtitle mb-2 text-muted">
