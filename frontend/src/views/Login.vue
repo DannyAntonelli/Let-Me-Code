@@ -66,7 +66,7 @@ export default {
           console.log(response);
           localStorage.setItem("token", response.token);
           this.$emit("login", this.username);
-          this.$router.push("/");
+          this.$router.push("/explore");
         })
         .catch((error) => {
           console.log(error);
