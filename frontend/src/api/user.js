@@ -39,10 +39,6 @@ async function register(username, email, firstName, lastName, password) {
   });
 }
 
-function logout() {
-  localStorage.removeItem("token");
-}
-
 async function getUser(username) {
   return fetch(`http://localhost:8000/api/user/${username}/`, {
     method: "GET",
@@ -60,4 +56,4 @@ async function getUser(username) {
   });
 }
 
-export { login, register, logout, getUser };
+export { login, register, getUser };

@@ -39,6 +39,11 @@
           <li class="nav-item">
             <router-link class="nav-link active" to="/login">Login</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link active" to="/" @click="handleLogout"
+              >Logout</router-link
+            >
+          </li>
         </ul>
         <form class="d-flex" role="search">
           <input
@@ -57,10 +62,18 @@
 <script>
 export default {
   name: "Navbar",
+
   props: {
     profileRoute: {
       type: String,
       required: true,
+    },
+  },
+
+  methods: {
+    handleLogout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
     },
   },
 };

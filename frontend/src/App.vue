@@ -24,7 +24,6 @@ export default {
 
   methods: {
     updateUsername(username) {
-      console.log("Updating username to " + username);
       localStorage.setItem("username", username);
       this.profileRoute = "/profile/" + username;
     },
