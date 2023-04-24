@@ -11,6 +11,8 @@ async function login(username, password) {
   }).then((response) => {
     if (response.ok) {
       return response.json();
+    } else if (response.status === 400) {
+      throw new Error("Invalid username or password");
     } else {
       throw new Error("Error during login");
     }
@@ -33,6 +35,8 @@ async function register(username, email, firstName, lastName, password) {
   }).then((response) => {
     if (response.ok) {
       return response.json();
+    } else if (response.status === 409) {
+      throw new Error("Username already taken");
     } else {
       throw new Error("Error during register");
     }
