@@ -16,6 +16,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
 router.beforeEach((to, from, next) => {
+  document.title = "Let Me Code - " + to.name;
+
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const token = localStorage.getItem("token");
 
