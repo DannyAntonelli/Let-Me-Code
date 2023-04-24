@@ -1,5 +1,9 @@
 <template>
-  <Navbar :profileRoute="profileRoute" />
+  <Navbar
+    :profileRoute="profileRoute"
+    :isLoggedIn="isLoggedIn"
+    @logout="removeUserData"
+  />
   <router-view @login="updateUsername" :key="$route.path" />
   <FooterComponent />
 </template>
@@ -14,6 +18,7 @@ export default {
   data() {
     return {
       profileRoute: "/profile/" + localStorage.getItem("username"),
+      isLoggedIn: localStorage.getItem("token") ? true : false,
     };
   },
 
@@ -26,6 +31,13 @@ export default {
     updateUsername(username) {
       localStorage.setItem("username", username);
       this.profileRoute = "/profile/" + username;
+      this.isLoggedIn = true;
+    },
+
+    removeUserData() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      this.isLoggedIn = false;
     },
   },
 };
