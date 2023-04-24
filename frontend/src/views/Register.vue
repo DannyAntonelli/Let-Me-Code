@@ -77,7 +77,7 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+    <button type="submit" class="btn btn-dark btn-lg">Register</button>
 
     <p class="mt-3">
       Already have an account?

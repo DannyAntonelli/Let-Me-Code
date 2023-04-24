@@ -19,7 +19,7 @@
       <div class="col mx-auto mb-4">
         <h5><strong>Join Our Community:</strong></h5>
         <router-link to="/register"
-          ><button class="btn btn-primary btn-lg">
+          ><button class="btn btn-dark btn-lg">
             Start for free
           </button></router-link
         >
