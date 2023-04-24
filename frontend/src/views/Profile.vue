@@ -1,5 +1,8 @@
 <template>
   <h1>{{ username }}</h1>
+
+  <NewProjectModal @submit-project="handleCreateProject" v-if="isCurrentUser" />
+
   <p>email: {{ email }}</p>
   <p>first name: {{ firstName }}</p>
   <p>last name: {{ lastName }}</p>
@@ -7,60 +10,15 @@
   <p>Projects:</p>
 
   <div class="row">
-    <div
-      class="col-sm-6 col-md-4 col-lg-3"
-      v-for="projectId in projectIds"
-      :key="projectId"
-    >
+    <div class="col-4" v-for="projectId in projectIds" :key="projectId">
       <ProjectCard :projectId="projectId" />
     </div>
   </div>
-
-  <form @submit.prevent="handleCreateProject">
-    <div class="form-outline mb-4">
-      <input
-        type="text"
-        id="create-project-name"
-        class="form-control"
-        v-model="newProjectName"
-        required
-      />
-      <label class="form-label" for="create-project-name">Project Name</label>
-    </div>
-
-    <div class="form-outline mb-4">
-      <input
-        type="text"
-        id="create-project-description"
-        class="form-control"
-        v-model="newProjectDescription"
-        required
-      />
-      <label class="form-label" for="create-project-description"
-        >Project Description</label
-      >
-    </div>
-
-    <div class="form-outline mb-4">
-      <input
-        type="checkbox"
-        id="create-project-is-public"
-        class="form-check-input"
-        v-model="newProjectIsPublic"
-      />
-      <label class="form-check-label" for="create-project-is-public"
-        >Public</label
-      >
-    </div>
-
-    <button type="submit" class="btn btn-primary btn-block mb-4">
-      Create Project
-    </button>
-  </form>
 </template>
 
 <script>
 import ProjectCard from "@/components/ProjectCard.vue";
+import NewProjectModal from "@/components/NewProjectModal.vue";
 
 import { getUser } from "@/api/user.js";
 import { createProject } from "@/api/project.js";
@@ -77,9 +35,6 @@ export default {
       dateJoined: "",
       projectIds: [],
       isCurrentUser: false,
-      newProjectName: "",
-      newProjectDescription: "",
-      newProjectIsPublic: false,
     };
   },
 
@@ -88,11 +43,11 @@ export default {
   },
 
   methods: {
-    handleCreateProject() {
+    handleCreateProject(newProject) {
       createProject(
-        this.newProjectName,
-        this.newProjectDescription,
-        this.newProjectIsPublic
+        newProject.name,
+        newProject.description,
+        newProject.isPublic
       )
         .then((response) => {
           console.log(response);
@@ -126,6 +81,7 @@ export default {
 
   components: {
     ProjectCard,
+    NewProjectModal,
   },
 };
 </script>
