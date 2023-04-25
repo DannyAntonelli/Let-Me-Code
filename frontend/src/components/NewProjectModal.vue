@@ -29,22 +29,21 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="new-project-name" class="col-form-label">Name:</label>
               <input
                 type="text"
                 class="form-control"
                 id="new-project-name"
+                placeholder="Name"
                 v-model="name"
               />
             </div>
 
             <div class="mb-3">
-              <label for="new-project-description" class="col-form-label"
-                >Description:</label
-              >
               <textarea
                 class="form-control"
                 id="new-project-description"
+                placeholder="Description"
+                style="height: 20vh"
                 v-model="description"
               ></textarea>
             </div>

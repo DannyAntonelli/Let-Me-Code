@@ -4,7 +4,9 @@
       <router-link :to="projectUrl"
         ><h5 class="card-title">
           <font-awesome-icon icon="fa-solid fa-code" size="xs" />
-          {{ title }}
+          <strong class="m-2">
+            {{ title }}
+          </strong>
         </h5></router-link
       >
       <router-link :to="profileUrl"
