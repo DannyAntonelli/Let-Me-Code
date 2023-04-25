@@ -9,7 +9,7 @@
 
   <form
     class="text-center"
-    style="max-width: 450px; margin: auto"
+    style="max-width: 500px; margin: auto"
     @submit.prevent="handleLogin"
   >
     <h2 class="text-center mb-4"><strong>Sign In</strong></h2>
