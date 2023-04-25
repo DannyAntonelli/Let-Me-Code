@@ -11,7 +11,7 @@
       v-if="isCurrentUser"
     />
 
-    <h3 class="mt-5"><strong>Projects:</strong></h3>
+    <h3 class="mt-5"><strong>Projects</strong></h3>
   </div>
 
   <div class="row m-4">

@@ -2,11 +2,13 @@
   <div class="card">
     <div class="card-body">
       <router-link :to="projectUrl"
-        ><h5 class="card-title">
+        ><h5 class="card-title" style="font-size: large">
           <font-awesome-icon icon="fa-solid fa-code" size="xs" />
           <strong class="m-2">
             {{ title }}
           </strong>
+          <span v-if="isPublic" class="badge text-bg-success">Public</span>
+          <span v-if="!isPublic" class="badge text-bg-secondary">Private</span>
         </h5></router-link
       >
       <router-link :to="profileUrl"

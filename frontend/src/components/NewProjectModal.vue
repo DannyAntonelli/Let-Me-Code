@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn btn-success"
     data-bs-toggle="modal"
     data-bs-target="#newProjectModal"
   >
@@ -72,7 +72,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn btn-success"
             data-dismiss="modal"
             @click="submitProject"
           >
