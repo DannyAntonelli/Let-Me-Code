@@ -4,13 +4,17 @@ import router from "./router";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-import { faTerminal } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+
+import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
+import {
+  faTerminal,
+  faLocationDot,
+  faPhone,
+  faCode,
+  faSignature,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -35,7 +39,10 @@ library.add(
   faEnvelope,
   faLocationDot,
   faPhone,
-  faCode
+  faCode,
+  faUser,
+  faSignature,
+  faLock
 );
 
 createApp(App)

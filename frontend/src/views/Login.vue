@@ -14,24 +14,30 @@
   >
     <h2 class="text-center mb-4"><strong>Sign In</strong></h2>
 
-    <div class="mb-3">
+    <div class="m-3 row">
+      <font-awesome-icon
+        icon="fa-regular fa-user"
+        class="col-1 mt-2"
+        size="lg"
+      />
       <input
         type="text"
         id="login-username"
-        class="form-control"
+        class="form-control col mr-2"
         v-model="username"
-        placeholder="Username*"
+        placeholder="Username"
         required
       />
     </div>
 
-    <div class="mb-3">
+    <div class="m-3 mb-4 row">
+      <font-awesome-icon icon="fa-solid fa-lock" class="col-1 mt-2" size="lg" />
       <input
         type="password"
         id="login-password"
-        class="form-control"
+        class="form-control col"
         v-model="password"
-        placeholder="Password*"
+        placeholder="Password"
         required
       />
     </div>
