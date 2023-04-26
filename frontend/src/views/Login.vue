@@ -8,7 +8,7 @@
   </div>
 
   <form
-    class="text-center"
+    class="text-center mt-3"
     style="max-width: 500px; margin: auto"
     @submit.prevent="handleLogin"
   >

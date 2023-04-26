@@ -14,6 +14,7 @@ import {
   faCode,
   faSignature,
   faLock,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -42,7 +43,8 @@ library.add(
   faCode,
   faUser,
   faSignature,
-  faLock
+  faLock,
+  faMagnifyingGlass
 );
 
 createApp(App)

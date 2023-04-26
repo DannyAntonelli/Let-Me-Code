@@ -28,47 +28,47 @@
 </template>
 
 <script>
-  import { getProject } from "@/api/project.js";
-  import CodeEditor from "@/components/workspace/CodeEditor.vue";
-  import TopBar from "@/components/workspace/TopBar.vue";
-  import BotBar from "@/components/workspace/BotBar.vue";
-  import SideBar from "@/components/workspace/SideBar.vue";
+import { getProject } from "@/api/project.js";
+import CodeEditor from "@/components/workspace/CodeEditor.vue";
+import TopBar from "@/components/workspace/TopBar.vue";
+import BotBar from "@/components/workspace/BotBar.vue";
+import SideBar from "@/components/workspace/SideBar.vue";
 
-  export default {
-    name: "Profile",
-    components: {
-      CodeEditor,
-      TopBar,
-      BotBar,
-      SideBar,
-    },
-    data() {
-      return {
-        file_ids: [],
-        description: "",
-        id: "",
-        is_public: false,
-        name: "",
-        shared_users: [],
-        user: "",
-      };
-    },
+export default {
+  name: "Profile",
+  components: {
+    CodeEditor,
+    TopBar,
+    BotBar,
+    SideBar,
+  },
+  data() {
+    return {
+      file_ids: [],
+      description: "",
+      id: "",
+      is_public: false,
+      name: "",
+      shared_users: [],
+      user: "",
+    };
+  },
 
-    async created() {
-      getProject(this.$route.params.id)
-        .then((response) => {
-          console.log(response);
-          this.file_ids = response.file_ids;
-          this.description = response.project.description;
-          this.id = response.project.id;
-          this.is_public = response.project.is_public;
-          this.name = response.project.name;
-          this.shared_users = response.project.shared_users;
-          this.user = response.project.user;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  };
+  async created() {
+    getProject(this.$route.params.id)
+      .then((response) => {
+        console.log(response);
+        this.file_ids = response.file_ids;
+        this.description = response.description;
+        this.id = response.id;
+        this.is_public = response.is_public;
+        this.name = response.name;
+        this.shared_users = response.shared_users;
+        this.user = response.user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
 </script>
