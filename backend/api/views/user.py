@@ -67,3 +67,34 @@ class GetUser(APIView):
                 ],
             }
         )
+
+
+class SearchUsers(APIView):
+    def get(self, request: Request) -> Response:
+        query = request.query_params.get("query")
+
+        if query is None:
+            return Response(
+                {"message": "Query is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        users = User.objects.filter(username__icontains=query)
+        QUERY_LIMIT = 50
+
+        return Response(
+            {
+                "users": [
+                    {
+                        **UserSerializer(user).data,
+                        "number_of_public_projects": user.projects.filter(
+                            is_public=True
+                        ).count(),
+                        "number_of_shared_public_projects": user.shared_projects.filter(
+                            is_public=True
+                        ).count(),
+                    }
+                    for user in users[:QUERY_LIMIT]
+                ]
+            }
+        )

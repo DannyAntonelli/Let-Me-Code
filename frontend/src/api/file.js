@@ -1,10 +1,9 @@
+import { API_URL, getHeaders } from "./common";
+
 async function getFile(id) {
-  return fetch(`http://localhost:8000/api/file/${id}/`, {
+  return fetch(`${API_URL}/file/${id}/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -15,15 +14,12 @@ async function getFile(id) {
 }
 
 async function syncFile(id, newContent) {
-  return fetch(`http://localhost:8000/api/file/sync/${id}/`, {
+  return fetch(`${API_URL}/file/sync/${id}/`, {
     method: "PATCH",
     body: {
       content: newContent,
     },
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -34,12 +30,9 @@ async function syncFile(id, newContent) {
 }
 
 async function deleteFile(id) {
-  return fetch(`http://localhost:8000/api/file/${id}/delete/`, {
+  return fetch(`${API_URL}/file/${id}/delete/`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();

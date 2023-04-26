@@ -1,9 +1,9 @@
+import { API_URL, getHeaders } from "./common";
+
 async function login(username, password) {
-  return fetch("http://localhost:8000/api/user/login/", {
+  return fetch(`${API_URL}/user/login/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getHeaders(false),
     body: JSON.stringify({
       username: username,
       password: password,
@@ -20,11 +20,9 @@ async function login(username, password) {
 }
 
 async function register(username, email, firstName, lastName, password) {
-  return fetch("http://localhost:8000/api/user/register/", {
+  return fetch(`${API_URL}/user/register/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getHeaders(false),
     body: JSON.stringify({
       username: username,
       email: email,
@@ -44,12 +42,9 @@ async function register(username, email, firstName, lastName, password) {
 }
 
 async function getUser(username) {
-  return fetch(`http://localhost:8000/api/user/${username}/`, {
+  return fetch(`${API_URL}/user/${username}/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     console.log(response);
     if (response.ok) {
@@ -60,4 +55,17 @@ async function getUser(username) {
   });
 }
 
-export { login, register, getUser };
+async function searchUsers(query) {
+  return fetch(`${API_URL}/user/search/?query=${query}`, {
+    method: "GET",
+    headers: getHeaders(),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during search user");
+    }
+  });
+}
+
+export { login, register, getUser, searchUsers };

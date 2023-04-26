@@ -20,7 +20,7 @@ class GetProject(APIView):
         self.check_object_permissions(request, project)
         return Response(
             {
-                "project": ProjectSerializer(project).data,
+                **ProjectSerializer(project).data,
                 "file_ids": [file.id for file in project.files.all()],
                 "creator_username": project.user.username,
                 "shared_usernames": [
@@ -106,5 +106,44 @@ class DeleteProject(APIView):
         return Response(
             {
                 "message": "Project deleted successfully",
+            }
+        )
+
+
+class SearchProjects(APIView):
+    def get(self, request: Request) -> Response:
+        query = request.query_params.get("query")
+
+        if query is None:
+            return Response(
+                {"message": "Query is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        projects = (
+            Project.objects.filter(
+                name__icontains=query,
+                shared_users__in=[request.user],
+            )
+            | Project.objects.filter(
+                name__icontains=query,
+                user=request.user,
+            )
+            | Project.objects.filter(
+                name__icontains=query,
+                is_public=True,
+            )
+        )
+
+        QUERY_LIMIT = 50
+        return Response(
+            {
+                "projects": [
+                    {
+                        **ProjectSerializer(project).data,
+                        "creator_username": project.user.username,
+                    }
+                    for project in projects[:QUERY_LIMIT]
+                ]
             }
         )
