@@ -1,5 +1,16 @@
 <template>
-  <div class="text-center mt-3">
+  <div class="text-center mt-5" v-if="!username">
+    <h2>
+      <strong
+        >Oops there's no user called "{{ this.$route.params.username }}"</strong
+      >
+    </h2>
+    <h3>
+      Maybe you were looking for <a href="https://youtu.be/dQw4w9WgXcQ">this</a>
+    </h3>
+  </div>
+
+  <div class="text-center mt-3" v-if="username">
     <h2>
       <strong>@{{ username }}</strong>
     </h2>
