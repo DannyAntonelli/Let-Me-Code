@@ -15,8 +15,18 @@
     </div>
   </div>
 
-  <h3 class="mt-5 text-center"><strong>Explore Projects</strong></h3>
-  <div class="row m-4">
+  <ul class="nav nav-tabs text-center justify-content-center">
+    <li class="nav-item">
+      <a :class="projectsNavLinkClass" @click="setProjectsPage" href="#"
+        >Projects</a
+      >
+    </li>
+    <li class="nav-item">
+      <a :class="usersNavLinkClass" @click="setUsersTab" href="#">Users</a>
+    </li>
+  </ul>
+
+  <div class="row m-4" v-if="projectsTab">
     <div
       class="col col-sm-4 mb-3"
       v-for="project in projects"
@@ -26,8 +36,7 @@
     </div>
   </div>
 
-  <h3 class="mt-3 text-center"><strong>Explore Users</strong></h3>
-  <div class="row m-4">
+  <div class="row m-4" v-if="!projectsTab">
     <div class="col col-sm-4 mb-3" v-for="user in users" :key="user.id">
       <UserCard :user="user" />
     </div>
@@ -49,6 +58,7 @@ export default {
       query: "",
       projects: [],
       users: [],
+      projectsTab: true,
     };
   },
 
@@ -59,7 +69,7 @@ export default {
 
   methods: {
     async search() {
-      await this.fetchData();
+      this.fetchData();
       this.query = "";
     },
 
@@ -79,6 +89,24 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    setProjectsPage() {
+      this.projectsTab = true;
+    },
+
+    setUsersTab() {
+      this.projectsTab = false;
+    },
+  },
+
+  computed: {
+    projectsNavLinkClass() {
+      return "nav-link " + (this.projectsTab ? "active" : "");
+    },
+
+    usersNavLinkClass() {
+      return "nav-link " + (this.projectsTab ? "" : "active");
     },
   },
 
