@@ -15,7 +15,7 @@
     </div>
     <div class="row align-items-start">
       <div class="col-2">
-        <SideBar :file_ids="this.file_ids" />
+        <SideBar :file_ids="this.file_ids" :key="this.file_ids" />
       </div>
       <div class="col-10">
         <CodeEditor />
@@ -33,9 +33,9 @@
   import TopBar from "@/components/workspace/TopBar.vue";
   import BotBar from "@/components/workspace/BotBar.vue";
   import SideBar from "@/components/workspace/SideBar.vue";
-
   export default {
-    name: "Profile",
+    name: "Workspace",
+
     components: {
       CodeEditor,
       TopBar,
@@ -51,10 +51,11 @@
         name: "",
         shared_users: [],
         user: "",
+        // componentKey: 0,
       };
     },
 
-    async created() {
+    async beforeCreate() {
       getProject(this.$route.params.id)
         .then((response) => {
           console.log(response);
@@ -65,6 +66,7 @@
           this.name = response.project.name;
           this.shared_users = response.project.shared_users;
           this.user = response.project.user;
+          //   this.componentKey += 1;
         })
         .catch((error) => {
           console.log(error);
