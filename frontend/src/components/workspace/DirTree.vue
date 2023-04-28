@@ -1,19 +1,20 @@
 <template>
   <ul class="tree">
     <li v-for="(value, key) in this.node" :key="key">
-      <div v-if="isObject(value)">
+      <div v-if="!value.id && key != 'folderName'">
+        <!--check if has id -> is a file and not a folder -->
         <span
           class="folder"
           @click="toggle(key)"
-          @contextmenu.prevent="showMenu($event, false, key)"
+          @contextmenu.prevent="showMenu($event, false, value.folderName)"
         >
           {{ key }}
         </span>
         <dir-tree v-if="expanded[key]" :node="value" />
       </div>
-      <div v-else>
-        <span class="file" @contextmenu.prevent="showMenu($event, true, key)">
-          f {{ value }}
+      <div v-if="value.id">
+        <span class="file" @contextmenu.prevent="showMenu($event, true, value)">
+          - {{ value.fileName }}
         </span>
       </div>
     </li>
@@ -26,6 +27,7 @@
     :objName="menuObjName"
     :param="menuParam"
   />
+  <NewFileModal :path="this.newFilePath" :key="newFilePath" />
 </template>
 
 <style scoped>
@@ -145,6 +147,8 @@
 
 <script>
   import ContextMenu from "@/components/workspace/ContextualMenu.vue";
+  import NewFileModal from "@/components/workspace/NewFileModal.vue";
+  import { Modal } from "bootstrap";
   export default {
     name: "DirTree",
     props: {
@@ -153,14 +157,27 @@
     data() {
       return {
         expanded: {},
+        showingNewFileModal: false,
         menuFolderItems: [
           {
             label: "New File",
-            action: (a) => console.log("Item 1 clicked", a),
+            action: (folder) => {
+              //   this.showing = true;
+              console.log("Item 1 clicked", folder);
+              this.newFilePath = folder;
+              console.log(this.newFilePath);
+              //   let m = new Modal(document.querySelector("#newFileModal"));
+              //   m.show();
+            },
           },
           {
             label: "Delete",
-            action: (a) => console.log("Item 2 clicked", a),
+
+            action: (a) => {
+              console.log("Item 2 clicked", a);
+              let m = new Modal(document.querySelector("#newFileModal"));
+              m.show();
+            },
           },
         ],
         menuFileItems: [
@@ -173,10 +190,12 @@
         menuPosition: { x: 0, y: 0 },
         menuVisible: false,
         menuParam: null,
+        newFilePath: "ssss",
       };
     },
     components: {
       ContextMenu,
+      NewFileModal,
     },
 
     async created() {
