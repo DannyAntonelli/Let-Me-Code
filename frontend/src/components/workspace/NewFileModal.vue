@@ -72,8 +72,7 @@
 </template>
 
 <script>
-  //   import { Modal } from "bootstrap";
-
+  import { Modal } from "bootstrap";
   export default {
     name: "NewFileModal",
 
@@ -103,8 +102,15 @@
     async mounted() {
       console.log(this.path, "aaaaaaaaa");
       this.newName = this.path;
-      //   let m = new Modal(document.querySelector("#newFileModal"));
-      //   m.show();
+      let m = new Modal(document.querySelector("#newFileModal"));
+      if (this.path != null) {
+        m.show();
+      }
+      var myModalEl = document.getElementById("newFileModal");
+      myModalEl.addEventListener("hidden.bs.modal", (e) => {
+        console.log("hidden", e);
+        this.$emit("close-modal");
+      });
     },
   };
 </script>

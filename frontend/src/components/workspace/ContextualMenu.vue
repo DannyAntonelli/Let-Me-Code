@@ -1,6 +1,7 @@
 <template>
   <div
     class="context-menu"
+    id="side-bar-context-menu"
     v-show="visible"
     :style="{ top: position.y + 'px', left: position.x + 'px' }"
   >
@@ -43,6 +44,15 @@
           action(this.param);
         }
       },
+    },
+    async mounted() {
+      // on dismiss
+      let contextMenu = document.getElementById("side-bar-context-menu");
+      document.addEventListener("click", (e) => {
+        if (!contextMenu.contains(e.target)) {
+          this.$emit("close-context");
+        }
+      });
     },
   };
 </script>

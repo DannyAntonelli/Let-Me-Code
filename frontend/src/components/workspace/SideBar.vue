@@ -10,6 +10,12 @@
     :position="menuPosition"
     :visible="menuVisible"
     :param="menuParam"
+    v-on:close-context="resetContextMenu"
+  />
+  <NewFileModal
+    :path="this.newFilePath"
+    :key="newFilePath"
+    v-on:close-modal="resetNewFilePath"
   />
 </template>
 
@@ -21,6 +27,8 @@
   // import { getFile } from "@/api/file.js";
   import DirTree from "@/components/workspace/DirTree.vue";
   import ContextMenu from "@/components/workspace/ContextualMenu.vue";
+  import NewFileModal from "@/components/workspace/NewFileModal.vue";
+  import { deleteFile } from "@/api/file.js";
 
   function buildTree(files) {
     let tree = {};
@@ -33,8 +41,6 @@
           curr[path[i]] = file;
         } else {
           if (curr[path[i]] == undefined) {
-            // console.log("f", path.slice(1, i + 1));
-
             curr[path[i]] = {
               folderName: path.slice(0, i + 1).join("/") + "/",
             };
@@ -43,8 +49,6 @@
         }
       }
     }
-
-    // console.log(tree[""]);
     tree["root"] = tree[""];
     delete tree[""];
     console.log(tree);
@@ -58,43 +62,55 @@
     components: {
       DirTree,
       ContextMenu,
+      NewFileModal,
     },
     data() {
       return {
         files: [],
         tree: {},
+        //context menu
         menuFolderItems: [
           {
             label: "New File",
             action: (folder) => {
               //   this.showing = true;
-              console.log("Item 1 clicked", folder);
+              console.log("New File in", folder);
               this.newFilePath = folder;
               console.log(this.newFilePath);
-              //   let m = new Modal(document.querySelector("#newFileModal"));
-              //   m.show();
             },
           },
           {
             label: "Delete",
 
             action: (a) => {
-              console.log("Item 2 clicked", a);
-              // let m = new Modal(document.querySelector("#newFileModal"));
-              // m.show();
+              console.log("Folder Delete", a);
+              alert("Folder Delete Not Implemented Yet");
             },
           },
         ],
         menuFileItems: [
           {
             label: "Delete",
-            action: (a) => console.log("File 2 clicked", a),
+            action: (a) => {
+              console.log("File deleted", a);
+              deleteFile(a.id)
+                .then((response) => {
+                  console.log(response);
+                  this.$emit("refresh-files");
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            },
           },
         ],
         menuItems: this.menuFolderItems,
         menuPosition: { x: 0, y: 0 },
         menuVisible: false,
         menuParam: null,
+        //Modal
+        showingNewFileModal: false,
+        newFilePath: null,
       };
     },
     methods: {
@@ -110,6 +126,14 @@
         this.menuPosition.y = event.clientY;
         this.menuVisible = true;
         this.menuParam = name;
+      },
+      resetNewFilePath() {
+        console.log("reset");
+        this.newFilePath = null;
+      },
+      resetContextMenu() {
+        console.log("reset context");
+        this.menuVisible = false;
       },
     },
     async created() {

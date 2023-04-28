@@ -1,7 +1,7 @@
 <template>
   <ul class="tree">
     <li v-for="(value, key) in this.node" :key="key">
-      <div v-if="!value.id && key != 'folderName'">
+      <div v-if="value.id === undefined && key != 'folderName'">
         <!--check if has id -> is a file and not a folder -->
         <span
           class="folder"
@@ -14,7 +14,7 @@
         </span>
         <dir-tree v-if="expanded[key]" :node="value" :root="this.root" />
       </div>
-      <div v-if="value.id">
+      <div v-if="!(value.id === undefined)">
         <span
           class="file"
           @contextmenu.prevent="this.root.showMenu($event, true, value)"
@@ -24,8 +24,6 @@
       </div>
     </li>
   </ul>
-
-  <NewFileModal :path="this.newFilePath" :key="newFilePath" />
 </template>
 
 <style scoped>
@@ -144,8 +142,6 @@
 </style>
 
 <script>
-  import NewFileModal from "@/components/workspace/NewFileModal.vue";
-  //   import { Modal } from "bootstrap";
   export default {
     name: "DirTree",
     props: {
@@ -155,13 +151,9 @@
     data() {
       return {
         expanded: {},
-        showingNewFileModal: false,
-        newFilePath: "ssss",
       };
     },
-    components: {
-      NewFileModal,
-    },
+    components: {},
 
     async created() {
       console.log("mounted");
