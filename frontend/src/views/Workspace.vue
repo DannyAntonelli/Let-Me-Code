@@ -15,14 +15,19 @@
     </div>
     <div class="row align-items-start">
       <div class="col-2">
-        <SideBar :file_ids="this.file_ids" :key="this.file_ids" />
+        <SideBar
+          :file_ids="this.file_ids"
+          :currentFileId="this.currentFile ? this.currentFile.id : null"
+          :key="this.file_ids"
+          v-on:refresh-files="refreshProject"
+        />
       </div>
       <div class="col-10">
-        <CodeEditor />
+        <CodeEditor :currentFile="this.currentFile" />
       </div>
     </div>
     <div class="row">
-      <BotBar />
+      <BotBar :file="this.currentFile" />
     </div>
   </div>
 </template>
@@ -33,6 +38,22 @@
   import TopBar from "@/components/workspace/TopBar.vue";
   import BotBar from "@/components/workspace/BotBar.vue";
   import SideBar from "@/components/workspace/SideBar.vue";
+  function retrieveProjectInfo(id, context) {
+    getProject(id)
+      .then((response) => {
+        console.log(response);
+        context.file_ids = response.file_ids;
+        context.description = response.description;
+        context.id = response.id;
+        context.is_public = response.is_public;
+        context.name = response.name;
+        context.shared_users = response.shared_users;
+        context.user = response.user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   export default {
     name: "Workspace",
 
@@ -51,26 +72,23 @@
         name: "",
         shared_users: [],
         user: "",
+        currentFile: {
+          id: 1,
+          name: "/file1",
+          content: "",
+          language: "py",
+          project: 1,
+        },
         // componentKey: 0,
       };
     },
-
+    methods: {
+      refreshProject() {
+        retrieveProjectInfo(this.$route.params.id, this);
+      },
+    },
     async beforeCreate() {
-      getProject(this.$route.params.id)
-        .then((response) => {
-          console.log(response);
-          this.file_ids = response.file_ids;
-          this.description = response.project.description;
-          this.id = response.project.id;
-          this.is_public = response.project.is_public;
-          this.name = response.project.name;
-          this.shared_users = response.project.shared_users;
-          this.user = response.project.user;
-          //   this.componentKey += 1;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      retrieveProjectInfo(this.$route.params.id, this);
     },
   };
 </script>
