@@ -8,17 +8,30 @@
   export default {
     name: "CodeEditor",
     props: {
-      fileId: String,
+      file: String,
+    },
+    methods: {
+      onChange: function (newValue, e) {
+        console.log("onChange", newValue, e);
+      },
     },
     async mounted() {
       const editorOptions = {
         language: "python",
+        value: this.file.content,
+        minimap: { enabled: false },
+
+        options: {
+          change: this.onChange,
+          //   change: (e) => console.log(e),
+        },
       };
       loader.init().then((monaco) => {
-        monaco.editor.create(
-          document.getElementById("code-editor"),
-          editorOptions
-        );
+        let editor = monaco.editor;
+        editor.create(document.getElementById("code-editor"), editorOptions);
+        editor.onDidChangeModelContent = (e) => {
+          console.log("onDidChangeModelContent", e);
+        };
       });
     },
   };

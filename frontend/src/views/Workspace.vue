@@ -23,11 +23,11 @@
         />
       </div>
       <div class="col-10">
-        <CodeEditor :currentFile="this.currentFile" />
+        <CodeEditor :file="this.currentFile" :key="this.currentFile" />
       </div>
     </div>
     <div class="row">
-      <BotBar :file="this.currentFile" />
+      <BotBar :file="this.currentFile" :key="this.currentFile" />
     </div>
   </div>
 </template>
@@ -75,7 +75,7 @@
         currentFile: {
           id: 1,
           name: "/file1",
-          content: "",
+          content: "CIAOOOO",
           language: "py",
           project: 1,
         },
