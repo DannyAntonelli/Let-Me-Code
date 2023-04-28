@@ -1,31 +1,31 @@
 <template>
-  <!-- <ul>
-    <li v-for="(value, key) in this.node" :key="key">
-      <span>{{ key }} </span>
-      <directory-tree
-        v-if="value && value.constructor === Object"
-        :tree="{ a: 'b' }"
-      />
-    </li>
-  </ul> -->
   <ul class="tree">
     <li v-for="(value, key) in this.node" :key="key">
-      <!-- aaa {{ key }} {{ value }} -->
       <div v-if="isObject(value)">
         <span
           class="folder"
           @click="toggle(key)"
-          @auxclick="contextual_menu(key)"
+          @contextmenu.prevent="showMenu($event, false, key)"
         >
           {{ key }}
         </span>
         <dir-tree v-if="expanded[key]" :node="value" />
       </div>
       <div v-else>
-        <span class="file"> f {{ value }} </span>
+        <span class="file" @contextmenu.prevent="showMenu($event, true, key)">
+          f {{ value }}
+        </span>
       </div>
     </li>
   </ul>
+  <ContextMenu
+    :items="menuItems"
+    :position="menuPosition"
+    :visible="menuVisible"
+    :file="menuFile"
+    :objName="menuObjName"
+    :param="menuParam"
+  />
 </template>
 
 <style scoped>
@@ -144,8 +144,7 @@
 </style>
 
 <script>
-  //   import $ from "jquery";
-
+  import ContextMenu from "@/components/workspace/ContextualMenu.vue";
   export default {
     name: "DirTree",
     props: {
@@ -154,9 +153,31 @@
     data() {
       return {
         expanded: {},
+        menuFolderItems: [
+          {
+            label: "New File",
+            action: (a) => console.log("Item 1 clicked", a),
+          },
+          {
+            label: "Delete",
+            action: (a) => console.log("Item 2 clicked", a),
+          },
+        ],
+        menuFileItems: [
+          {
+            label: "Delete",
+            action: (a) => console.log("File 2 clicked", a),
+          },
+        ],
+        menuItems: this.menuFolderItems,
+        menuPosition: { x: 0, y: 0 },
+        menuVisible: false,
+        menuParam: null,
       };
     },
-    components: {},
+    components: {
+      ContextMenu,
+    },
 
     async created() {
       console.log("mounted");
@@ -167,8 +188,23 @@
       isObject(val) {
         return typeof val === "object";
       },
+
       toggle(key) {
         this.expanded[key] = !this.expanded[key];
+      },
+
+      showMenu(event, file, name) {
+        event.preventDefault();
+        if (!file) {
+          this.menuItems = this.menuFolderItems;
+          console.log("folder");
+        } else {
+          this.menuItems = this.menuFileItems;
+        }
+        this.menuPosition.x = event.clientX;
+        this.menuPosition.y = event.clientY;
+        this.menuVisible = true;
+        this.menuParam = name;
       },
     },
   };
