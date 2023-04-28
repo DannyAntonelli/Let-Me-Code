@@ -1,10 +1,9 @@
+import { API_URL, getHeaders } from "./common";
+
 async function getProject(id) {
-  return fetch(`http://localhost:8000/api/project/${id}/`, {
+  return fetch(`${API_URL}/project/${id}/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -15,12 +14,9 @@ async function getProject(id) {
 }
 
 async function createProject(name, description, isPublic) {
-  return fetch("http://localhost:8000/api/project/create_project/", {
+  return fetch(`${API_URL}/project/create_project/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
     body: JSON.stringify({
       name: name,
       description: description,
@@ -36,12 +32,9 @@ async function createProject(name, description, isPublic) {
 }
 
 async function shareProject(id) {
-  return fetch(`http://localhost:8000/api/project/share/${id}/`, {
+  return fetch(`${API_URL}/project/share/${id}/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -52,15 +45,12 @@ async function shareProject(id) {
 }
 
 async function changeProjectVisibility(id, makePublic) {
-  return fetch(`http://localhost:8000/api/project/public/${id}/`, {
+  return fetch(`${API_URL}/project/public/${id}/`, {
     method: "POST",
     body: {
       public: makePublic,
     },
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -71,12 +61,9 @@ async function changeProjectVisibility(id, makePublic) {
 }
 
 async function createFile(id) {
-  return fetch(`http://localhost:8000/api/project/${id}/create_file/`, {
+  return fetch(`${API_URL}/project/${id}/create_file/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -87,17 +74,27 @@ async function createFile(id) {
 }
 
 async function deleteProject(id) {
-  return fetch(`http://localhost:8000/api/project/${id}/delete/`, {
+  return fetch(`${API_URL}/project/${id}/delete/`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Token " + localStorage.getItem("token"),
-    },
+    headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
       return response.json();
     } else {
       throw new Error("Error during delete project");
+    }
+  });
+}
+
+async function searchProjects(query) {
+  return fetch(`${API_URL}/project/search/?query=${query}`, {
+    method: "GET",
+    headers: getHeaders(),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during search projects");
     }
   });
 }
@@ -109,4 +106,5 @@ export {
   changeProjectVisibility,
   createFile,
   deleteProject,
+  searchProjects,
 };

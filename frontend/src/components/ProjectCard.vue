@@ -5,60 +5,45 @@
         ><h5 class="card-title" style="font-size: large">
           <font-awesome-icon icon="fa-solid fa-code" size="xs" />
           <strong class="m-2">
-            {{ title }}
+            {{ project.name }}
           </strong>
-          <span v-if="isPublic" class="badge text-bg-success">Public</span>
-          <span v-if="!isPublic" class="badge text-bg-secondary">Private</span>
+          <span v-if="project.is_public" class="badge text-bg-success"
+            >Public</span
+          >
+          <span v-if="!project.is_public" class="badge text-bg-secondary"
+            >Private</span
+          >
         </h5></router-link
       >
       <router-link :to="profileUrl"
         ><h6 class="card-subtitle mb-2 text-muted">
-          {{ creator }}
+          @{{ project.creator_username }}
         </h6></router-link
       >
-      <p class="card-text">{{ description }}</p>
+      <p class="card-text">{{ project.description }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import { getProject } from "@/api/project.js";
-
 export default {
   name: "ProjectCard",
+
   props: {
-    projectId: {
-      type: Number,
+    project: {
+      type: Object,
       required: true,
     },
   },
 
-  data() {
-    return {
-      title: "",
-      description: "",
-      isPublic: false,
-      creator: "",
-      sharedUsers: [],
-      projectUrl: "",
-      profileUrl: "",
-    };
-  },
+  computed: {
+    projectUrl() {
+      return `/project/${this.project.id}`;
+    },
 
-  async created() {
-    getProject(this.projectId)
-      .then((response) => {
-        this.title = response.project.name;
-        this.description = response.project.description;
-        this.isPublic = response.project.is_public;
-        this.creator = response.creator_username;
-        this.sharedUsers = response.shared_usernames;
-        this.projectUrl = `/project/${this.projectId}`;
-        this.profileUrl = `/profile/${this.creator}`;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    profileUrl() {
+      return `/profile/${this.project.creator_username}`;
+    },
   },
 };
 </script>

@@ -1,5 +1,16 @@
 <template>
-  <div class="text-center mt-3">
+  <div class="text-center mt-5" v-if="!username">
+    <h2>
+      <strong
+        >Oops there's no user called "{{ this.$route.params.username }}"</strong
+      >
+    </h2>
+    <h3>
+      Maybe you were looking for <a href="https://youtu.be/dQw4w9WgXcQ">this</a>
+    </h3>
+  </div>
+
+  <div class="text-center mt-3" v-if="username">
     <h2>
       <strong>@{{ username }}</strong>
     </h2>
@@ -17,10 +28,10 @@
   <div class="row m-4">
     <div
       class="col col-sm-4 mb-3"
-      v-for="projectId in projectIds"
-      :key="projectId"
+      v-for="project in projects"
+      :key="project.id"
     >
-      <ProjectCard :projectId="projectId" />
+      <ProjectCard :project="project" />
     </div>
   </div>
 </template>
@@ -30,7 +41,7 @@ import ProjectCard from "@/components/ProjectCard.vue";
 import NewProjectModal from "@/components/NewProjectModal.vue";
 
 import { getUser } from "@/api/user.js";
-import { createProject } from "@/api/project.js";
+import { createProject, getProject } from "@/api/project.js";
 
 export default {
   name: "Profile",
@@ -41,13 +52,35 @@ export default {
       email: "",
       fullName: "",
       dateJoined: new Date(),
-      projectIds: [],
-      isCurrentUser: false,
+      projects: [],
     };
   },
 
   async created() {
-    this.retrieveUserInfo();
+    getUser(this.$route.params.username)
+      .then((response) => {
+        this.username = response.user.username;
+        this.email = response.user.email;
+        this.fullName =
+          response.user.first_name + " " + response.user.last_name;
+        this.dateJoined = new Date(response.user.date_joined);
+
+        let projectIds = response.project_ids.concat(
+          response.shared_project_ids
+        );
+        for (let projectId of projectIds) {
+          getProject(projectId)
+            .then((response) => {
+              this.projects.push(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   methods: {
@@ -58,28 +91,13 @@ export default {
         newProject.isPublic
       )
         .then((response) => {
-          console.log(response);
-          this.retrieveUserInfo();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    async retrieveUserInfo() {
-      getUser(this.$route.params.username)
-        .then((response) => {
-          console.log(response);
-          this.username = response.user.username;
-          this.email = response.user.email;
-          this.fullName =
-            response.user.first_name + " " + response.user.last_name;
-          this.dateJoined = new Date(response.user.date_joined);
-          this.projectIds = response.project_ids.concat(
-            response.shared_project_ids
-          );
-          this.isCurrentUser =
-            this.username == localStorage.getItem("username");
+          getProject(response.project_id)
+            .then((response) => {
+              this.projects.push(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);
@@ -90,6 +108,12 @@ export default {
   components: {
     ProjectCard,
     NewProjectModal,
+  },
+
+  computed: {
+    isCurrentUser() {
+      return this.username == localStorage.getItem("username");
+    },
   },
 };
 </script>
