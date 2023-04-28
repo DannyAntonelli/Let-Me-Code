@@ -6,27 +6,25 @@
         <span
           class="folder"
           @click="toggle(key)"
-          @contextmenu.prevent="showMenu($event, false, value.folderName)"
+          @contextmenu.prevent="
+            this.root.showMenu($event, false, value.folderName)
+          "
         >
           {{ key }}
         </span>
-        <dir-tree v-if="expanded[key]" :node="value" />
+        <dir-tree v-if="expanded[key]" :node="value" :root="this.root" />
       </div>
       <div v-if="value.id">
-        <span class="file" @contextmenu.prevent="showMenu($event, true, value)">
+        <span
+          class="file"
+          @contextmenu.prevent="this.root.showMenu($event, true, value)"
+        >
           - {{ value.fileName }}
         </span>
       </div>
     </li>
   </ul>
-  <ContextMenu
-    :items="menuItems"
-    :position="menuPosition"
-    :visible="menuVisible"
-    :file="menuFile"
-    :objName="menuObjName"
-    :param="menuParam"
-  />
+
   <NewFileModal :path="this.newFilePath" :key="newFilePath" />
 </template>
 
@@ -146,55 +144,22 @@
 </style>
 
 <script>
-  import ContextMenu from "@/components/workspace/ContextualMenu.vue";
   import NewFileModal from "@/components/workspace/NewFileModal.vue";
-  import { Modal } from "bootstrap";
+  //   import { Modal } from "bootstrap";
   export default {
     name: "DirTree",
     props: {
       node: {},
+      root: Object,
     },
     data() {
       return {
         expanded: {},
         showingNewFileModal: false,
-        menuFolderItems: [
-          {
-            label: "New File",
-            action: (folder) => {
-              //   this.showing = true;
-              console.log("Item 1 clicked", folder);
-              this.newFilePath = folder;
-              console.log(this.newFilePath);
-              //   let m = new Modal(document.querySelector("#newFileModal"));
-              //   m.show();
-            },
-          },
-          {
-            label: "Delete",
-
-            action: (a) => {
-              console.log("Item 2 clicked", a);
-              let m = new Modal(document.querySelector("#newFileModal"));
-              m.show();
-            },
-          },
-        ],
-        menuFileItems: [
-          {
-            label: "Delete",
-            action: (a) => console.log("File 2 clicked", a),
-          },
-        ],
-        menuItems: this.menuFolderItems,
-        menuPosition: { x: 0, y: 0 },
-        menuVisible: false,
-        menuParam: null,
         newFilePath: "ssss",
       };
     },
     components: {
-      ContextMenu,
       NewFileModal,
     },
 
@@ -210,20 +175,6 @@
 
       toggle(key) {
         this.expanded[key] = !this.expanded[key];
-      },
-
-      showMenu(event, file, name) {
-        event.preventDefault();
-        if (!file) {
-          this.menuItems = this.menuFolderItems;
-          console.log("folder");
-        } else {
-          this.menuItems = this.menuFileItems;
-        }
-        this.menuPosition.x = event.clientX;
-        this.menuPosition.y = event.clientY;
-        this.menuVisible = true;
-        this.menuParam = name;
       },
     },
   };
