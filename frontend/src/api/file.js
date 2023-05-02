@@ -14,11 +14,11 @@ async function getFile(id) {
 }
 
 async function syncFile(id, newContent) {
-  return fetch(`${API_URL}/file/sync/${id}/`, {
-    method: "PATCH",
-    body: {
+  return fetch(`${API_URL}/file/${id}/sync/`, {
+    method: "POST",
+    body: JSON.stringify({
       content: newContent,
-    },
+    }),
     headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {

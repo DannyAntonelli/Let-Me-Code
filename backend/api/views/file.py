@@ -26,7 +26,7 @@ class GetFile(APIView):
 class SyncFile(APIView):
     permission_classes = [IsFileInEditableProject]
 
-    def patch(self, request: Request, file_id: int) -> Response:
+    def post(self, request: Request, file_id: int) -> Response:
         content = request.data.get("content", "")
         file = get_object_or_404(File, id=file_id)
         self.check_object_permissions(request, file)
@@ -50,6 +50,8 @@ class CreateFile(APIView):
                 {"message": "Name and language are required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        if name[0] != "/":
+            name = "/" + name
         project = get_object_or_404(Project, id=project_id)
         file = File(name=name, language=language, content="", project=project)
         self.check_object_permissions(request, file)
