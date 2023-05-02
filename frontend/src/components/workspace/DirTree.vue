@@ -18,6 +18,7 @@
         <span
           class="file"
           @contextmenu.prevent="this.root.showMenu($event, true, value)"
+          @click="this.root.onFileClick(value)"
         >
           - {{ value.fileName }}
         </span>
@@ -147,6 +148,7 @@
     props: {
       node: {},
       root: Object,
+      onFileClick: Function,
     },
     data() {
       return {

@@ -4,7 +4,12 @@
   <!-- <div v-for="file_id in files" :key="file_id">
     {{ file_id }}
   </div> -->
-  <DirTree :node="this.tree" :key="this.tree" :root="this" />
+  <DirTree
+    :node="this.tree"
+    :key="this.tree"
+    :root="this"
+    :onFileClick="onFileClick"
+  />
   <ContextMenu
     :items="menuItems"
     :position="menuPosition"
@@ -134,6 +139,10 @@
       resetContextMenu() {
         console.log("reset context");
         this.menuVisible = false;
+      },
+      onFileClick(file) {
+        console.log("file clicked", file);
+        this.$emit("file-clicked", file);
       },
     },
     async created() {

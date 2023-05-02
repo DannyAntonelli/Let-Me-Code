@@ -20,6 +20,7 @@
           :currentFileId="this.currentFile ? this.currentFile.id : null"
           :key="this.file_ids"
           v-on:refresh-files="refreshProject"
+          v-on:file-clicked="changeFile"
         />
       </div>
       <div class="col-10">
@@ -85,6 +86,9 @@
     methods: {
       refreshProject() {
         retrieveProjectInfo(this.$route.params.id, this);
+      },
+      changeFile(file) {
+        this.currentFile = file;
       },
     },
     async beforeCreate() {
