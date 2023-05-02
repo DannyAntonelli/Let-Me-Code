@@ -19,7 +19,7 @@ import {
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-
+// import "mdb-vue-ui-kit/css/mdb.min.css";
 router.beforeEach((to, from, next) => {
   document.title = "Let Me Code - " + to.name;
 
@@ -46,8 +46,12 @@ library.add(
   faLock,
   faMagnifyingGlass
 );
-
-createApp(App)
-  .use(router)
-  .component("font-awesome-icon", FontAwesomeIcon)
-  .mount("#app");
+const app = createApp(App);
+// import contextmenu from "v-contextmenu";
+// import "v-contextmenu/dist/themes/default.css";
+// app.use(contextmenu);
+// import PrimeVue from "primevue/config";
+// app.use(PrimeVue);
+// import "primevue/resources/themes/lara-light-indigo/theme.css";
+// import "primevue/resources/primevue.min.css";
+app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
