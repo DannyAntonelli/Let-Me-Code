@@ -1,38 +1,42 @@
 <template>
-  <div id="code-editor" style="height: 500px"></div>
+  <div class="container text-start">
+    <MonacoEditor
+      class="editor"
+      :options="this.options"
+      style="height: 500px"
+      @change="onChange"
+      v-model="code"
+      :key="this.file.id"
+    />
+  </div>
 </template>
 
 <script>
-  import loader from "@monaco-editor/loader";
-
+  import { h } from "vue";
+  import MonacoEditor from "vue-monaco";
+  MonacoEditor.render = () => h("div");
   export default {
     name: "CodeEditor",
     props: {
-      file: String,
+      file: Object,
     },
     methods: {
       onChange: function (newValue, e) {
-        console.log("onChange", newValue, e);
+        console.log("onChange", newValue, e, this.code);
       },
     },
-    async mounted() {
-      const editorOptions = {
-        language: "python",
-        value: this.file.content,
-        minimap: { enabled: false },
-
+    data() {
+      return {
         options: {
-          change: this.onChange,
-          //   change: (e) => console.log(e),
+          language: "python",
+          value: this.file.content,
+          theme: "vs-dark",
         },
+        code: "const  noop = () => {}", // Not sure if this is needed
       };
-      loader.init().then((monaco) => {
-        let editor = monaco.editor;
-        editor.create(document.getElementById("code-editor"), editorOptions);
-        editor.onDidChangeModelContent = (e) => {
-          console.log("onDidChangeModelContent", e);
-        };
-      });
+    },
+    components: {
+      MonacoEditor,
     },
   };
 </script>
