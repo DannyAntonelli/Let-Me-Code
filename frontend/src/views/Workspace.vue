@@ -17,6 +17,7 @@
       <div class="col-2">
         <SideBar
           :file_ids="this.file_ids"
+          :proj_id="this.id"
           :currentFileId="this.currentFile ? this.currentFile.id : null"
           :key="this.file_ids"
           v-on:refresh-files="refreshProject"
@@ -73,13 +74,14 @@
         name: "",
         shared_users: [],
         user: "",
-        currentFile: {
-          id: 1,
-          name: "/file1",
-          content: "CIAOOOO",
-          language: "py",
-          project: 1,
-        },
+        // currentFile: {
+        //   id: 1,
+        //   name: "/file1",
+        //   content: "CIAOOOO",
+        //   language: "python",
+        //   project: 1,
+        // },
+        currentFile: null,
         // componentKey: 0,
       };
     },

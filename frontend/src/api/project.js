@@ -60,9 +60,13 @@ async function changeProjectVisibility(id, makePublic) {
   });
 }
 
-async function createFile(id) {
+async function createFile(id, name, language) {
   return fetch(`${API_URL}/project/${id}/create_file/`, {
     method: "POST",
+    body: JSON.stringify({
+      name: name,
+      language: language,
+    }),
     headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {

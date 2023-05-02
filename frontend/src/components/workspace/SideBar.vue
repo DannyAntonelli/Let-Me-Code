@@ -21,6 +21,7 @@
     :path="this.newFilePath"
     :key="newFilePath"
     v-on:close-modal="resetNewFilePath"
+    v-on:submit-file="handleCreateFile"
   />
 </template>
 
@@ -29,11 +30,12 @@
   //     cod: string,
   //     param: string
   // }
-  // import { getFile } from "@/api/file.js";
+  // eslint-disable-next-line no-unused-vars
+  import { getFile, deleteFile } from "@/api/file.js";
   import DirTree from "@/components/workspace/DirTree.vue";
   import ContextMenu from "@/components/workspace/ContextualMenu.vue";
   import NewFileModal from "@/components/workspace/NewFileModal.vue";
-  import { deleteFile } from "@/api/file.js";
+  import { createFile } from "@/api/project.js";
 
   function buildTree(files) {
     let tree = {};
@@ -63,6 +65,7 @@
     name: "SideBar",
     props: {
       file_ids: Array,
+      proj_id: String,
     },
     components: {
       DirTree,
@@ -144,38 +147,49 @@
         console.log("file clicked", file);
         this.$emit("file-clicked", file);
       },
+      handleCreateFile(newFile) {
+        console.log("create file", newFile, this.proj_id);
+        createFile(this.proj_id, newFile.name, newFile.language)
+          .then((response) => {
+            console.log(response);
+            this.$emit("refresh-files");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
     },
     async created() {
-      // for (let file_id of this.file_ids) {
-      //   console.log(file_id);
-      //   console.log("aaa    ");
-      //   let f = await getFile(file_id);
-      //   // .then((response) => {
-      //   //   this.files.push(response); // Race condition?
-      //   // })
-      //   // .catch((error) => {
-      //   //   console.log(error);
-      //   // });
-      //   this.files.push(f.file);
-      // }
-      this.files = [
-        { id: 1, name: "/file1", content: "", language: "py", project: 1 },
-        { id: 2, name: "/file3", content: "", language: "py", project: 1 },
-        {
-          id: 3,
-          name: "/folder/file2",
-          content: "",
-          language: "py",
-          project: 1,
-        },
-        {
-          id: 4,
-          name: "/folder/file5",
-          content: "",
-          language: "py",
-          project: 1,
-        },
-      ];
+      for (let file_id of this.file_ids) {
+        console.log(file_id);
+        console.log("aaa    ");
+        let f = await getFile(file_id);
+        // .then((response) => {
+        //   this.files.push(response); // Race condition?
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
+        this.files.push(f.file);
+      }
+      //   this.files = [
+      //     { id: 1, name: "/file1", content: "", language: "py", project: 1 },
+      //     { id: 2, name: "/file3", content: "", language: "py", project: 1 },
+      //     {
+      //       id: 3,
+      //       name: "/folder/file2",
+      //       content: "",
+      //       language: "py",
+      //       project: 1,
+      //     },
+      //     {
+      //       id: 4,
+      //       name: "/folder/file5",
+      //       content: "",
+      //       language: "py",
+      //       project: 1,
+      //     },
+      //   ];
       console.log(this.files);
       let tree = buildTree(this.files);
       console.log(tree);

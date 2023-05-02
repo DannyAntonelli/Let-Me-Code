@@ -43,7 +43,7 @@
                 class="form-control"
                 id="new-file-language"
                 placeholder="Language"
-                v-model="lang"
+                v-model="language"
               />
             </div>
           </form>
@@ -87,15 +87,11 @@
     },
     methods: {
       submitFile() {
-        // this.$emit("submit-project", {
-        //   name: this.name,
-        //   description: this.description,
-        //   isPublic: this.isPublic,
-        // });
-        // document.getElementById("dismiss-modal").click();
-        // this.name = "";
-        // this.description = "";
-        // this.isPublic = true;
+        this.$emit("submit-file", {
+          name: this.newName,
+          language: this.language,
+        });
+        document.getElementById("dismiss-modal").click();
         console.log(this.path, this.language);
       },
     },
