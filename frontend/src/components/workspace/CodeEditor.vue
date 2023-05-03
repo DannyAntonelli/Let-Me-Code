@@ -58,6 +58,7 @@
             .then((response) => {
               console.log(response);
               this.status = "saved";
+              this.$emit("file-changed", this.file, this.content);
             })
             .catch((error) => {
               console.log(error);

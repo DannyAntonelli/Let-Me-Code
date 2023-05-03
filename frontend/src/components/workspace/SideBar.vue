@@ -31,7 +31,7 @@
   //     param: string
   // }
   // eslint-disable-next-line no-unused-vars
-  import { getFile, deleteFile } from "@/api/file.js";
+  import { deleteFile } from "@/api/file.js";
   import DirTree from "@/components/workspace/DirTree.vue";
   import ContextMenu from "@/components/workspace/ContextualMenu.vue";
   import NewFileModal from "@/components/workspace/NewFileModal.vue";
@@ -69,7 +69,7 @@
   export default {
     name: "SideBar",
     props: {
-      file_ids: Array,
+      files: Array,
       proj_id: String,
     },
     components: {
@@ -79,7 +79,6 @@
     },
     data() {
       return {
-        files: [],
         tree: {},
         //context menu
         menuFolderItems: [
@@ -165,18 +164,6 @@
       },
     },
     async created() {
-      for (let file_id of this.file_ids) {
-        console.log(file_id);
-        console.log("aaa    ");
-        let f = await getFile(file_id);
-        // .then((response) => {
-        //   this.files.push(response); // Race condition?
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
-        this.files.push(f.file);
-      }
       //   this.files = [
       //     { id: 1, name: "/file1", content: "", language: "py", project: 1 },
       //     { id: 2, name: "/file3", content: "", language: "py", project: 1 },
