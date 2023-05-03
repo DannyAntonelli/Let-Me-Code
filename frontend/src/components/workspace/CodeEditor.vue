@@ -41,7 +41,10 @@
         });
         window.addEventListener("keydown", (e) => {
           console.log(e);
-          if (e.ctrlKey && e.key === "5") {
+          if (e.ctrlKey) {
+            e.preventDefault();
+          }
+          if (e.ctrlKey && e.key === "s") {
             console.log("saving", this.content);
             this.status = "saving";
           }
