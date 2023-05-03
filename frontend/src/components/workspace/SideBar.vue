@@ -58,6 +58,11 @@
     }
     tree["root"] = tree[""];
     delete tree[""];
+    if (tree["root"] == undefined) {
+      tree["root"] = {
+        folderName: "/",
+      };
+    }
     console.log(tree);
     return tree;
   }
