@@ -1,14 +1,4 @@
 <template>
-  <!-- <div>
-        <h1>Workspace</h1>
-        <p>{{ $route.params.id }}</p>
-        <p>{{ name }}</p>
-        <p>{{ description }}</p>
-        <p>{{ is_public }}</p>
-        <p>{{ user }}</p>
-        <p>{{ shared_users }}</p>
-        <p>{{ file_ids }}</p>
-    </div> -->
   <div class="container text-center">
     <div class="row text-start">
       <TopBar :workspaceName="this.name" :workspaceId="this.id" />
@@ -39,30 +29,13 @@
 </template>
 
 <script>
-  import { getProject } from "@/api/project.js";
+  import { retrieveProjectInfo } from "@/components/workspace/utils.js";
   import { getFile } from "@/api/file.js";
   import CodeEditor from "@/components/workspace/CodeEditor.vue";
   import TopBar from "@/components/workspace/TopBar.vue";
   import BotBar from "@/components/workspace/BotBar.vue";
   import SideBar from "@/components/workspace/SideBar.vue";
 
-  function retrieveProjectInfo(id, context) {
-    getProject(id)
-      .then((response) => {
-        console.log(response);
-        context.file_ids = response.file_ids;
-        context.description = response.description;
-        context.id = response.id;
-        context.is_public = response.is_public;
-        context.name = response.name;
-        context.shared_users = response.shared_users;
-        context.user = response.user;
-        context.getFiles();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
   export default {
     name: "Workspace",
 
@@ -92,7 +65,6 @@
         currentFile: null,
         reloadFile: false,
         reloadFiles: false,
-        // componentKey: 0,
       };
     },
     methods: {

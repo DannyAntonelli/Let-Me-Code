@@ -1,13 +1,4 @@
 <template>
-  <!-- <button
-    type="button"
-    class="btn btn-success"
-    data-bs-toggle="modal"
-    data-bs-target="#newFileModal"
-  >
-    New File
-  </button> -->
-
   <div
     class="modal fade"
     id="newFileModal"
