@@ -142,9 +142,9 @@ export default {
         .then(() => {
           login(this.username, this.password)
             .then((response) => {
-              console.log(response);
               localStorage.setItem("token", response.token);
-              this.$emit("login", this.username);
+              localStorage.setItem("username", this.username);
+              this.$emit("login");
               this.$router.push("/explore");
             })
             .catch((error) => {

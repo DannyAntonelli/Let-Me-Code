@@ -33,6 +33,14 @@
               >Profile</router-link
             >
           </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link
+              class="nav-link active"
+              to="/favorites"
+              :username="username"
+              >Favorites</router-link
+            >
+          </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link active" to="/register"
               >Register</router-link
@@ -57,10 +65,6 @@ export default {
   name: "Navbar",
 
   props: {
-    profileRoute: {
-      type: String,
-      required: true,
-    },
     isLoggedIn: {
       type: Boolean,
       required: true,
@@ -69,7 +73,19 @@ export default {
 
   methods: {
     handleLogout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
       this.$emit("logout");
+    },
+  },
+
+  computed: {
+    username() {
+      return localStorage.getItem("username");
+    },
+
+    profileRoute() {
+      return "/profile/" + this.username;
     },
   },
 };

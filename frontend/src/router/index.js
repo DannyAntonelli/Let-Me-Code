@@ -6,6 +6,7 @@ import Profile from "@/views/Profile.vue";
 import Register from "@/views/Register.vue";
 import Workspace from "@/views/Workspace.vue";
 import Explore from "@/views/Explore.vue";
+import Favorites from "@/views/Favorites.vue";
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     name: "Project",
     component: Workspace,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/favorites",
+    name: "Favorites",
+    component: Favorites,
   },
 ];
 

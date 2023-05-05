@@ -69,9 +69,9 @@ export default {
     handleLogin() {
       login(this.username, this.password)
         .then((response) => {
-          console.log(response);
           localStorage.setItem("token", response.token);
-          this.$emit("login", this.username);
+          localStorage.setItem("username", this.username);
+          this.$emit("login");
           this.$router.push("/explore");
         })
         .catch((error) => {
@@ -79,10 +79,6 @@ export default {
           this.errorMessage = error.message;
         });
     },
-  },
-
-  emits: {
-    login: null,
   },
 };
 </script>

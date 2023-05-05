@@ -31,7 +31,7 @@
       v-for="project in projects"
       :key="project.id"
     >
-      <ProjectCard :project="project" />
+      <ProjectCard :project="project" @favorite-changed="changeFavorite" />
     </div>
   </div>
 </template>
@@ -68,6 +68,7 @@ export default {
         let projectIds = response.project_ids.concat(
           response.shared_project_ids
         );
+
         for (let projectId of projectIds) {
           getProject(projectId)
             .then((response) => {
@@ -102,6 +103,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    changeFavorite(projectId) {
+      let project = this.projects.find((project) => project.id == projectId);
+      project.is_favorite = !project.is_favorite;
     },
   },
 

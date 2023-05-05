@@ -6,7 +6,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEnvelope,
+  faUser,
+  faStar as faStarRegular,
+} from "@fortawesome/free-regular-svg-icons";
 import {
   faTerminal,
   faLocationDot,
@@ -15,6 +19,7 @@ import {
   faSignature,
   faLock,
   faMagnifyingGlass,
+  faStar as fasStarSolid,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -43,7 +48,9 @@ library.add(
   faUser,
   faSignature,
   faLock,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faStarRegular,
+  fasStarSolid
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
