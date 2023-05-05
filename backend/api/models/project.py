@@ -11,6 +11,9 @@ class Project(models.Model):
     shared_users = models.ManyToManyField(
         User, blank=True, related_name="shared_projects"
     )
+    favorite_users = models.ManyToManyField(
+        User, blank=True, related_name="favorite_projects"
+    )
 
     class Meta:
         unique_together = ["name", "user"]

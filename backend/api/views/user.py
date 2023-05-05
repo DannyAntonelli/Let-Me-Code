@@ -65,6 +65,13 @@ class GetUser(APIView):
                         self, request, None, project
                     )
                 ],
+                "favorite_project_ids": [
+                    project.id
+                    for project in user.favorite_projects.all()
+                    if IsPublicOrCreatorOrShared.has_object_permission(
+                        self, request, None, project
+                    )
+                ],
             }
         )
 
