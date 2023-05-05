@@ -7,6 +7,7 @@ import Register from "@/views/Register.vue";
 import Workspace from "@/views/Workspace.vue";
 import Explore from "@/views/Explore.vue";
 import Favorites from "@/views/Favorites.vue";
+import NotFound from "@/views/NotFound.vue";
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
     path: "/favorites",
     name: "Favorites",
     component: Favorites,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 
