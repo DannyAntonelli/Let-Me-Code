@@ -36,20 +36,20 @@
         this.content = newValue;
       },
       editorDidMount(editor) {
-        // TODO On editor unmount
         editor.onDidScrollChange((e) => {
-          console.log(e);
+          console.log(e, this.file);
         });
-        window.addEventListener("keydown", (e) => {
-          console.log(e);
-          if (e.ctrlKey) {
-            e.preventDefault();
-          }
-          if (e.ctrlKey && e.key === "s") {
-            console.log("saving", this.content);
-            this.status = "saving";
-          }
-        });
+        window.addEventListener("keydown", this.onKeyPress);
+      },
+      onKeyPress(e) {
+        console.log(e, this.file);
+        if (e.ctrlKey) {
+          e.preventDefault();
+        }
+        if (e.ctrlKey && e.key === "s") {
+          console.log("saving", this.content);
+          this.status = "saving";
+        }
       },
     },
     watch: {
@@ -89,6 +89,10 @@
         theme: this.editorTheme,
       };
       this.content = this.file.content;
+    },
+    async unmounted() {
+      window.removeEventListener("keydown", this.onKeyPress);
+      console.log("unmounting editor", this.file);
     },
     components: {
       MonacoEditor,
