@@ -28,14 +28,24 @@
               />
             </div>
 
-            <div class="mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="new-file-language"
-                placeholder="Language"
-                v-model="language"
-              />
+            <div class="mb-3 text-start">
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ language }}
+                </button>
+                <ul class="dropdown-menu">
+                  <li v-for="lang in this.languages" :key="lang">
+                    <a class="dropdown-item" @click="selectLang(lang)">{{
+                      lang
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </form>
         </div>
@@ -64,12 +74,14 @@
 
 <script>
   import { Modal } from "bootstrap";
+  import { languages } from "@/variables.js";
   export default {
     name: "NewFileModal",
 
     data() {
       return {
-        language: "",
+        languages: languages,
+        language: "Python",
         newName: "",
       };
     },
@@ -85,9 +97,11 @@
         document.getElementById("dismiss-modal").click();
         console.log(this.path, this.language);
       },
+      selectLang(lang) {
+        this.language = lang;
+      },
     },
     async mounted() {
-      console.log(this.path, "aaaaaaaaa");
       this.newName = this.path;
       let m = new Modal(document.querySelector("#newFileModal"));
       if (this.path != null) {
