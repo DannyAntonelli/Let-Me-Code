@@ -17,13 +17,19 @@
       <div class="col-10">
         <CodeEditor
           :file="this.currentFile"
+          :editorTheme="this.editorTheme"
           :key="this.reloadFile"
           v-on:file-changed="updateFile"
         />
       </div>
     </div>
     <div class="row">
-      <BotBar :file="this.currentFile" :key="this.reloadFile" />
+      <BotBar
+        :file="this.currentFile"
+        :theme="this.editorTheme"
+        :key="this.reloadFile"
+        v-on:theme-changed="changeTheme"
+      />
     </div>
   </div>
 </template>
@@ -65,6 +71,7 @@
         currentFile: null,
         reloadFile: false,
         reloadFiles: false,
+        editorTheme: "vs-dark",
       };
     },
     methods: {
@@ -77,6 +84,11 @@
       },
       updateFile(file, content) {
         file.content = content;
+      },
+      changeTheme(theme) {
+        if (theme == this.editorTheme) return;
+        this.editorTheme = theme;
+        this.reloadFile = !this.reloadFile;
       },
       async getFiles() {
         for (let file_id of this.file_ids) {

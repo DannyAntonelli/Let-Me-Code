@@ -28,6 +28,7 @@
     name: "CodeEditor",
     props: {
       file: Object,
+      editorTheme: String,
     },
     methods: {
       onChange: function (newValue, e) {
@@ -85,7 +86,7 @@
       this.options = {
         language: "python",
         value: this.file.content,
-        theme: "vs-dark",
+        theme: this.editorTheme,
       };
       this.content = this.file.content;
     },
