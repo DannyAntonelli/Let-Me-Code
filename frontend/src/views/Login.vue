@@ -42,7 +42,7 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-dark btn-lg">Log In</button>
+    <button type="submit" class="btn btn-primary btn-lg">Log In</button>
 
     <p class="mt-3">
       Don't have an account?

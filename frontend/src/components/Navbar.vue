@@ -1,10 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <router-link class="navbar-brand" to="/">
         <font-awesome-icon icon="fa-solid fa-terminal" />
         <strong> Let Me Code </strong>
-      </a>
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -54,6 +54,14 @@
               >Logout</router-link
             >
           </li>
+          <li>
+            <a @click="toggleTheme">
+              <font-awesome-icon
+                icon="fa-solid fa-circle-half-stroke"
+                class="mt-3 ms-2"
+              />
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -76,6 +84,17 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       this.$emit("logout");
+    },
+
+    toggleTheme() {
+      let theme = localStorage.getItem("theme");
+      if (theme === "dark") {
+        theme = "light";
+      } else {
+        theme = "dark";
+      }
+      localStorage.setItem("theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
     },
   },
 

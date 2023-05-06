@@ -22,6 +22,15 @@ export default {
     };
   },
 
+  async created() {
+    let theme = localStorage.getItem("theme");
+    if (theme === null) {
+      localStorage.setItem("theme", "dark");
+      theme = "dark";
+    }
+    document.documentElement.setAttribute("data-bs-theme", theme);
+  },
+
   methods: {
     updateUsername() {
       this.isLoggedIn = true;

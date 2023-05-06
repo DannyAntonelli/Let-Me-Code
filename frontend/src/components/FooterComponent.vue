@@ -1,8 +1,5 @@
 <template>
-  <footer
-    class="text-center text-lg-start text-dark"
-    style="background-color: #eceff1"
-  >
+  <footer class="text-center text-lg-start">
     <section class="">
       <div class="container text-center text-md-start mt-5 pt-2">
         <div class="row mt-3">
@@ -71,9 +68,5 @@
         </div>
       </div>
     </section>
-
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-      © 2023 Copyright: Let Me Code
-    </div>
   </footer>
 </template>
