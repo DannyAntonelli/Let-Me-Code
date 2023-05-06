@@ -20,78 +20,80 @@
 </template>
 
 <script>
-  import { h } from "vue";
-  import MonacoEditor from "vue-monaco";
-  import { syncFile } from "@/api/file.js";
-  MonacoEditor.render = () => h("div");
-  export default {
-    name: "CodeEditor",
-    props: {
-      file: Object,
-      editorTheme: String,
+import { h } from "vue";
+import MonacoEditor from "vue-monaco";
+import { syncFile } from "@/api/file.js";
+
+MonacoEditor.render = () => h("div");
+
+export default {
+  name: "CodeEditor",
+  props: {
+    file: Object,
+    editorTheme: String,
+  },
+  methods: {
+    onChange: function (newValue, e) {
+      console.log("onChange", newValue, e, this.code);
+      this.content = newValue;
     },
-    methods: {
-      onChange: function (newValue, e) {
-        console.log("onChange", newValue, e, this.code);
-        this.content = newValue;
-      },
-      editorDidMount(editor) {
-        // TODO On editor unmount
-        editor.onDidScrollChange((e) => {
-          console.log(e);
-        });
-        window.addEventListener("keydown", (e) => {
-          console.log(e);
-          if (e.ctrlKey) {
-            e.preventDefault();
-          }
-          if (e.ctrlKey && e.key === "s") {
-            console.log("saving", this.content);
-            this.status = "saving";
-          }
-        });
-      },
-    },
-    watch: {
-      status: function (newStatus) {
-        if (newStatus === "saving") {
-          syncFile(this.file.id, this.content)
-            .then((response) => {
-              console.log(response);
-              this.status = "saved";
-              this.$emit("file-changed", this.file, this.content);
-            })
-            .catch((error) => {
-              console.log(error);
-              this.status = "error";
-            });
+    editorDidMount(editor) {
+      // TODO On editor unmount
+      editor.onDidScrollChange((e) => {
+        console.log(e);
+      });
+      window.addEventListener("keydown", (e) => {
+        console.log(e);
+        if (e.ctrlKey) {
+          e.preventDefault();
         }
-      },
+        if (e.ctrlKey && e.key === "s") {
+          console.log("saving", this.content);
+          this.status = "saving";
+        }
+      });
     },
-    data() {
-      return {
-        options: null,
-        code: "const  noop = () => {}", // Not sure if this is needed
-        status: "saved",
-        content: "",
-      };
-    },
-
-    async mounted() {
-      console.log("loading editor for", this.file);
-      if (this.file === null) {
-        return;
+  },
+  watch: {
+    status: function (newStatus) {
+      if (newStatus === "saving") {
+        syncFile(this.file.id, this.content)
+          .then((response) => {
+            console.log(response);
+            this.status = "saved";
+            this.$emit("file-changed", this.file, this.content);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.status = "error";
+          });
       }
+    },
+  },
+  data() {
+    return {
+      options: null,
+      code: "const  noop = () => {}", // Not sure if this is needed
+      status: "saved",
+      content: "",
+    };
+  },
 
-      this.options = {
-        language: "python",
-        value: this.file.content,
-        theme: this.editorTheme,
-      };
-      this.content = this.file.content;
-    },
-    components: {
-      MonacoEditor,
-    },
-  };
+  async mounted() {
+    console.log("loading editor for", this.file);
+    if (this.file === null) {
+      return;
+    }
+
+    this.options = {
+      language: "javascript",
+      value: this.file.content,
+      theme: this.editorTheme,
+    };
+    this.content = this.file.content;
+  },
+  components: {
+    MonacoEditor,
+  },
+};
 </script>
