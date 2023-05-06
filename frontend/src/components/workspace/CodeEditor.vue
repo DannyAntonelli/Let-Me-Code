@@ -28,15 +28,18 @@ MonacoEditor.render = () => h("div");
 
 export default {
   name: "CodeEditor",
+
   props: {
     file: Object,
     editorTheme: String,
   },
+
   methods: {
     onChange: function (newValue, e) {
       console.log("onChange", newValue, e, this.code);
       this.content = newValue;
     },
+
     editorDidMount(editor) {
       // TODO On editor unmount
       editor.onDidScrollChange((e) => {
@@ -54,6 +57,7 @@ export default {
       });
     },
   },
+
   watch: {
     status: function (newStatus) {
       if (newStatus === "saving") {
@@ -70,6 +74,7 @@ export default {
       }
     },
   },
+
   data() {
     return {
       options: null,
@@ -92,6 +97,7 @@ export default {
     };
     this.content = this.file.content;
   },
+
   components: {
     MonacoEditor,
   },
