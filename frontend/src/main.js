@@ -23,6 +23,7 @@ import {
   faCircleHalfStroke,
   faGear,
   faCircle,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -56,7 +57,8 @@ library.add(
   fasStarSolid,
   faCircleHalfStroke,
   faGear,
-  faCircle
+  faCircle,
+  faPlus
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
