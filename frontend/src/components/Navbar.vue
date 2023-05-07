@@ -34,10 +34,12 @@
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link
-              class="nav-link active"
-              to="/favorites"
-              :username="username"
+            <router-link class="nav-link active" to="/following"
+              >Following</router-link
+            >
+          </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link class="nav-link active" to="/favorites"
               >Favorites</router-link
             >
           </li>
@@ -58,7 +60,8 @@
             <a @click="toggleTheme">
               <font-awesome-icon
                 icon="fa-solid fa-circle-half-stroke"
-                class="mt-3 ms-2"
+                class="ms-2"
+                style="margin-top: 0.9rem; cursor: pointer"
               />
             </a>
           </li>
@@ -73,8 +76,8 @@ export default {
   name: "Navbar",
 
   props: {
-    isLoggedIn: {
-      type: Boolean,
+    username: {
+      type: String,
       required: true,
     },
   },
@@ -99,8 +102,8 @@ export default {
   },
 
   computed: {
-    username() {
-      return localStorage.getItem("username");
+    isLoggedIn() {
+      return this.username !== "";
     },
 
     profileRoute() {

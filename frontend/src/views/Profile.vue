@@ -13,6 +13,30 @@
   <div class="text-center mt-3" v-if="username">
     <h2>
       <strong>@{{ username }}</strong>
+      <EditProfileModal
+        class="col"
+        v-if="isCurrentUser"
+        :firstName="firstName"
+        :lastName="lastName"
+        :email="email"
+        @edit-profile="handleEditProfile"
+      />
+      <font-awesome-icon
+        v-if="!isCurrentUser && !isFollowing"
+        icon="fa-solid fa-user-plus"
+        size="xs"
+        class="ms-3"
+        @click="toggleFollow"
+        style="cursor: pointer"
+      />
+      <font-awesome-icon
+        v-if="!isCurrentUser && isFollowing"
+        icon="fa-solid fa-user-minus"
+        size="xs"
+        class="ms-3"
+        @click="toggleFollow"
+        style="cursor: pointer"
+      />
     </h2>
     <p class="text-muted mb-0" v-if="fullName.length > 1">{{ fullName }}</p>
     <p class="text-muted mb-0" v-if="email">{{ email }}</p>
@@ -39,8 +63,9 @@
 <script>
 import ProjectCard from "@/components/ProjectCard.vue";
 import NewProjectModal from "@/components/NewProjectModal.vue";
+import EditProfileModal from "@/components/EditProfileModal.vue";
 
-import { getUser } from "@/api/user.js";
+import { getUser, followUser, editProfile } from "@/api/user.js";
 import { createProject, getProject } from "@/api/project.js";
 
 export default {
@@ -50,9 +75,11 @@ export default {
     return {
       username: "",
       email: "",
-      fullName: "",
+      firstName: "",
+      lastName: "",
       dateJoined: new Date(),
       projects: [],
+      isFollowing: false,
     };
   },
 
@@ -61,9 +88,13 @@ export default {
       .then((response) => {
         this.username = response.user.username;
         this.email = response.user.email;
-        this.fullName =
-          response.user.first_name + " " + response.user.last_name;
+        this.firstName = response.user.first_name;
+        this.lastName = response.user.last_name;
         this.dateJoined = new Date(response.user.date_joined);
+
+        this.isFollowing = response.followers_usernames.includes(
+          localStorage.getItem("username")
+        );
 
         let projectIds = response.project_ids.concat(
           response.shared_project_ids
@@ -105,20 +136,47 @@ export default {
         });
     },
 
+    handleEditProfile(newProfile) {
+      editProfile(newProfile.firstName, newProfile.lastName, newProfile.email)
+        .then(() => {
+          this.firstName = newProfile.firstName;
+          this.lastName = newProfile.lastName;
+          this.email = newProfile.email;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     changeFavorite(projectId) {
       let project = this.projects.find((project) => project.id == projectId);
       project.is_favorite = !project.is_favorite;
+    },
+
+    toggleFollow() {
+      followUser(this.username, !this.isFollowing)
+        .then(() => {
+          this.isFollowing = !this.isFollowing;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 
   components: {
     ProjectCard,
     NewProjectModal,
+    EditProfileModal,
   },
 
   computed: {
     isCurrentUser() {
       return this.username == localStorage.getItem("username");
+    },
+
+    fullName() {
+      return this.firstName + " " + this.lastName;
     },
   },
 };

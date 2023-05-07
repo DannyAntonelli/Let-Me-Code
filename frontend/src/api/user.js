@@ -46,7 +46,6 @@ async function getUser(username) {
     method: "GET",
     headers: getHeaders(),
   }).then((response) => {
-    console.log(response);
     if (response.ok) {
       return response.json();
     } else {
@@ -68,4 +67,38 @@ async function searchUsers(query) {
   });
 }
 
-export { login, register, getUser, searchUsers };
+async function followUser(username, follow) {
+  return fetch(`${API_URL}/user/${username}/follow/`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify({
+      follow: follow,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during follow user");
+    }
+  });
+}
+
+async function editProfile(firstName, lastName, email) {
+  return fetch(`${API_URL}/user/edit/`, {
+    method: "PATCH",
+    headers: getHeaders(),
+    body: JSON.stringify({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during edit user");
+    }
+  });
+}
+
+export { login, register, getUser, searchUsers, followUser, editProfile };

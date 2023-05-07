@@ -66,7 +66,7 @@
             type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal"
-            id="dismiss-modal"
+            id="dismiss-new-project-modal"
           >
             Cancel
           </button>
@@ -103,7 +103,7 @@ export default {
         description: this.description,
         isPublic: this.isPublic,
       });
-      document.getElementById("dismiss-modal").click();
+      document.getElementById("dismiss-new-project-modal").click();
       this.name = "";
       this.description = "";
       this.isPublic = true;

@@ -26,6 +26,9 @@ import {
   faGear,
   faCircle,
   faPlus,
+  faPenToSquare,
+  faUserPlus,
+  faUserMinus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -60,6 +63,10 @@ library.add(
   faCircleHalfStroke,
   faGear,
   faCircle,
+  faPlus,
+  faPenToSquare,
+  faUserPlus,
+  faUserMinus,
   faPlus,
   faFolder,
   faFolderOpen
