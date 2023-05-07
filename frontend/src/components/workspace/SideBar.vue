@@ -4,6 +4,7 @@
     :key="this.tree"
     :root="this"
     :onFileClick="onFileClick"
+    :currentFileId="this.currentFileId"
   />
   <ContextMenu
     :items="menuItems"
@@ -33,6 +34,7 @@
     props: {
       files: Array,
       proj_id: String,
+      currentFileId: String,
     },
     components: {
       DirTree,

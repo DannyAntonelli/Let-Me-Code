@@ -31,6 +31,7 @@
           class="file"
           @contextmenu.prevent="this.root.showMenu($event, true, value)"
           @click="this.root.onFileClick(value)"
+          v-bind:class="{ 'open-file': value.id === this.root.currentFileId }"
         >
           {{ value.fileName }}
           <font-awesome-icon
@@ -119,6 +120,9 @@
     /* color: #666; */
     text-align: start;
   }
+  .open-file {
+    color: #19eeae;
+  }
 </style>
 
 <script>
@@ -128,6 +132,7 @@
       node: {},
       root: Object,
       onFileClick: Function,
+      currentFileId: String,
     },
     data() {
       return {
