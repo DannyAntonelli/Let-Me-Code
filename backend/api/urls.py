@@ -7,6 +7,7 @@ from .views import user, project, file
 urlpatterns = [
     path("user/login/", obtain_auth_token),
     path("user/register/", user.Register.as_view()),
+    path("user/edit/", user.EditProfile.as_view()),
     path("user/search/", user.SearchUsers.as_view()),
     path("user/<str:username>/", user.GetUser.as_view()),
     path("user/<str:username>/follow/", user.FollowUser.as_view()),

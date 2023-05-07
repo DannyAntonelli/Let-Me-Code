@@ -129,3 +129,21 @@ class FollowUser(APIView):
                 "message": f"Follow status changed successfully, following = {str(follow).lower()}",
             }
         )
+
+
+class EditProfile(APIView):
+    def patch(self, request: Request) -> Response:
+        user = request.user
+        first_name = request.data.get("first_name")
+        last_name = request.data.get("last_name")
+        email = request.data.get("email")
+
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        if email:
+            user.email = email
+        user.save()
+
+        return Response({"message": "User info changed successfully"})
