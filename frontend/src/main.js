@@ -10,6 +10,8 @@ import {
   faEnvelope,
   faUser,
   faStar as faStarRegular,
+  faFolder,
+  faFolderOpen,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faTerminal,
@@ -58,7 +60,9 @@ library.add(
   faCircleHalfStroke,
   faGear,
   faCircle,
-  faPlus
+  faPlus,
+  faFolder,
+  faFolderOpen
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

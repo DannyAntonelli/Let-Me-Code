@@ -7,7 +7,7 @@
     <li class="nav-item">
       <div class="dropdown">
         <button
-          class="btn btn-light dropdown-toggle"
+          class="btn dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"

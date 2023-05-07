@@ -125,24 +125,6 @@
       },
     },
     async created() {
-      //   this.files = [
-      //     { id: 1, name: "/file1", content: "", language: "py", project: 1 },
-      //     { id: 2, name: "/file3", content: "", language: "py", project: 1 },
-      //     {
-      //       id: 3,
-      //       name: "/folder/file2",
-      //       content: "",
-      //       language: "py",
-      //       project: 1,
-      //     },
-      //     {
-      //       id: 4,
-      //       name: "/folder/file5",
-      //       content: "",
-      //       language: "py",
-      //       project: 1,
-      //     },
-      //   ];
       console.log(this.files);
       let tree = buildTree(this.files);
       console.log(tree);

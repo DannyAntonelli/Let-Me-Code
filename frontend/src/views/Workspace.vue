@@ -1,5 +1,8 @@
 <template>
-  <div class="container text-center">
+  <div
+    class="container-fluid text-center"
+    style="margin-left: 20px; margin-right: 20px"
+  >
     <div class="row text-start">
       <TopBar
         :workspaceName="this.name"
@@ -12,7 +15,7 @@
       />
     </div>
     <div class="row align-items-start">
-      <div class="col-2">
+      <div class="col-md-2">
         <SideBar
           :files="this.files"
           :proj_id="this.id"
@@ -22,7 +25,7 @@
           v-on:file-clicked="changeFile"
         />
       </div>
-      <div class="col-10">
+      <div class="col-md-10">
         <CodeEditor
           :file="this.currentFile"
           :editorTheme="this.editorTheme"
