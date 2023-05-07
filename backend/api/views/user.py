@@ -8,6 +8,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ..models import Profile
 from ..permissions import IsPublicOrCreatorOrShared
 from ..serializers import UserSerializer
 
@@ -48,6 +49,7 @@ class Register(APIView):
 class GetUser(APIView):
     def get(self, request: Request, username: str) -> Response:
         user = get_object_or_404(User, username=username)
+        profile = Profile.objects.get_or_create(user=user)[0]
         return Response(
             {
                 "user": UserSerializer(user).data,
@@ -71,6 +73,12 @@ class GetUser(APIView):
                     if IsPublicOrCreatorOrShared.has_object_permission(
                         self, request, None, project
                     )
+                ],
+                "followers_usernames": [
+                    user.username for user in profile.followers.all()
+                ],
+                "following_usernames": [
+                    profile.user.username for profile in user.following.all()
                 ],
             }
         )
@@ -103,5 +111,21 @@ class SearchUsers(APIView):
                     }
                     for user in users[:QUERY_LIMIT]
                 ]
+            }
+        )
+
+
+class FollowUser(APIView):
+    def post(self, request: Request, username: str) -> Response:
+        user = get_object_or_404(User, username=username)
+        profile = Profile.objects.get_or_create(user=user)[0]
+        follow = request.data.get("follow", False)
+        if follow:
+            profile.followers.add(request.user)
+        else:
+            profile.followers.remove(request.user)
+        return Response(
+            {
+                "message": f"Follow status changed successfully, following = {str(follow).lower()}",
             }
         )

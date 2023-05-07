@@ -9,6 +9,7 @@ urlpatterns = [
     path("user/register/", user.Register.as_view()),
     path("user/search/", user.SearchUsers.as_view()),
     path("user/<str:username>/", user.GetUser.as_view()),
+    path("user/<str:username>/follow/", user.FollowUser.as_view()),
     path("project/<int:project_id>/", project.GetProject.as_view()),
     path("project/create_project/", project.CreateProject.as_view()),
     path(
