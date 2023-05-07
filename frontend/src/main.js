@@ -24,6 +24,7 @@ import {
   faGear,
   faCircle,
   faPlus,
+  faPenToSquare,
   faUserPlus,
   faUserMinus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -61,6 +62,7 @@ library.add(
   faGear,
   faCircle,
   faPlus,
+  faPenToSquare,
   faUserPlus,
   faUserMinus
 );

@@ -83,4 +83,22 @@ async function followUser(username, follow) {
   });
 }
 
-export { login, register, getUser, searchUsers, followUser };
+async function editProfile(firstName, lastName, email) {
+  return fetch(`${API_URL}/user/edit/`, {
+    method: "PATCH",
+    headers: getHeaders(),
+    body: JSON.stringify({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during edit user");
+    }
+  });
+}
+
+export { login, register, getUser, searchUsers, followUser, editProfile };

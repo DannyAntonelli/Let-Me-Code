@@ -60,7 +60,8 @@
             <a @click="toggleTheme">
               <font-awesome-icon
                 icon="fa-solid fa-circle-half-stroke"
-                class="mt-3 ms-2"
+                class="ms-2"
+                style="margin-top: 0.9rem; cursor: pointer"
               />
             </a>
           </li>
