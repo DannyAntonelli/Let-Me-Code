@@ -77,7 +77,6 @@ export default {
       searchProjects(this.query)
         .then((response) => {
           this.projects = response.projects;
-          console.log(this.projects);
         })
         .catch((error) => {
           console.log(error);

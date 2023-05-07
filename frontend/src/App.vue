@@ -1,5 +1,5 @@
 <template>
-  <Navbar @logout="removeUserData" :isLoggedIn="isLoggedIn" />
+  <Navbar @logout="removeUserData" :username="username" />
   <router-view @login="updateUsername" :key="$route.path" />
   <FooterComponent />
 </template>
@@ -18,7 +18,7 @@ export default {
 
   data() {
     return {
-      isLoggedIn: localStorage.getItem("token") ? true : false,
+      username: localStorage.getItem("username") ?? "",
     };
   },
 
@@ -33,11 +33,11 @@ export default {
 
   methods: {
     updateUsername() {
-      this.isLoggedIn = true;
+      this.username = localStorage.getItem("username");
     },
 
     removeUserData() {
-      this.isLoggedIn = false;
+      this.username = "";
     },
   },
 };

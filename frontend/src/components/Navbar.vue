@@ -34,10 +34,12 @@
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link
-              class="nav-link active"
-              to="/favorites"
-              :username="username"
+            <router-link class="nav-link active" to="/following"
+              >Following</router-link
+            >
+          </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link class="nav-link active" to="/favorites"
               >Favorites</router-link
             >
           </li>
@@ -73,8 +75,8 @@ export default {
   name: "Navbar",
 
   props: {
-    isLoggedIn: {
-      type: Boolean,
+    username: {
+      type: String,
       required: true,
     },
   },
@@ -99,8 +101,8 @@ export default {
   },
 
   computed: {
-    username() {
-      return localStorage.getItem("username");
+    isLoggedIn() {
+      return this.username !== "";
     },
 
     profileRoute() {

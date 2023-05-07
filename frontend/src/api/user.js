@@ -46,7 +46,6 @@ async function getUser(username) {
     method: "GET",
     headers: getHeaders(),
   }).then((response) => {
-    console.log(response);
     if (response.ok) {
       return response.json();
     } else {
@@ -68,4 +67,20 @@ async function searchUsers(query) {
   });
 }
 
-export { login, register, getUser, searchUsers };
+async function followUser(username, follow) {
+  return fetch(`${API_URL}/user/${username}/follow/`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify({
+      follow: follow,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during follow user");
+    }
+  });
+}
+
+export { login, register, getUser, searchUsers, followUser };

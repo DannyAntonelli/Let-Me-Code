@@ -24,6 +24,8 @@ import {
   faGear,
   faCircle,
   faPlus,
+  faUserPlus,
+  faUserMinus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -58,7 +60,9 @@ library.add(
   faCircleHalfStroke,
   faGear,
   faCircle,
-  faPlus
+  faPlus,
+  faUserPlus,
+  faUserMinus
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

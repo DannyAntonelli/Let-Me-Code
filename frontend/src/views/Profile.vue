@@ -13,6 +13,22 @@
   <div class="text-center mt-3" v-if="username">
     <h2>
       <strong>@{{ username }}</strong>
+      <font-awesome-icon
+        v-if="!isCurrentUser && !isFollowing"
+        icon="fa-solid fa-user-plus"
+        size="xs"
+        class="ms-3"
+        @click="toggleFollow"
+        style="cursor: pointer"
+      />
+      <font-awesome-icon
+        v-if="!isCurrentUser && isFollowing"
+        icon="fa-solid fa-user-minus"
+        size="xs"
+        class="ms-3"
+        @click="toggleFollow"
+        style="cursor: pointer"
+      />
     </h2>
     <p class="text-muted mb-0" v-if="fullName.length > 1">{{ fullName }}</p>
     <p class="text-muted mb-0" v-if="email">{{ email }}</p>
@@ -40,7 +56,7 @@
 import ProjectCard from "@/components/ProjectCard.vue";
 import NewProjectModal from "@/components/NewProjectModal.vue";
 
-import { getUser } from "@/api/user.js";
+import { getUser, followUser } from "@/api/user.js";
 import { createProject, getProject } from "@/api/project.js";
 
 export default {
@@ -53,6 +69,7 @@ export default {
       fullName: "",
       dateJoined: new Date(),
       projects: [],
+      isFollowing: false,
     };
   },
 
@@ -64,6 +81,10 @@ export default {
         this.fullName =
           response.user.first_name + " " + response.user.last_name;
         this.dateJoined = new Date(response.user.date_joined);
+
+        this.isFollowing = response.followers_usernames.includes(
+          localStorage.getItem("username")
+        );
 
         let projectIds = response.project_ids.concat(
           response.shared_project_ids
@@ -108,6 +129,16 @@ export default {
     changeFavorite(projectId) {
       let project = this.projects.find((project) => project.id == projectId);
       project.is_favorite = !project.is_favorite;
+    },
+
+    toggleFollow() {
+      followUser(this.username, !this.isFollowing)
+        .then(() => {
+          this.isFollowing = !this.isFollowing;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 

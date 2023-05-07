@@ -6,6 +6,7 @@ import Profile from "@/views/Profile.vue";
 import Register from "@/views/Register.vue";
 import Workspace from "@/views/Workspace.vue";
 import Explore from "@/views/Explore.vue";
+import Following from "@/views/Following.vue";
 import Favorites from "@/views/Favorites.vue";
 import NotFound from "@/views/NotFound.vue";
 
@@ -42,6 +43,11 @@ const routes = [
     name: "Project",
     component: Workspace,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/following",
+    name: "Following",
+    component: Following,
   },
   {
     path: "/favorites",

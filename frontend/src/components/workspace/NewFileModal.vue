@@ -73,45 +73,44 @@
 </template>
 
 <script>
-  import { Modal } from "bootstrap";
-  import { languages } from "@/variables.js";
-  export default {
-    name: "NewFileModal",
-
-    data() {
-      return {
-        languages: languages,
-        language: "Python",
-        newName: "",
-      };
-    },
-    props: {
-      path: String,
-    },
-    methods: {
-      submitFile() {
-        this.$emit("submit-file", {
-          name: this.newName,
-          language: this.language,
-        });
-        document.getElementById("dismiss-modal").click();
-        console.log(this.path, this.language);
-      },
-      selectLang(lang) {
-        this.language = lang;
-      },
-    },
-    async mounted() {
-      this.newName = this.path;
-      let m = new Modal(document.querySelector("#newFileModal"));
-      if (this.path != null) {
-        m.show();
-      }
-      var myModalEl = document.getElementById("newFileModal");
-      myModalEl.addEventListener("hidden.bs.modal", (e) => {
-        console.log("hidden", e);
-        this.$emit("close-modal");
+import { Modal } from "bootstrap";
+import { languages } from "@/variables.js";
+export default {
+  name: "NewFileModal",
+  data() {
+    return {
+      languages: languages,
+      language: "Python",
+      newName: "",
+    };
+  },
+  props: {
+    path: String,
+  },
+  methods: {
+    submitFile() {
+      this.$emit("submit-file", {
+        name: this.newName,
+        language: this.language,
       });
+      document.getElementById("dismiss-modal").click();
+      console.log(this.path, this.language);
     },
-  };
+    selectLang(lang) {
+      this.language = lang;
+    },
+  },
+  async mounted() {
+    this.newName = this.path;
+    let m = new Modal(document.querySelector("#newFileModal"));
+    if (this.path != null) {
+      m.show();
+    }
+    var myModalEl = document.getElementById("newFileModal");
+    myModalEl.addEventListener("hidden.bs.modal", (e) => {
+      console.log("hidden", e);
+      this.$emit("close-modal");
+    });
+  },
+};
 </script>
