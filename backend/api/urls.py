@@ -20,6 +20,10 @@ urlpatterns = [
         project.MakePublic.as_view(),
     ),
     path(
+        "project/<int:project_id>/favorite/",
+        project.ToggleFavorite.as_view(),
+    ),
+    path(
         "project/<int:project_id>/create_file/",
         file.CreateFile.as_view(),
     ),

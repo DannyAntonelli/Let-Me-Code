@@ -99,7 +99,7 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-dark btn-lg">Register</button>
+    <button type="submit" class="btn btn-primary btn-lg">Register</button>
 
     <p class="mt-3">
       Already have an account?
@@ -142,9 +142,9 @@ export default {
         .then(() => {
           login(this.username, this.password)
             .then((response) => {
-              console.log(response);
               localStorage.setItem("token", response.token);
-              this.$emit("login", this.username);
+              localStorage.setItem("username", this.username);
+              this.$emit("login");
               this.$router.push("/explore");
             })
             .catch((error) => {

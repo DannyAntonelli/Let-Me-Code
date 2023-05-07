@@ -32,7 +32,7 @@
       v-for="project in projects"
       :key="project.id"
     >
-      <ProjectCard :project="project" />
+      <ProjectCard :project="project" @favorite-changed="changeFavorite" />
     </div>
   </div>
 
@@ -77,6 +77,7 @@ export default {
       searchProjects(this.query)
         .then((response) => {
           this.projects = response.projects;
+          console.log(this.projects);
         })
         .catch((error) => {
           console.log(error);
@@ -97,6 +98,11 @@ export default {
 
     setUsersTab() {
       this.projectsTab = false;
+    },
+
+    changeFavorite(projectId) {
+      let project = this.projects.find((project) => project.id == projectId);
+      project.is_favorite = !project.is_favorite;
     },
   },
 

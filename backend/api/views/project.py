@@ -26,6 +26,7 @@ class GetProject(APIView):
                 "shared_usernames": [
                     user.username for user in project.shared_users.all()
                 ],
+                "is_favorite": request.user in project.favorite_users.all(),
             }
         )
 
@@ -84,7 +85,7 @@ class MakePublic(APIView):
     permission_classes = [IsCreator]
 
     def post(self, request: Request, project_id: int) -> Response:
-        public = request.data.get("public").lower() == "true"
+        public = request.data.get("public", False)
         project = get_object_or_404(Project, id=project_id)
         self.check_object_permissions(request, project)
         project.is_public = public
@@ -142,8 +143,27 @@ class SearchProjects(APIView):
                     {
                         **ProjectSerializer(project).data,
                         "creator_username": project.user.username,
+                        "is_favorite": request.user in project.favorite_users.all(),
                     }
                     for project in projects[:QUERY_LIMIT]
                 ]
+            }
+        )
+
+
+class ToggleFavorite(APIView):
+    permission_classes = [IsPublicOrCreatorOrShared]
+
+    def post(self, request: Request, project_id: int) -> Response:
+        favorite = request.data.get("favorite", False)
+        project = get_object_or_404(Project, id=project_id)
+        self.check_object_permissions(request, project)
+        if favorite:
+            project.favorite_users.add(request.user)
+        else:
+            project.favorite_users.remove(request.user)
+        return Response(
+            {
+                "message": f"Project status changed successfully, favorite = {str(favorite).lower()}",
             }
         )

@@ -47,9 +47,9 @@ async function shareProject(id) {
 async function changeProjectVisibility(id, makePublic) {
   return fetch(`${API_URL}/project/public/${id}/`, {
     method: "POST",
-    body: {
+    body: JSON.stringify({
       public: makePublic,
-    },
+    }),
     headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {
@@ -103,6 +103,22 @@ async function searchProjects(query) {
   });
 }
 
+async function changeFavorite(id, makeFavorite) {
+  return fetch(`${API_URL}/project/${id}/favorite/`, {
+    method: "POST",
+    body: JSON.stringify({
+      favorite: makeFavorite,
+    }),
+    headers: getHeaders(),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during change favorite");
+    }
+  });
+}
+
 export {
   getProject,
   createProject,
@@ -111,4 +127,5 @@ export {
   createFile,
   deleteProject,
   searchProjects,
+  changeFavorite,
 };

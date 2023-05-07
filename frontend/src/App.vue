@@ -1,9 +1,5 @@
 <template>
-  <Navbar
-    :profileRoute="profileRoute"
-    :isLoggedIn="isLoggedIn"
-    @logout="removeUserData"
-  />
+  <Navbar @logout="removeUserData" :isLoggedIn="isLoggedIn" />
   <router-view @login="updateUsername" :key="$route.path" />
   <FooterComponent />
 </template>
@@ -15,28 +11,32 @@ import FooterComponent from "@/components/FooterComponent.vue";
 export default {
   name: "App",
 
-  data() {
-    return {
-      profileRoute: "/profile/" + localStorage.getItem("username"),
-      isLoggedIn: localStorage.getItem("token") ? true : false,
-    };
-  },
-
   components: {
     Navbar,
     FooterComponent,
   },
 
+  data() {
+    return {
+      isLoggedIn: localStorage.getItem("token") ? true : false,
+    };
+  },
+
+  async created() {
+    let theme = localStorage.getItem("theme");
+    if (theme === null) {
+      localStorage.setItem("theme", "dark");
+      theme = "dark";
+    }
+    document.documentElement.setAttribute("data-bs-theme", theme);
+  },
+
   methods: {
-    updateUsername(username) {
-      localStorage.setItem("username", username);
-      this.profileRoute = "/profile/" + username;
+    updateUsername() {
       this.isLoggedIn = true;
     },
 
     removeUserData() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("username");
       this.isLoggedIn = false;
     },
   },
