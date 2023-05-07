@@ -1,3 +1,8 @@
 # Visual Studio Code files
 .vscode/
 .env
+.idea/
+letmecode/*/__pycache__/*
+letmecode/*/*/__pycache__/*
+letmecode/api/migrations
+db.sqlite3
