@@ -31,9 +31,12 @@ async function createProject(name, description, isPublic) {
   });
 }
 
-async function shareProject(id) {
+async function shareProject(id, username) {
   return fetch(`${API_URL}/project/${id}/share/`, {
     method: "POST",
+    body: JSON.stringify({
+      username: username,
+    }),
     headers: getHeaders(),
   }).then((response) => {
     if (response.ok) {

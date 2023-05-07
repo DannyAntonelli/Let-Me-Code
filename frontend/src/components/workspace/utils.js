@@ -8,8 +8,8 @@ export function retrieveProjectInfo(id, context) {
       context.id = response.id;
       context.is_public = response.is_public;
       context.name = response.name;
-      context.shared_users = response.shared_users;
-      context.user = response.user;
+      context.shared_users = response.shared_usernames;
+      context.user = response.username;
       context.getFiles();
     })
     .catch((error) => {
