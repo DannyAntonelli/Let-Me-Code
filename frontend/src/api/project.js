@@ -32,7 +32,7 @@ async function createProject(name, description, isPublic) {
 }
 
 async function shareProject(id) {
-  return fetch(`${API_URL}/project/share/${id}/`, {
+  return fetch(`${API_URL}/project/${id}/share/`, {
     method: "POST",
     headers: getHeaders(),
   }).then((response) => {
@@ -45,7 +45,7 @@ async function shareProject(id) {
 }
 
 async function changeProjectVisibility(id, makePublic) {
-  return fetch(`${API_URL}/project/public/${id}/`, {
+  return fetch(`${API_URL}/project/${id}/public/`, {
     method: "POST",
     body: JSON.stringify({
       public: makePublic,
