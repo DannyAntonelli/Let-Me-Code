@@ -20,7 +20,12 @@
           @contextmenu.prevent="this.root.showMenu($event, true, value)"
           @click="this.root.onFileClick(value)"
         >
-          - {{ value.fileName }} {{ value.saved ? "" : "🔴" }}
+          - {{ value.fileName }}
+          <font-awesome-icon
+            icon="fa-solid fa-circle"
+            style="color: #ce1c1c"
+            v-if="!value.saved"
+          />
         </span>
       </div>
     </li>
