@@ -21,6 +21,8 @@ import {
   faMagnifyingGlass,
   faStar as fasStarSolid,
   faCircleHalfStroke,
+  faGear,
+  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -52,7 +54,9 @@ library.add(
   faMagnifyingGlass,
   faStarRegular,
   fasStarSolid,
-  faCircleHalfStroke
+  faCircleHalfStroke,
+  faGear,
+  faCircle
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

@@ -1,7 +1,15 @@
 <template>
   <div class="container text-center">
     <div class="row text-start">
-      <TopBar :workspaceName="this.name" :workspaceId="this.id" />
+      <TopBar
+        :workspaceName="this.name"
+        :workspaceId="this.id"
+        :user="this.user"
+        :shared_users="this.shared_users"
+        :is_public="this.is_public"
+        v-on:update-project-visibility="updateProjectVisibility"
+        :key="reloadFiles"
+      />
     </div>
     <div class="row align-items-start">
       <div class="col-2">
@@ -62,13 +70,6 @@
         shared_users: [],
         user: "",
         files: [],
-        // currentFile: {
-        //   id: 1,
-        //   name: "/file1",
-        //   content: "CIAOOOO",
-        //   language: "python",
-        //   project: 1,
-        // },
         currentFile: null,
         reloadFile: false,
         reloadFiles: false,
@@ -92,6 +93,10 @@
         if (theme == this.editorTheme) return;
         this.editorTheme = theme;
         this.reloadFile = !this.reloadFile;
+      },
+      updateProjectVisibility(is_public, shared_users) {
+        this.is_public = is_public;
+        this.shared_users = shared_users;
       },
       async getFiles() {
         for (let file_id of this.file_ids) {
