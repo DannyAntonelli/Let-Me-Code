@@ -91,7 +91,7 @@
       }
 
       this.options = {
-        language: "python", // this.file.language,
+        language: this.file.language,
         value: this.file.content,
         theme: this.editorTheme,
       };
