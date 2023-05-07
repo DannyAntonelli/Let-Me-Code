@@ -31,9 +31,16 @@
       editorTheme: String,
     },
     methods: {
+      // eslint-disable-next-line no-unused-vars
       onChange: function (newValue, e) {
-        console.log("onChange", newValue, e, this.code);
+        if (newValue.isTrusted) return;
         this.content = newValue;
+        this.status = "edited";
+      },
+      storeChanges: function () {
+        if (this.status == "edited") {
+          this.$emit("file-changed", this.file, this.content, false);
+        }
       },
       editorDidMount(editor) {
         editor.onDidScrollChange((e) => {
@@ -59,7 +66,7 @@
             .then((response) => {
               console.log(response);
               this.status = "saved";
-              this.$emit("file-changed", this.file, this.content);
+              this.$emit("file-changed", this.file, this.content, true);
             })
             .catch((error) => {
               console.log(error);
@@ -84,11 +91,12 @@
       }
 
       this.options = {
-        language: "python",
+        language: "python", // this.file.language,
         value: this.file.content,
         theme: this.editorTheme,
       };
       this.content = this.file.content;
+      this.status = this.file.saved ? "saved" : "edited";
     },
     async unmounted() {
       window.removeEventListener("keydown", this.onKeyPress);

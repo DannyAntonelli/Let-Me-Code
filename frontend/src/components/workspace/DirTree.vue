@@ -20,7 +20,7 @@
           @contextmenu.prevent="this.root.showMenu($event, true, value)"
           @click="this.root.onFileClick(value)"
         >
-          - {{ value.fileName }}
+          - {{ value.fileName }} {{ value.saved ? "" : "🔴" }}
         </span>
       </div>
     </li>

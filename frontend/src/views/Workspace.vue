@@ -20,6 +20,7 @@
           :editorTheme="this.editorTheme"
           :key="this.reloadFile"
           v-on:file-changed="updateFile"
+          ref="editor"
         />
       </div>
     </div>
@@ -79,11 +80,13 @@
         retrieveProjectInfo(this.$route.params.id, this);
       },
       changeFile(file) {
+        this.$refs.editor.storeChanges();
         this.currentFile = file;
         this.reloadFile = !this.reloadFile;
       },
-      updateFile(file, content) {
+      updateFile(file, content, saved) {
         file.content = content;
+        file.saved = saved;
       },
       changeTheme(theme) {
         if (theme == this.editorTheme) return;
@@ -101,6 +104,7 @@
           // .catch((error) => {
           //   console.log(error);
           // });
+          f.file.saved = true;
           this.files.push(f.file);
         }
         this.reloadFiles = !this.reloadFiles;
