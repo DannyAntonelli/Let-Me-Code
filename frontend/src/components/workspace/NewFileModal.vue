@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       languages: languages,
-      language: "Python",
+      language: "python",
       newName: "",
     };
   },
