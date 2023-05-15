@@ -15,7 +15,7 @@
       <MonacoEditor
         class="editor"
         :options="this.options"
-        style="height: 500px"
+        style="height: 80vh"
         @change="onChange"
         v-model="code"
         :key="this.file.id"

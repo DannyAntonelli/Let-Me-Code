@@ -63,6 +63,7 @@
     z-index: 100;
     background-color: white;
     border: 1px solid #ccc;
+    width: 120px;
   }
 
   .context-menu ul {

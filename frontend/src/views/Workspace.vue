@@ -3,9 +3,9 @@
     class="container-fluid text-center"
     style="margin-left: 20px; margin-right: 20px"
   >
-    <div class="row align-items-start">
+    <div class="row">
       <div class="col-md-2">
-        <div class="row text-start">
+        <div class="row text-start align-content-start">
           <TopBar
             :workspaceName="this.name"
             :workspaceId="this.id"
@@ -17,24 +17,31 @@
             :key="reloadFiles"
           />
         </div>
-        <div class="row">
-          <SideBar
-            :files="this.files"
-            :proj_id="this.id"
-            :currentFileId="this.currentFile ? this.currentFile.id : null"
-            :key="this.reloadFiles"
-            :editPermit="this.editPermit"
-            v-on:refresh-files="refreshProject"
-            v-on:file-clicked="changeFile"
-          />
-        </div>
-        <div class="row">
-          <BotBar
-            :file="this.currentFile"
-            :theme="this.editorTheme"
-            :key="this.reloadFile"
-            v-on:theme-changed="changeTheme"
-          />
+        <div class="row h-100" style="margin-left: 0; padding-left: 0">
+          <div
+            class="d-flex align-items-start flex-column h-100"
+            style="margin-left: 0; padding-left: 0; width: 100%"
+          >
+            <div class="row" style="height: 90%">
+              <SideBar
+                :files="this.files"
+                :proj_id="this.id"
+                :currentFileId="this.currentFile ? this.currentFile.id : null"
+                :key="this.reloadFiles"
+                :editPermit="this.editPermit"
+                v-on:refresh-files="refreshProject"
+                v-on:file-clicked="changeFile"
+              />
+            </div>
+            <div class="row h-10" style="margin-bottom: 40px">
+              <BotBar
+                :file="this.currentFile"
+                :theme="this.editorTheme"
+                :key="this.reloadFile"
+                v-on:theme-changed="changeTheme"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-10">
