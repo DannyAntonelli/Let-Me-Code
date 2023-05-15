@@ -9,7 +9,8 @@ export function retrieveProjectInfo(id, context) {
       context.is_public = response.is_public;
       context.name = response.name;
       context.shared_users = response.shared_usernames;
-      context.user = response.username;
+      context.user = response.creator_username;
+      context.setEditPermit();
       context.getFiles();
     })
     .catch((error) => {

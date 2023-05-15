@@ -10,6 +10,7 @@
         :user="this.user"
         :shared_users="this.shared_users"
         :is_public="this.is_public"
+        :editPermit="this.editPermit"
         v-on:update-project-visibility="updateProjectVisibility"
         :key="reloadFiles"
       />
@@ -21,7 +22,7 @@
           :proj_id="this.id"
           :currentFileId="this.currentFile ? this.currentFile.id : null"
           :key="this.reloadFiles"
-          :editPermit="this.hasEditPermit"
+          :editPermit="this.editPermit"
           v-on:refresh-files="refreshProject"
           v-on:file-clicked="changeFile"
         />
@@ -31,7 +32,7 @@
           :file="this.currentFile"
           :editorTheme="this.editorTheme"
           :key="this.reloadFile"
-          :editPermit="this.hasEditPermit"
+          :editPermit="this.editPermit"
           v-on:file-changed="updateFile"
           ref="editor"
         />
@@ -42,7 +43,6 @@
         :file="this.currentFile"
         :theme="this.editorTheme"
         :key="this.reloadFile"
-        :editPermit="this.hasEditPermit"
         v-on:theme-changed="changeTheme"
       />
     </div>
@@ -80,6 +80,7 @@
         reloadFile: false,
         reloadFiles: false,
         editorTheme: "vs-dark",
+        editPermit: false,
       };
     },
     methods: {
@@ -104,6 +105,12 @@
         this.is_public = is_public;
         this.shared_users = shared_users;
       },
+      setEditPermit() {
+        console.log(this.user, "AJASHHASHA");
+        this.editPermit =
+          this.user == localStorage.getItem("username") ||
+          this.shared_users.includes(localStorage.getItem("username"));
+      },
       async getFiles() {
         for (let file_id of this.file_ids) {
           console.log(file_id);
@@ -119,14 +126,6 @@
           this.files.push(f.file);
         }
         this.reloadFiles = !this.reloadFiles;
-      },
-    },
-    computed: {
-      hasEditPermit() {
-        return (
-          this.user == localStorage.getItem("username") ||
-          this.shared_users.includes(localStorage.getItem("username"))
-        );
       },
     },
     async beforeCreate() {
