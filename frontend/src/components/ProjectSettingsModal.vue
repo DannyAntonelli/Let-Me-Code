@@ -41,12 +41,12 @@
                 v-model="new_is_public"
               />
               <label class="form-check-label" for="flexSwitchCheckChecked"
-                >Public</label
+                >Public View Mode</label
               >
             </div>
-            <div v-if="!new_is_public">
+            <div>
               <ul class="list-group">
-                <li class="list-group-item">Shared With:</li>
+                <li class="list-group-item">Shared In Edit Mode With:</li>
                 <li
                   class="list-group-item"
                   v-for="user in this.new_shared_users"
@@ -160,10 +160,7 @@
             return;
           }
         }
-        if (
-          !this.new_is_public &&
-          !arrayEquals(this.new_shared_users, this.shared_users)
-        ) {
+        if (!arrayEquals(this.new_shared_users, this.shared_users)) {
           try {
             await this.updateSharedUsers();
             console.log("changed visibility");

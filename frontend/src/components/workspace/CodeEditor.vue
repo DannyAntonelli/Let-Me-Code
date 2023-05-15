@@ -29,6 +29,7 @@
     props: {
       file: Object,
       editorTheme: String,
+      editPermit: Boolean,
     },
     methods: {
       // eslint-disable-next-line no-unused-vars
@@ -62,6 +63,11 @@
     watch: {
       status: function (newStatus) {
         if (newStatus === "saving") {
+          if (this.editPermit === false) {
+            alert("You do not have permission to edit this file");
+            this.status = "Error Saving No Permission";
+            return;
+          }
           syncFile(this.file.id, this.content)
             .then((response) => {
               console.log(response);

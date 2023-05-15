@@ -21,6 +21,7 @@
           :proj_id="this.id"
           :currentFileId="this.currentFile ? this.currentFile.id : null"
           :key="this.reloadFiles"
+          :editPermit="this.hasEditPermit"
           v-on:refresh-files="refreshProject"
           v-on:file-clicked="changeFile"
         />
@@ -30,6 +31,7 @@
           :file="this.currentFile"
           :editorTheme="this.editorTheme"
           :key="this.reloadFile"
+          :editPermit="this.hasEditPermit"
           v-on:file-changed="updateFile"
           ref="editor"
         />
@@ -40,6 +42,7 @@
         :file="this.currentFile"
         :theme="this.editorTheme"
         :key="this.reloadFile"
+        :editPermit="this.hasEditPermit"
         v-on:theme-changed="changeTheme"
       />
     </div>
@@ -116,6 +119,14 @@
           this.files.push(f.file);
         }
         this.reloadFiles = !this.reloadFiles;
+      },
+    },
+    computed: {
+      hasEditPermit() {
+        return (
+          this.user == localStorage.getItem("username") ||
+          this.shared_users.includes(localStorage.getItem("username"))
+        );
       },
     },
     async beforeCreate() {

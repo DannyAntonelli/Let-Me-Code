@@ -9,6 +9,7 @@
         :user="this.user"
         :shared_users="this.shared_users"
         :is_public="this.is_public"
+        v-if="this.editPermit"
       />
     </li>
   </ul>
@@ -25,6 +26,7 @@
       user: String,
       shared_users: Array,
       is_public: Boolean,
+      editPermit: Boolean,
     },
   };
 </script>

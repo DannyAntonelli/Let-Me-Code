@@ -12,6 +12,7 @@
     :visible="menuVisible"
     :param="menuParam"
     v-on:close-context="resetContextMenu"
+    v-if="this.editPermit"
   />
   <NewFileModal
     :path="this.newFilePath"
@@ -35,6 +36,7 @@
       files: Array,
       proj_id: String,
       currentFileId: String,
+      editPermit: Boolean,
     },
     components: {
       DirTree,
