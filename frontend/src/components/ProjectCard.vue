@@ -15,11 +15,13 @@
         <font-awesome-icon
           v-if="project.is_favorite"
           icon="fa-solid fa-star"
+          style="color: gold; cursor: pointer"
           @click="toggleFavorite"
         />
         <font-awesome-icon
           v-else
           icon="fa-regular fa-star"
+          style="cursor: pointer"
           @click="toggleFavorite"
         />
       </h5>
@@ -29,6 +31,12 @@
         </h6></router-link
       >
       <p class="card-text">{{ project.description }}</p>
+      <span
+        v-for="language in project.languages"
+        :key="language"
+        class="badge text-bg-info m-1"
+        >{{ language }}</span
+      >
     </div>
   </div>
 </template>
