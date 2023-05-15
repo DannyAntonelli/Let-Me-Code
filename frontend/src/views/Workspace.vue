@@ -3,29 +3,39 @@
     class="container-fluid text-center"
     style="margin-left: 20px; margin-right: 20px"
   >
-    <div class="row text-start">
-      <TopBar
-        :workspaceName="this.name"
-        :workspaceId="this.id"
-        :user="this.user"
-        :shared_users="this.shared_users"
-        :is_public="this.is_public"
-        :editPermit="this.editPermit"
-        v-on:update-project-visibility="updateProjectVisibility"
-        :key="reloadFiles"
-      />
-    </div>
     <div class="row align-items-start">
       <div class="col-md-2">
-        <SideBar
-          :files="this.files"
-          :proj_id="this.id"
-          :currentFileId="this.currentFile ? this.currentFile.id : null"
-          :key="this.reloadFiles"
-          :editPermit="this.editPermit"
-          v-on:refresh-files="refreshProject"
-          v-on:file-clicked="changeFile"
-        />
+        <div class="row text-start">
+          <TopBar
+            :workspaceName="this.name"
+            :workspaceId="this.id"
+            :user="this.user"
+            :shared_users="this.shared_users"
+            :is_public="this.is_public"
+            :editPermit="this.editPermit"
+            v-on:update-project-visibility="updateProjectVisibility"
+            :key="reloadFiles"
+          />
+        </div>
+        <div class="row">
+          <SideBar
+            :files="this.files"
+            :proj_id="this.id"
+            :currentFileId="this.currentFile ? this.currentFile.id : null"
+            :key="this.reloadFiles"
+            :editPermit="this.editPermit"
+            v-on:refresh-files="refreshProject"
+            v-on:file-clicked="changeFile"
+          />
+        </div>
+        <div class="row">
+          <BotBar
+            :file="this.currentFile"
+            :theme="this.editorTheme"
+            :key="this.reloadFile"
+            v-on:theme-changed="changeTheme"
+          />
+        </div>
       </div>
       <div class="col-md-10">
         <CodeEditor
@@ -37,14 +47,6 @@
           ref="editor"
         />
       </div>
-    </div>
-    <div class="row">
-      <BotBar
-        :file="this.currentFile"
-        :theme="this.editorTheme"
-        :key="this.reloadFile"
-        v-on:theme-changed="changeTheme"
-      />
     </div>
   </div>
 </template>

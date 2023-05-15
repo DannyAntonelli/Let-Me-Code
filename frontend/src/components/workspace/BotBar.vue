@@ -1,16 +1,16 @@
 <template>
-  <ul class="nav justify-content-between">
-    <li class="nav-item">
-      Language{{ this.file ? ": " + this.file.language : "" }}
-    </li>
-    <li class="nav-item">Font</li>
-    <li class="nav-item">
+  <div class="text-start">
+    <span class=""
+      >Language{{ this.file ? ": " + this.file.language : "" }}</span
+    >
+    <span class="">
       <div class="dropdown">
         <button
           class="btn dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
+          style="margin-left: 0; padding-left: 0"
         >
           Theme: {{ this.theme }}
         </button>
@@ -20,8 +20,8 @@
           </li>
         </ul>
       </div>
-    </li>
-  </ul>
+    </span>
+  </div>
 </template>
 
 <script>

@@ -1,8 +1,9 @@
 <template>
-  <ul class="nav justify-content-between">
-    <li class="nav-item">Project: {{ workspaceName }}</li>
-    <li class="nav-item">#id: {{ workspaceId }}</li>
-    <li class="nav-item">
+  <div class="row justify-content-between">
+    <div class="col-10" style="margin: auto">
+      Project #{{ workspaceId }}: {{ workspaceName }}
+    </div>
+    <div class="col-2">
       <ProjectSettingsModal
         :name="this.workspaceName"
         :id="this.workspaceId"
@@ -11,8 +12,8 @@
         :is_public="this.is_public"
         v-if="this.editPermit"
       />
-    </li>
-  </ul>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -3,7 +3,14 @@
     <div class="alert alert-warning" role="alert">No file open</div>
   </div>
   <div v-if="this.file != null">
-    {{ this.status }}
+    <div
+      class="row justify-content-between"
+      style="margin-left: 10px; margin-right: 10px"
+    >
+      <div class="col text-start">{{ this.file.name }}</div>
+      <div class="col text-end">{{ this.status }}</div>
+    </div>
+
     <div class="container text-start">
       <MonacoEditor
         class="editor"
