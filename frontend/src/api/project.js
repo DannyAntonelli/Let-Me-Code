@@ -122,6 +122,32 @@ async function changeFavorite(id, makeFavorite) {
   });
 }
 
+async function getFollowingProjects() {
+  return fetch(`${API_URL}/project/following/`, {
+    method: "GET",
+    headers: getHeaders(),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error getting following projects");
+    }
+  });
+}
+
+async function getFavoriteProjects() {
+  return fetch(`${API_URL}/project/favorites/`, {
+    method: "GET",
+    headers: getHeaders(),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error getting favorite projects");
+    }
+  });
+}
+
 export {
   getProject,
   createProject,
@@ -131,4 +157,6 @@ export {
   deleteProject,
   searchProjects,
   changeFavorite,
+  getFollowingProjects,
+  getFavoriteProjects,
 };

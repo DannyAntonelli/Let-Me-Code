@@ -95,6 +95,8 @@ class SearchUsers(APIView):
             )
 
         users = User.objects.filter(username__icontains=query)
+        for user in users:
+            Profile.objects.get_or_create(user=user)
         QUERY_LIMIT = 50
 
         return Response(
@@ -108,6 +110,8 @@ class SearchUsers(APIView):
                         "number_of_shared_public_projects": user.shared_projects.filter(
                             is_public=True
                         ).count(),
+                        "number_of_followers": user.profile.followers.count(),
+                        "number_of_following": user.following.count(),
                     }
                     for user in users[:QUERY_LIMIT]
                 ]
@@ -147,3 +151,26 @@ class EditProfile(APIView):
         user.save()
 
         return Response({"message": "User info changed successfully"})
+
+
+class GetFollowingUsers(APIView):
+    def get(self, request: Request) -> Response:
+        following_users = [profile.user for profile in request.user.following.all()]
+        return Response(
+            {
+                "users": [
+                    {
+                        **UserSerializer(user).data,
+                        "number_of_public_projects": user.projects.filter(
+                            is_public=True
+                        ).count(),
+                        "number_of_shared_public_projects": user.shared_projects.filter(
+                            is_public=True
+                        ).count(),
+                        "number_of_followers": user.profile.followers.count(),
+                        "number_of_following": user.following.count(),
+                    }
+                    for user in following_users
+                ]
+            }
+        )

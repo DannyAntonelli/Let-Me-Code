@@ -27,96 +27,96 @@
 </template>
 
 <script>
-  import { h } from "vue";
-  import MonacoEditor from "vue-monaco";
-  import { syncFile } from "@/api/file.js";
-  MonacoEditor.render = () => h("div");
-  export default {
-    name: "CodeEditor",
-    props: {
-      file: Object,
-      editorTheme: String,
-      editPermit: Boolean,
+import { h } from "vue";
+import MonacoEditor from "vue-monaco";
+import { syncFile } from "@/api/file.js";
+MonacoEditor.render = () => h("div");
+export default {
+  name: "CodeEditor",
+  props: {
+    file: Object,
+    editorTheme: String,
+    editPermit: Boolean,
+  },
+  methods: {
+    // eslint-disable-next-line no-unused-vars
+    onChange: function (newValue, e) {
+      if (newValue.isTrusted) return;
+      this.content = newValue;
+      this.status = "edited";
     },
-    methods: {
-      // eslint-disable-next-line no-unused-vars
-      onChange: function (newValue, e) {
-        if (newValue.isTrusted) return;
-        this.content = newValue;
-        this.status = "edited";
-      },
-      storeChanges: function () {
-        if (this.status == "edited") {
-          this.$emit("file-changed", this.file, this.content, false);
-        }
-      },
-      editorDidMount(editor) {
-        editor.onDidScrollChange((e) => {
-          console.log(e, this.file);
-        });
-        window.addEventListener("keydown", this.onKeyPress);
-      },
-      onKeyPress(e) {
-        console.log(e, this.file);
-        if (e.ctrlKey) {
-          e.preventDefault();
-        }
-        if (e.ctrlKey && e.key === "s") {
-          console.log("saving", this.content);
-          this.status = "saving";
-        }
-      },
-    },
-    watch: {
-      status: function (newStatus) {
-        if (newStatus === "saving") {
-          if (this.editPermit === false) {
-            alert("You do not have permission to edit this file");
-            this.status = "Error Saving No Permission";
-            return;
-          }
-          syncFile(this.file.id, this.content)
-            .then((response) => {
-              console.log(response);
-              this.status = "saved";
-              this.$emit("file-changed", this.file, this.content, true);
-            })
-            .catch((error) => {
-              console.log(error);
-              this.status = "error";
-            });
-        }
-      },
-    },
-    data() {
-      return {
-        options: null,
-        code: "const  noop = () => {}", // Not sure if this is needed
-        status: "saved",
-        content: "",
-      };
-    },
-
-    async mounted() {
-      console.log("loading editor for", this.file);
-      if (this.file === null) {
-        return;
+    storeChanges: function () {
+      if (this.status == "edited") {
+        this.$emit("file-changed", this.file, this.content, false);
       }
+    },
+    editorDidMount(editor) {
+      editor.onDidScrollChange((e) => {
+        console.log(e, this.file);
+      });
+      window.addEventListener("keydown", this.onKeyPress);
+    },
+    onKeyPress(e) {
+      console.log(e, this.file);
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.key === "s") {
+        console.log("saving", this.content);
+        this.status = "saving";
+      }
+    },
+  },
+  watch: {
+    status: function (newStatus) {
+      if (newStatus === "saving") {
+        if (this.editPermit === false) {
+          alert("You do not have permission to edit this file");
+          this.status = "Error Saving No Permission";
+          return;
+        }
+        syncFile(this.file.id, this.content)
+          .then((response) => {
+            console.log(response);
+            this.status = "saved";
+            this.$emit("file-changed", this.file, this.content, true);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.status = "error";
+          });
+      }
+    },
+  },
+  data() {
+    return {
+      options: null,
+      code: "const  noop = () => {}", // Not sure if this is needed
+      status: "saved",
+      content: "",
+    };
+  },
 
-      this.options = {
-        language: this.file.language,
-        value: this.file.content,
-        theme: this.editorTheme,
-      };
-      this.content = this.file.content;
-      this.status = this.file.saved ? "saved" : "edited";
-    },
-    async unmounted() {
-      window.removeEventListener("keydown", this.onKeyPress);
-      console.log("unmounting editor", this.file);
-    },
-    components: {
-      MonacoEditor,
-    },
-  };
+  async mounted() {
+    console.log("loading editor for", this.file);
+    if (this.file === null) {
+      return;
+    }
+
+    this.options = {
+      language: this.file.language.toLowerCase(),
+      value: this.file.content,
+      theme: this.editorTheme,
+    };
+    this.content = this.file.content;
+    this.status = this.file.saved ? "saved" : "edited";
+  },
+  async unmounted() {
+    window.removeEventListener("keydown", this.onKeyPress);
+    console.log("unmounting editor", this.file);
+  },
+  components: {
+    MonacoEditor,
+  },
+};
 </script>

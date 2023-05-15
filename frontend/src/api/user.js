@@ -101,4 +101,25 @@ async function editProfile(firstName, lastName, email) {
   });
 }
 
-export { login, register, getUser, searchUsers, followUser, editProfile };
+async function getFollowingUsers() {
+  return fetch(`${API_URL}/user/following/`, {
+    method: "GET",
+    headers: getHeaders(),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error during get following user");
+    }
+  });
+}
+
+export {
+  login,
+  register,
+  getUser,
+  searchUsers,
+  followUser,
+  editProfile,
+  getFollowingUsers,
+};

@@ -144,6 +144,9 @@ class SearchProjects(APIView):
                         **ProjectSerializer(project).data,
                         "creator_username": project.user.username,
                         "is_favorite": request.user in project.favorite_users.all(),
+                        "languages": list(
+                            {file.language.lower() for file in project.files.all()}
+                        ),
                     }
                     for project in projects[:QUERY_LIMIT]
                 ]
@@ -165,5 +168,54 @@ class ToggleFavorite(APIView):
         return Response(
             {
                 "message": f"Project status changed successfully, favorite = {str(favorite).lower()}",
+            }
+        )
+
+
+class GetFollowingProjects(APIView):
+    def get(self, request: Request) -> Response:
+        following_users = [profile.user for profile in request.user.following.all()]
+        projects = Project.objects.filter(
+            user__in=following_users,
+            is_public=True,
+        ) | Project.objects.filter(
+            user__in=following_users,
+            shared_users__in=[request.user],
+        )
+
+        return Response(
+            {
+                "projects": [
+                    {
+                        **ProjectSerializer(project).data,
+                        "creator_username": project.user.username,
+                        "is_favorite": request.user in project.favorite_users.all(),
+                        "languages": list(
+                            {file.language.lower() for file in project.files.all()}
+                        ),
+                    }
+                    for project in projects
+                ]
+            }
+        )
+
+
+class GetFavoriteProjects(APIView):
+    def get(self, request: Request) -> Response:
+        projects = Project.objects.filter(favorite_users__in=[request.user])
+
+        return Response(
+            {
+                "projects": [
+                    {
+                        **ProjectSerializer(project).data,
+                        "creator_username": project.user.username,
+                        "is_favorite": request.user in project.favorite_users.all(),
+                        "languages": list(
+                            {file.language.lower() for file in project.files.all()}
+                        ),
+                    }
+                    for project in projects
+                ]
             }
         )

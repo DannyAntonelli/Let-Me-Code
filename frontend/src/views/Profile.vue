@@ -27,7 +27,7 @@
         size="xs"
         class="ms-3"
         @click="toggleFollow"
-        style="cursor: pointer"
+        style="cursor: pointer; color: #005000"
       />
       <font-awesome-icon
         v-if="!isCurrentUser && isFollowing"
@@ -35,7 +35,7 @@
         size="xs"
         class="ms-3"
         @click="toggleFollow"
-        style="cursor: pointer"
+        style="cursor: pointer; color: #800000"
       />
     </h2>
     <p class="text-muted mb-0" v-if="fullName.length > 1">{{ fullName }}</p>
