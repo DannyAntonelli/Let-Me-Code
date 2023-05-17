@@ -1,5 +1,7 @@
 <template>
-  <div class="row height d-flex justify-content-center align-items-center mt-4">
+  <div
+    class="row height d-flex justify-content-center align-items-center mt-5 mb-2"
+  >
     <div class="col-md-4">
       <form class="input-group mb-3 p-2" @submit.prevent="search">
         <span class="input-group-text">

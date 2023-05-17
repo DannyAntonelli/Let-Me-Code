@@ -8,7 +8,7 @@
   </div>
 
   <form
-    class="text-center mt-3"
+    class="text-center mt-5"
     style="max-width: 500px; margin: auto"
     @submit.prevent="handleRegister"
   >
@@ -97,6 +97,22 @@
         placeholder="Confirm Password*"
         required
       />
+    </div>
+
+    <div class="form-check form-switch m-3 mb-4 row">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="toc"
+        checked
+        required
+      />
+      <label class="col form-check-label" for="toc">
+        I agree to the
+        <a href="https://youtu.be/dQw4w9WgXcQ"
+          ><strong>Terms and Conditions</strong></a
+        >
+      </label>
     </div>
 
     <button type="submit" class="btn btn-primary btn-lg">Register</button>

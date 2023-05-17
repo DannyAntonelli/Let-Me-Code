@@ -1,5 +1,5 @@
 <template>
-  <h3 class="mt-3 text-center">
+  <h3 class="mt-5 mb-5 text-center">
     <strong>People you're following</strong>
   </h3>
 

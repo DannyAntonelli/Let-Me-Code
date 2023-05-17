@@ -1,9 +1,14 @@
 <template>
-  <div class="card">
+  <div class="card hidden">
     <div class="card-body">
       <router-link :to="profileUrl"
         ><h5 class="card-title" style="font-size: large">
-          <font-awesome-icon icon="fa-regular fa-user" size="s" />
+          <img
+            :src="avatarUrl"
+            class="rounded-circle"
+            alt="avatar"
+            style="width: 2rem; height: 2rem"
+          />
           <strong class="m-2">@{{ user.username }} {{ fullName }} </strong>
         </h5></router-link
       >
@@ -22,6 +27,8 @@
 </template>
 
 <script>
+import MD5 from "crypto-js/md5";
+
 export default {
   name: "UserCard",
 
@@ -41,6 +48,26 @@ export default {
     profileUrl() {
       return `/profile/${this.user.username}`;
     },
+
+    avatarUrl() {
+      let hash = MD5(this.user.username).toString();
+      return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+    },
+  },
+
+  async mounted() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          entry.target.classList.add("show");
+        }
+      });
+    });
+
+    document
+      .querySelectorAll(".hidden")
+      .forEach((element) => observer.observe(element));
   },
 };
 </script>

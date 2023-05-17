@@ -1,5 +1,5 @@
 <template>
-  <h3 class="mt-3 text-center"><strong>Favorite Projects</strong></h3>
+  <h3 class="mt-5 mb-1 text-center"><strong>Favorite Projects</strong></h3>
   <div class="row m-4">
     <div
       class="col col-sm-4 mb-3"

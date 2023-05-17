@@ -8,7 +8,7 @@
   </div>
 
   <form
-    class="text-center mt-3"
+    class="text-center mt-5"
     style="max-width: 500px; margin: auto"
     @submit.prevent="handleLogin"
   >
@@ -42,7 +42,7 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+    <button type="submit" class="btn btn-primary btn-lg mt-2">Log In</button>
 
     <p class="mt-3">
       Don't have an account?

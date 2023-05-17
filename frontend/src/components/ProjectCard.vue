@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card hidden">
     <div class="card-body">
       <h5 class="card-title" style="font-size: large">
         <router-link :to="projectUrl" class="m-1">
@@ -74,6 +74,21 @@ export default {
           console.log(error);
         });
     },
+  },
+
+  async mounted() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          entry.target.classList.add("show");
+        }
+      });
+    });
+
+    document
+      .querySelectorAll(".hidden")
+      .forEach((element) => observer.observe(element));
   },
 };
 </script>

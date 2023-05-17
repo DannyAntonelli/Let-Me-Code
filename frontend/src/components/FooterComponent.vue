@@ -10,8 +10,10 @@
               style="width: 60px; background-color: #7c4dff; height: 2px"
             />
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed nibh vitae diam posuere feugiat. Sed cursus maximus faucibus.
+              Let Me Code is a project developed by Danny Antonelli and Valerio
+              Massimo Camaiani for the Web Technologies course at the Sapienza
+              University of Rome. Let Me Code is not meant to be a real product,
+              but just a proof of concept.
             </p>
           </div>
 

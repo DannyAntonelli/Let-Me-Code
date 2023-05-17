@@ -11,6 +11,8 @@
   </div>
 
   <div class="text-center mt-3" v-if="username">
+    <img :src="avatarUrl" class="rounded-circle mb-3" alt="avatar" />
+
     <h2>
       <strong>@{{ username }}</strong>
       <EditProfileModal
@@ -61,6 +63,8 @@
 </template>
 
 <script>
+import MD5 from "crypto-js/md5";
+
 import ProjectCard from "@/components/ProjectCard.vue";
 import NewProjectModal from "@/components/NewProjectModal.vue";
 import EditProfileModal from "@/components/EditProfileModal.vue";
@@ -177,6 +181,11 @@ export default {
 
     fullName() {
       return this.firstName + " " + this.lastName;
+    },
+
+    avatarUrl() {
+      let hash = MD5(this.username).toString();
+      return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
     },
   },
 };
