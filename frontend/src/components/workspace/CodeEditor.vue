@@ -24,11 +24,11 @@
       </div>
     </div>
 
-    <div class="container text-start">
+    <div class="text-start">
       <MonacoEditor
         class="editor"
         :options="this.options"
-        style="height: 80vh"
+        style="height: 80vh !important; width: auto !important"
         @change="onChange"
         v-model="code"
         :key="this.file.id"
