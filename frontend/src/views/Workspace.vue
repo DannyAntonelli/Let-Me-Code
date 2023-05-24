@@ -1,7 +1,7 @@
 <template>
   <div
     class="container-fluid text-center"
-    style="margin-left: 20px; margin-right: 20px"
+    style="padding-left: 20px; padding-right: 20px"
   >
     <div class="row">
       <div class="col-md-2">
