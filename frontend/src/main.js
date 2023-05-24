@@ -12,6 +12,7 @@ import {
   faStar as faStarRegular,
   faFolder,
   faFolderOpen,
+  faFloppyDisk,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faTerminal,
@@ -69,7 +70,8 @@ library.add(
   faUserMinus,
   faPlus,
   faFolder,
-  faFolderOpen
+  faFolderOpen,
+  faFloppyDisk
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
