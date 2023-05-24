@@ -144,11 +144,19 @@
         document.getElementById("dismiss-modal").click();
       },
       async updateSharedUsers() {
+        let actual_shared_users = Array.from(this.shared_users);
         for (let user of this.new_shared_users) {
           if (!this.shared_users.includes(user)) {
-            await shareProject(this.id, user);
+            try {
+              await shareProject(this.id, user);
+              actual_shared_users.push(user);
+            } catch (err) {
+              alert("Error sharing project with " + user);
+              continue;
+            }
           }
         }
+        this.new_shared_users = actual_shared_users;
       },
       async submitChanges() {
         if (this.new_is_public != this.is_public) {
