@@ -14,7 +14,7 @@
             :is_public="this.is_public"
             :editPermit="this.editPermit"
             v-on:update-project-visibility="updateProjectVisibility"
-            :key="reloadFiles"
+            :key="this.reloadFiles"
           />
         </div>
         <div class="row h-100" style="margin-left: 0; padding-left: 0">
@@ -121,6 +121,7 @@
           this.shared_users.includes(localStorage.getItem("username"));
       },
       async getFiles() {
+        this.files = [];
         for (let file_id of this.file_ids) {
           console.log(file_id);
           console.log("aaa    ");

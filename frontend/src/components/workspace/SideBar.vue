@@ -56,14 +56,14 @@
               console.log(this.newFilePath);
             },
           },
-          {
-            label: "Delete",
+          //   {
+          //     label: "Delete",
 
-            action: (a) => {
-              console.log("Folder Delete", a);
-              alert("Folder Delete Not Implemented Yet");
-            },
-          },
+          //     action: (a) => {
+          //       console.log("Folder Delete", a);
+          //       alert("Folder Delete Not Implemented Yet");
+          //     },
+          //   },
         ],
         menuFileItems: [
           {
