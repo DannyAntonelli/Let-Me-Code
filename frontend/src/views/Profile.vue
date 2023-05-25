@@ -6,15 +6,24 @@
       >
     </h2>
     <h3>
-      Maybe you were looking for <a href="https://youtu.be/dQw4w9WgXcQ">this</a>
+      Maybe you were looking for
+      <a style="color: var(--bs-purple)" href="https://youtu.be/dQw4w9WgXcQ"
+        >this</a
+      >
     </h3>
   </div>
 
   <div class="text-center mt-3" v-if="username">
-    <img :src="avatarUrl" class="rounded-circle mb-3" alt="avatar" />
+    <img
+      :src="getAvatarUrl(username)"
+      class="rounded-circle mb-3"
+      alt="avatar"
+      style="height: 7rem"
+    />
 
     <h2>
       <strong>@{{ username }}</strong>
+
       <EditProfileModal
         class="col"
         v-if="isCurrentUser"
@@ -23,26 +32,50 @@
         :email="email"
         @edit-profile="handleEditProfile"
       />
+
       <font-awesome-icon
         v-if="!isCurrentUser && !isFollowing"
         icon="fa-solid fa-user-plus"
         size="xs"
         class="ms-3"
         @click="toggleFollow"
-        style="cursor: pointer; color: #005000"
+        style="cursor: pointer; color: var(--bs-success)"
       />
+
       <font-awesome-icon
         v-if="!isCurrentUser && isFollowing"
         icon="fa-solid fa-user-minus"
         size="xs"
         class="ms-3"
         @click="toggleFollow"
-        style="cursor: pointer; color: #800000"
+        style="cursor: pointer; color: var(--bs-danger)"
       />
     </h2>
+
+    <h6>
+      <a
+        class="badge text-badge bg-primary mx-2"
+        href="#"
+        data-bs-toggle="modal"
+        data-bs-target="#followersModal"
+        style="cursor: pointer; text-decoration: none"
+        >{{ followersUsernames.length }} followers</a
+      >
+      <a
+        class="badge text-badge bg-primary"
+        href="#"
+        data-bs-toggle="modal"
+        data-bs-target="#followingModal"
+        style="cursor: pointer; text-decoration: none"
+      >
+        {{ followingUsernames.length }} following</a
+      >
+    </h6>
+
     <p class="text-muted mb-0" v-if="fullName.length > 1">{{ fullName }}</p>
     <p class="text-muted mb-0" v-if="email">{{ email }}</p>
     <p class="text-muted">Member since: {{ dateJoined.toDateString() }}</p>
+
     <NewProjectModal
       @submit-project="handleCreateProject"
       v-if="isCurrentUser"
@@ -53,11 +86,115 @@
 
   <div class="row m-4">
     <div
-      class="col col-sm-4 mb-3"
+      class="col-12 col-sm-6 col-md-4 mb-3"
       v-for="project in projects"
       :key="project.id"
     >
       <ProjectCard :project="project" @favorite-changed="changeFavorite" />
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="followersModal"
+    tabindex="-1"
+    aria-labelledby="followersModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="followersModalLabel">
+            {{ this.followersUsernames.length }} Followers
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="dismiss-followers-modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="card mb-3">
+            <div class="card-body">
+              <p v-if="followersUsernames.length == 0" class="card-text">
+                No followers yet
+              </p>
+              <div v-else>
+                <router-link
+                  v-for="followerUsername in followersUsernames"
+                  @click="handleFollowersModalClick"
+                  :key="followerUsername"
+                  :to="`/profile/${followerUsername}`"
+                >
+                  <h5 class="card-title" style="font-size: large">
+                    <img
+                      :src="getAvatarUrl(username)"
+                      class="rounded-circle"
+                      alt="avatar"
+                      style="width: 2rem; height: 2rem"
+                    />
+                    <strong class="m-2">@{{ followerUsername }} </strong>
+                  </h5>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="followingModal"
+    tabindex="-1"
+    aria-labelledby="followingModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="followingModalLabel">
+            {{ this.followingUsernames.length }} Following
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="dismiss-following-modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="card mb-1">
+            <div class="card-body">
+              <p v-if="followingUsernames.length == 0" class="card-text">
+                No following yet
+              </p>
+              <div v-else>
+                <router-link
+                  v-for="followingUsername in followingUsernames"
+                  :to="`/profile/${followingUsername}`"
+                  :key="followingUsername"
+                  @click="handleFollowingModalClick"
+                >
+                  <h5 class="card-title" style="font-size: large">
+                    <img
+                      :src="getAvatarUrl(followingUsername)"
+                      class="rounded-circle"
+                      alt="avatar"
+                      style="width: 2rem; height: 2rem"
+                    />
+                    <strong class="m-2">@{{ followingUsername }} </strong>
+                  </h5>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +221,8 @@ export default {
       dateJoined: new Date(),
       projects: [],
       isFollowing: false,
+      followersUsernames: [],
+      followingUsernames: [],
     };
   },
 
@@ -95,8 +234,10 @@ export default {
         this.firstName = response.user.first_name;
         this.lastName = response.user.last_name;
         this.dateJoined = new Date(response.user.date_joined);
+        this.followersUsernames = response.followers_usernames;
+        this.followingUsernames = response.following_usernames;
 
-        this.isFollowing = response.followers_usernames.includes(
+        this.isFollowing = this.followersUsernames.includes(
           localStorage.getItem("username")
         );
 
@@ -161,10 +302,30 @@ export default {
       followUser(this.username, !this.isFollowing)
         .then(() => {
           this.isFollowing = !this.isFollowing;
+          if (this.isFollowing) {
+            this.followersUsernames.push(localStorage.getItem("username"));
+          } else {
+            this.followersUsernames = this.followersUsernames.filter(
+              (username) => username != localStorage.getItem("username")
+            );
+          }
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    handleFollowersModalClick() {
+      document.getElementById("dismiss-followers-modal").click();
+    },
+
+    handleFollowingModalClick() {
+      document.getElementById("dismiss-following-modal").click();
+    },
+
+    getAvatarUrl(username) {
+      let hash = MD5(username).toString();
+      return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
     },
   },
 
@@ -182,11 +343,12 @@ export default {
     fullName() {
       return this.firstName + " " + this.lastName;
     },
-
-    avatarUrl() {
-      let hash = MD5(this.username).toString();
-      return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
-    },
   },
 };
 </script>
+
+<style scoped>
+a {
+  color: inherit;
+}
+</style>
