@@ -127,6 +127,7 @@
                   @click="handleFollowersModalClick"
                   :key="followerUsername"
                   :to="`/profile/${followerUsername}`"
+                  style="text-decoration: none"
                 >
                   <h5 class="card-title" style="font-size: large">
                     <img
@@ -179,6 +180,7 @@
                   :to="`/profile/${followingUsername}`"
                   :key="followingUsername"
                   @click="handleFollowingModalClick"
+                  style="text-decoration: none"
                 >
                   <h5 class="card-title" style="font-size: large">
                     <img
