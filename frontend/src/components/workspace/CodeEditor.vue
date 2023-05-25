@@ -5,9 +5,15 @@
   <div v-if="this.file != null">
     <div
       class="row justify-content-between"
-      style="margin-left: 10px; margin-right: 10px"
+      style="margin-left: 5px; margin-right: 10px"
     >
-      <div class="col text-start">{{ this.file.name }}</div>
+      <div class="col text-start" style="padding: 5px">
+        <font-awesome-icon
+          icon="fa-regular fa-file"
+          style="padding-right: 5px"
+        />
+        {{ this.file.name }}
+      </div>
       <div class="col text-end">
         <!-- {{ this.status }} -->
         <font-awesome-icon
@@ -19,7 +25,7 @@
         />
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
-          style="color: #1cce1c; padding: 5px"
+          style="color: #1cce1c; padding: 5px; border: 1px solid #cccccc00"
           v-if="this.status === 'saved'"
         />
       </div>
