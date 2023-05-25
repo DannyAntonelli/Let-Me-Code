@@ -16,13 +16,22 @@
           v-if="project.is_favorite"
           icon="fa-solid fa-star"
           style="color: gold; cursor: pointer"
+          class="star-favorite"
           @click="toggleFavorite"
         />
         <font-awesome-icon
           v-else
           icon="fa-regular fa-star"
           style="cursor: pointer"
+          class="star-not-favorite"
           @click="toggleFavorite"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-trash"
+          style="cursor: pointer"
+          class="trash-icon"
+          @click="deleteProject"
+          v-if="canDelete"
         />
       </h5>
       <router-link :to="profileUrl"
@@ -52,6 +61,10 @@ export default {
       type: Object,
       required: true,
     },
+    canDelete: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
@@ -73,6 +86,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    deleteProject() {
+      this.$emit("delete-project", this.project.id);
     },
   },
 
@@ -97,5 +114,21 @@ export default {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.star-favorite:hover {
+  color: gold;
+}
+
+.star-not-favorite:hover {
+  color: gold;
+}
+
+.trash-icon {
+  margin-left: 0.3rem;
+}
+
+.trash-icon:hover {
+  color: var(--bs-danger);
 }
 </style>

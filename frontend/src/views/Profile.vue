@@ -90,7 +90,12 @@
       v-for="project in projects"
       :key="project.id"
     >
-      <ProjectCard :project="project" @favorite-changed="changeFavorite" />
+      <ProjectCard
+        :project="project"
+        :canDelete="isDeleteAllowed(project)"
+        @favorite-changed="changeFavorite"
+        @delete-project="deleteProject"
+      />
     </div>
   </div>
 
@@ -209,7 +214,7 @@ import NewProjectModal from "@/components/NewProjectModal.vue";
 import EditProfileModal from "@/components/EditProfileModal.vue";
 
 import { getUser, followUser, editProfile } from "@/api/user.js";
-import { createProject, getProject } from "@/api/project.js";
+import { createProject, getProject, deleteProject } from "@/api/project.js";
 
 export default {
   name: "Profile",
@@ -328,6 +333,26 @@ export default {
     getAvatarUrl(username) {
       let hash = MD5(username).toString();
       return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+    },
+
+    isDeleteAllowed(project) {
+      return (
+        this.username == localStorage.getItem("username") &&
+        project.creator_username == this.username
+      );
+    },
+
+    deleteProject(projectId) {
+      console.log(projectId);
+      deleteProject(projectId)
+        .then(() => {
+          this.projects = this.projects.filter(
+            (project) => project.id != projectId
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 

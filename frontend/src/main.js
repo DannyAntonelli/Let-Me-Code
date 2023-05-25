@@ -32,6 +32,7 @@ import {
   faPenToSquare,
   faUserPlus,
   faUserMinus,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -75,7 +76,8 @@ library.add(
   faFolderOpen,
   faFloppyDisk,
   faFile,
-  faCircleQuestion
+  faCircleQuestion,
+  faTrash
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
