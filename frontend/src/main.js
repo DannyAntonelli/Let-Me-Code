@@ -14,6 +14,7 @@ import {
   faFolderOpen,
   faFloppyDisk,
   faFile,
+  faCircleQuestion,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faTerminal,
@@ -73,7 +74,8 @@ library.add(
   faFolder,
   faFolderOpen,
   faFloppyDisk,
-  faFile
+  faFile,
+  faCircleQuestion
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

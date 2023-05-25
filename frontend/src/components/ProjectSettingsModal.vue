@@ -40,13 +40,47 @@
                 id="flexSwitchCheckChecked"
                 v-model="new_is_public"
               />
-              <label class="form-check-label" for="flexSwitchCheckChecked"
-                >Public View Mode</label
+              <label
+                class="form-check-label"
+                for="flexSwitchCheckChecked"
+                style="padding-right: 3px"
               >
+                Public
+              </label>
+              <button
+                type="button"
+                class="btn"
+                style="padding: 0"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Make this project visible to everyone. (Read Only)"
+              >
+                <font-awesome-icon
+                  icon="fa-regular fa-circle-question"
+                  tyle="color: #ce1c1c;"
+                />
+              </button>
             </div>
-            <div>
+            <div style="margin-top: 30px">
               <ul class="list-group">
-                <li class="list-group-item">Shared In Edit Mode With:</li>
+                <li class="list-group-item">
+                  <div>
+                    <span style="padding-right: 3px"> Shared </span>
+                    <button
+                      type="button"
+                      class="btn"
+                      style="padding: 0"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="The following users have write permissions on the project"
+                    >
+                      <font-awesome-icon
+                        icon="fa-regular fa-circle-question"
+                        tyle="color: #ce1c1c;"
+                      />
+                    </button>
+                  </div>
+                </li>
                 <li
                   class="list-group-item"
                   v-for="user in this.new_shared_users"
