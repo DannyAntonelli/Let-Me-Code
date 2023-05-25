@@ -9,16 +9,17 @@
     >
       <div class="col text-start">{{ this.file.name }}</div>
       <div class="col text-end">
-        {{ this.status }}
+        <!-- {{ this.status }} -->
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
-          style="color: #ce1c1c"
+          id="save-button"
+          style="color: #ce1c1c; padding: 5px"
           v-if="this.status === 'edited'"
           @click="this.startSaving()"
         />
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
-          style="color: #1cce1c"
+          style="color: #1cce1c; padding: 5px"
           v-if="this.status === 'saved'"
         />
       </div>
@@ -38,6 +39,19 @@
     </div>
   </div>
 </template>
+<style>
+  #save-button {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  #save-button:hover {
+    border-color: #bbb;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+</style>
 
 <script>
   import { h } from "vue";
