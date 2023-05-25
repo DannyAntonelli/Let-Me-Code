@@ -6,7 +6,7 @@
 
   <div class="container text-center text-md-start">
     <div class="row mt-5 text-center">
-      <div class="col mx-auto mb-4">
+      <div class="col-12 col-sm-6 col-md-6 mx-auto mb-4">
         <p>
           <strong> Let Me Code</strong> is a platform for developers to share
           their code, collaborate with other developers, and learn from each
@@ -15,10 +15,16 @@
         </p>
       </div>
 
-      <div class="col mx-auto mb-4">
+      <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4">
         <h5><strong>Join Our Community:</strong></h5>
         <router-link to="/register"
-          ><button class="btn btn-primary btn-lg">
+          ><button
+            class="btn btn-primary btn-lg"
+            style="
+              background-color: var(--bs-purple);
+              border-color: var(--bs-purple);
+            "
+          >
             Start for free
           </button></router-link
         >
@@ -28,7 +34,7 @@
 
   <div class="container text-center text-md-start mt-5 pt-2">
     <div class="row mt-3 text-center">
-      <div class="col mx-auto mb-4 hidden">
+      <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4 hidden">
         <h4><strong>Zero Setup</strong></h4>
         <p>
           Start working on your code instantly, without having any code editor
@@ -37,7 +43,7 @@
         </p>
       </div>
 
-      <div class="col mx-auto mb-4 hidden" id="two">
+      <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4 hidden" id="two">
         <h4><strong>Collaborate Flawlessly with your Colleagues</strong></h4>
         <p>
           Create your new project, share it with your friend and start working
@@ -45,7 +51,7 @@
         </p>
       </div>
 
-      <div class="col mx-auto mb-4 hidden" id="three">
+      <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4 hidden" id="three">
         <h4><strong>Join +10M Developers</strong></h4>
         <p>
           Our community currently counts more than 10 million developers and
@@ -80,6 +86,10 @@ export default {
 </script>
 
 <style scoped>
+a {
+  color: inherit;
+}
+
 #two {
   transition-delay: 200ms;
 }

@@ -1,20 +1,20 @@
 <template>
-  <div
-    class="row height d-flex justify-content-center align-items-center mt-5 mb-2"
-  >
-    <div class="col-md-4">
-      <form class="input-group mb-3 p-2" @submit.prevent="search">
-        <span class="input-group-text">
-          <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-        </span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search for a username or project name"
-          v-model="query"
-        />
-      </form>
-    </div>
+  <div class="d-flex justify-content-center align-items-center mt-5 mb-2">
+    <form
+      class="input-group mb-3 p-2"
+      @submit.prevent="search"
+      style="width: 30rem"
+    >
+      <span class="input-group-text">
+        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search for a username or project name"
+        v-model="query"
+      />
+    </form>
   </div>
 
   <ul class="nav nav-tabs text-center justify-content-center">
@@ -30,7 +30,7 @@
 
   <div class="row m-4" v-if="projectsTab">
     <div
-      class="col col-sm-4 mb-3"
+      class="col-12 col-sm-6 col-md-4 mb-3"
       v-for="project in projects"
       :key="project.id"
     >
@@ -39,7 +39,11 @@
   </div>
 
   <div class="row m-4" v-if="!projectsTab">
-    <div class="col col-sm-4 mb-3" v-for="user in users" :key="user.id">
+    <div
+      class="col-12 col-sm-6 col-md-4 mb-3"
+      v-for="user in users"
+      :key="user.id"
+    >
       <UserCard :user="user" />
     </div>
   </div>

@@ -34,7 +34,7 @@
       <span
         v-for="language in project.languages"
         :key="language"
-        class="badge text-bg-info m-1"
+        class="badge rounded-pill text-bg-info m-1"
         >{{ language }}</span
       >
     </div>

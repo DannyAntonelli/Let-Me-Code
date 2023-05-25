@@ -1,6 +1,6 @@
 <template>
   <h3 class="mt-5 mb-5 text-center">
-    <strong>People you're following</strong>
+    <strong>Following</strong>
   </h3>
 
   <ul class="nav nav-tabs text-center justify-content-center">
@@ -16,7 +16,7 @@
 
   <div class="row m-4" v-if="projectsTab">
     <div
-      class="col col-sm-4 mb-3"
+      class="col-12 col-sm-6 col-md-4 mb-3"
       v-for="project in projects"
       :key="project.id"
     >
@@ -25,7 +25,11 @@
   </div>
 
   <div class="row m-4" v-if="!projectsTab">
-    <div class="col col-sm-4 mb-3" v-for="user in users" :key="user.id">
+    <div
+      class="col-12 col-sm-6 col-md-4 mb-3"
+      v-for="user in users"
+      :key="user.id"
+    >
       <UserCard :user="user" />
     </div>
   </div>
@@ -87,9 +91,6 @@ export default {
     changeFavorite(projectId) {
       let project = this.projects.find((project) => project.id == projectId);
       project.is_favorite = !project.is_favorite;
-      this.projects = this.projects.filter(
-        (project) => project.id != projectId
-      );
     },
 
     setProjectsPage() {

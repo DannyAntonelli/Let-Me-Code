@@ -42,7 +42,13 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg mt-2">Log In</button>
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg mt-2"
+      style="background-color: var(--bs-purple); border-color: var(--bs-purple)"
+    >
+      Log In
+    </button>
 
     <p class="mt-3">
       Don't have an account?
@@ -82,3 +88,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+a {
+  color: var(--bs-purple);
+}
+</style>

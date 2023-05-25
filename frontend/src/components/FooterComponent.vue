@@ -3,7 +3,7 @@
     <section class="">
       <div class="container text-center text-md-start mt-5 pt-2">
         <div class="row mt-3">
-          <div class="col mx-auto mb-4">
+          <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4">
             <h6 class="text-uppercase fw-bold">Let Me Code</h6>
             <hr
               class="mb-4 mt-0 d-inline-block mx-auto"
@@ -17,7 +17,7 @@
             </p>
           </div>
 
-          <div class="col mx-auto mb-4">
+          <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4">
             <h6 class="text-uppercase fw-bold">Our team</h6>
             <hr
               class="mb-4 mt-0 d-inline-block mx-auto"
@@ -49,7 +49,7 @@
             </p>
           </div>
 
-          <div class="col mx-auto mb-md-0 mb-4">
+          <div class="col-12 col-sm-6 col-md-4 mx-auto mb-md-0 mb-4">
             <h6 class="text-uppercase fw-bold">Contact us</h6>
             <hr
               class="mb-4 mt-0 d-inline-block mx-auto"
@@ -72,3 +72,9 @@
     </section>
   </footer>
 </template>
+
+<style scoped>
+a {
+  color: var(--bs-purple);
+}
+</style>
