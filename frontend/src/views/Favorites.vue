@@ -2,7 +2,7 @@
   <h3 class="mt-5 mb-1 text-center"><strong>Favorite Projects</strong></h3>
   <div class="row m-4">
     <div
-      class="col col-sm-4 mb-3"
+      class="col-12 col-sm-6 col-md-4 mb-3"
       v-for="project in favorites"
       :key="project.id"
     >

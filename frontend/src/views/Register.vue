@@ -115,7 +115,13 @@
       </label>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg"
+      style="background-color: var(--bs-purple); border-color: var(--bs-purple)"
+    >
+      Register
+    </button>
 
     <p class="mt-3">
       Already have an account?
@@ -180,3 +186,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+a {
+  color: var(--bs-purple);
+}
+
+.form-check-input[type="checkbox"]:checked {
+  background-color: var(--bs-purple);
+}
+</style>
