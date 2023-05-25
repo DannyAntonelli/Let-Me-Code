@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="true" class="tree">
+  <ul v-if="true" class="tree" style="cursor: pointer">
     <li v-for="(value, key) in this.node" :key="key">
       <div
         v-if="value.id === undefined && key != 'folderName'"
@@ -122,6 +122,9 @@
   }
   .open-file {
     color: #19eeae;
+  }
+  .tree p {
+    margin-bottom: 0;
   }
 </style>
 
