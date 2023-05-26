@@ -26,8 +26,13 @@
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
           style="color: #1cce1c; padding: 5px; border: 1px solid #cccccc00"
-          v-if="this.status === 'saved'"
+          v-if="this.status === 'saved' && this.editPermit === true"
         />
+        <span
+          style="color: #ce1c1c; padding: 5px"
+          v-if="this.editPermit === false"
+          >No Write Permission
+        </span>
       </div>
     </div>
 
@@ -107,8 +112,7 @@
       status: function (newStatus) {
         if (newStatus === "saving") {
           if (this.editPermit === false) {
-            alert("You do not have permission to edit this file");
-            this.status = "Error Saving No Permission";
+            this.status = "No Permission";
             return;
           }
           syncFile(this.file.id, this.content)
@@ -143,6 +147,7 @@
         language: this.file.language.toLowerCase(),
         value: this.file.content,
         theme: this.editorTheme,
+        readOnly: !this.editPermit,
       };
       this.content = this.file.content;
       this.status = this.file.saved ? "saved" : "edited";
