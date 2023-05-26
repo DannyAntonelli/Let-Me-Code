@@ -62,33 +62,54 @@
               </button>
             </div>
             <div style="margin-top: 30px">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <div>
-                    <span style="padding-right: 3px"> Shared </span>
-                    <button
-                      type="button"
-                      class="btn"
-                      style="padding: 0"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="The following users have write permissions on the project"
-                    >
-                      <font-awesome-icon
-                        icon="fa-regular fa-circle-question"
-                        tyle="color: #ce1c1c;"
-                      />
-                    </button>
-                  </div>
-                </li>
-                <li
-                  class="list-group-item"
-                  v-for="user in this.new_shared_users"
-                  :key="user"
+              <div>
+                <span style="padding-right: 3px"> Shared </span>
+                <button
+                  type="button"
+                  class="btn"
+                  style="padding: 0"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  title="The following users have write permissions on the project"
                 >
-                  {{ user }}
-                </li>
-              </ul>
+                  <font-awesome-icon
+                    icon="fa-regular fa-circle-question"
+                    tyle="color: #ce1c1c;"
+                  />
+                </button>
+              </div>
+
+              <div class="modal-body" style="padding: 0">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <p
+                      v-if="this.new_shared_users.length == 0"
+                      class="card-text"
+                    >
+                      You have not shared this project with anyone.
+                    </p>
+                    <div v-else>
+                      <router-link
+                        v-for="username in this.new_shared_users"
+                        @click="handleModalClick"
+                        :key="username"
+                        :to="`/profile/${username}`"
+                        style="text-decoration: none"
+                      >
+                        <h5 class="card-title" style="font-size: large">
+                          <img
+                            :src="getAvatarUrl(username)"
+                            class="rounded-circle"
+                            alt="avatar"
+                            style="width: 2rem; height: 2rem"
+                          />
+                          <strong class="m-2">@{{ username }} </strong>
+                        </h5>
+                      </router-link>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div style="margin-top: 30px">
                 <ul class="nav justify-content-start">
                   <li class="nav-item">
@@ -138,81 +159,90 @@
 </template>
 
 <script>
-import { changeProjectVisibility, shareProject } from "@/api/project.js";
-function arrayEquals(a, b) {
-  return (
-    Array.isArray(a) &&
-    Array.isArray(b) &&
-    a.length === b.length &&
-    a.every((val, index) => val === b[index])
-  );
-}
-export default {
-  name: "ProjectSettingsModal",
-  props: {
-    name: String,
-    id: String,
-    user: String, //TODO check if user is owner
-    shared_users: Array,
-    is_public: Boolean,
-  },
-  data() {
-    return {
-      new_shared_users: Array.from(this.shared_users),
-      new_is_public: this.is_public,
-    };
-  },
+  import MD5 from "crypto-js/md5";
+  import { changeProjectVisibility, shareProject } from "@/api/project.js";
+  function arrayEquals(a, b) {
+    return (
+      Array.isArray(a) &&
+      Array.isArray(b) &&
+      a.length === b.length &&
+      a.every((val, index) => val === b[index])
+    );
+  }
+  export default {
+    name: "ProjectSettingsModal",
+    props: {
+      name: String,
+      id: String,
+      user: String, //TODO check if user is owner
+      shared_users: Array,
+      is_public: Boolean,
+    },
+    data() {
+      return {
+        new_shared_users: Array.from(this.shared_users),
+        new_is_public: this.is_public,
+      };
+    },
 
-  methods: {
-    addSharedUser() {
-      if (this.new_shared_user != "") {
-        this.new_shared_users.push(this.new_shared_user);
-        this.new_shared_user = "";
-      }
-    },
-    propagateChanges() {
-      this.$emit("update-project-visibility", {
-        public: this.new_is_public,
-        shared: this.new_shared_users,
-      });
-      document.getElementById("dismiss-modal").click();
-    },
-    async updateSharedUsers() {
-      let actual_shared_users = Array.from(this.shared_users);
-      for (let user of this.new_shared_users) {
-        if (!this.shared_users.includes(user)) {
-          try {
-            await shareProject(this.id, user);
-            actual_shared_users.push(user);
-          } catch (err) {
-            alert("Error sharing project with " + user);
-            continue;
+    methods: {
+      addSharedUser() {
+        if (this.new_shared_user != "") {
+          this.new_shared_users.push(this.new_shared_user);
+          this.new_shared_user = "";
+        }
+      },
+      propagateChanges() {
+        this.$emit("update-project-visibility", {
+          public: this.new_is_public,
+          shared: this.new_shared_users,
+        });
+        document.getElementById("dismiss-modal").click();
+      },
+      handleModalClick() {
+        document.getElementById("dismiss-modal").click();
+      },
+
+      getAvatarUrl(username) {
+        let hash = MD5(username).toString();
+        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+      },
+      async updateSharedUsers() {
+        let actual_shared_users = Array.from(this.shared_users);
+        for (let user of this.new_shared_users) {
+          if (!this.shared_users.includes(user)) {
+            try {
+              await shareProject(this.id, user);
+              actual_shared_users.push(user);
+            } catch (err) {
+              alert("Error sharing project with " + user);
+              continue;
+            }
           }
         }
-      }
-      this.new_shared_users = actual_shared_users;
-    },
-    async submitChanges() {
-      if (this.new_is_public != this.is_public) {
-        try {
-          await changeProjectVisibility(this.id, this.new_is_public);
-          console.log("changed visibility");
-        } catch (err) {
-          console.log(err);
-          return;
+        this.new_shared_users = actual_shared_users;
+      },
+      async submitChanges() {
+        if (this.new_is_public != this.is_public) {
+          try {
+            await changeProjectVisibility(this.id, this.new_is_public);
+            console.log("changed visibility");
+          } catch (err) {
+            console.log(err);
+            return;
+          }
         }
-      }
-      if (!arrayEquals(this.new_shared_users, this.shared_users)) {
-        try {
-          await this.updateSharedUsers();
-          console.log("changed visibility");
-        } catch (err) {
-          console.log(err);
-          return;
+        if (!arrayEquals(this.new_shared_users, this.shared_users)) {
+          try {
+            await this.updateSharedUsers();
+            console.log("changed visibility");
+          } catch (err) {
+            console.log(err);
+            return;
+          }
         }
-      }
-      this.propagateChanges();
+        this.propagateChanges();
+      },
     },
-  },
-};
+  };
 </script>
