@@ -183,8 +183,8 @@ class GetFollowingProjects(APIView):
             | Project.objects.filter(
                 user__in=following_users,
                 shared_users__in=[request.user],
-            ).distinct()
-        )
+            )
+        ).distinct()
 
         return Response(
             {
