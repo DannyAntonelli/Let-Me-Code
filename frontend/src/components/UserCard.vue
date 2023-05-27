@@ -13,7 +13,7 @@
         </h5></router-link
       >
       <h6 class="card-subtitle mb-2 text-muted">
-        Member since: Tue Apr 25 2023
+        Member since: {{ dateJoined }}
       </h6>
       <p class="card-text mb-0">
         Number of public projects: {{ user.number_of_public_projects }}
@@ -52,6 +52,10 @@ export default {
     avatarUrl() {
       let hash = MD5(this.user.username).toString();
       return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+    },
+
+    dateJoined() {
+      return new Date(this.user.date_joined).toDateString();
     },
   },
 
