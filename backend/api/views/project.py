@@ -134,7 +134,7 @@ class SearchProjects(APIView):
                 name__icontains=query,
                 is_public=True,
             )
-        )
+        ).distinct()
 
         QUERY_LIMIT = 50
         return Response(
@@ -175,12 +175,15 @@ class ToggleFavorite(APIView):
 class GetFollowingProjects(APIView):
     def get(self, request: Request) -> Response:
         following_users = [profile.user for profile in request.user.following.all()]
-        projects = Project.objects.filter(
-            user__in=following_users,
-            is_public=True,
-        ) | Project.objects.filter(
-            user__in=following_users,
-            shared_users__in=[request.user],
+        projects = (
+            Project.objects.filter(
+                user__in=following_users,
+                is_public=True,
+            )
+            | Project.objects.filter(
+                user__in=following_users,
+                shared_users__in=[request.user],
+            ).distinct()
         )
 
         return Response(
