@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-between">
     <div class="col-10" style="margin: auto">
-      Project #{{ workspaceId }}: {{ workspaceName }}
+      <strong> Project #{{ workspaceId }}: {{ workspaceName }} </strong>
     </div>
     <div class="col-2">
       <ProjectSettingsModal
@@ -17,17 +17,17 @@
 </template>
 
 <script>
-  import ProjectSettingsModal from "@/components/ProjectSettingsModal.vue";
-  export default {
-    name: "TopBar",
-    components: { ProjectSettingsModal },
-    props: {
-      workspaceName: String,
-      workspaceId: String,
-      user: String,
-      shared_users: Array,
-      is_public: Boolean,
-      editPermit: Boolean,
-    },
-  };
+import ProjectSettingsModal from "@/components/ProjectSettingsModal.vue";
+export default {
+  name: "TopBar",
+  components: { ProjectSettingsModal },
+  props: {
+    workspaceName: String,
+    workspaceId: String,
+    user: String,
+    shared_users: Array,
+    is_public: Boolean,
+    editPermit: Boolean,
+  },
+};
 </script>

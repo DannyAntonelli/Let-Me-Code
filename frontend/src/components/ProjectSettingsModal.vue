@@ -58,6 +58,7 @@
                 <font-awesome-icon
                   icon="fa-regular fa-circle-question"
                   tyle="color: #ce1c1c;"
+                  class="p-1"
                 />
               </button>
             </div>
@@ -75,6 +76,7 @@
                   <font-awesome-icon
                     icon="fa-regular fa-circle-question"
                     tyle="color: #ce1c1c;"
+                    class="py-1"
                   />
                 </button>
               </div>
@@ -159,90 +161,90 @@
 </template>
 
 <script>
-  import MD5 from "crypto-js/md5";
-  import { changeProjectVisibility, shareProject } from "@/api/project.js";
-  function arrayEquals(a, b) {
-    return (
-      Array.isArray(a) &&
-      Array.isArray(b) &&
-      a.length === b.length &&
-      a.every((val, index) => val === b[index])
-    );
-  }
-  export default {
-    name: "ProjectSettingsModal",
-    props: {
-      name: String,
-      id: String,
-      user: String, //TODO check if user is owner
-      shared_users: Array,
-      is_public: Boolean,
+import MD5 from "crypto-js/md5";
+import { changeProjectVisibility, shareProject } from "@/api/project.js";
+function arrayEquals(a, b) {
+  return (
+    Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length === b.length &&
+    a.every((val, index) => val === b[index])
+  );
+}
+export default {
+  name: "ProjectSettingsModal",
+  props: {
+    name: String,
+    id: String,
+    user: String, //TODO check if user is owner
+    shared_users: Array,
+    is_public: Boolean,
+  },
+  data() {
+    return {
+      new_shared_users: Array.from(this.shared_users),
+      new_is_public: this.is_public,
+    };
+  },
+
+  methods: {
+    addSharedUser() {
+      if (this.new_shared_user != "") {
+        this.new_shared_users.push(this.new_shared_user);
+        this.new_shared_user = "";
+      }
     },
-    data() {
-      return {
-        new_shared_users: Array.from(this.shared_users),
-        new_is_public: this.is_public,
-      };
+    propagateChanges() {
+      this.$emit("update-project-visibility", {
+        public: this.new_is_public,
+        shared: this.new_shared_users,
+      });
+      document.getElementById("dismiss-modal").click();
+    },
+    handleModalClick() {
+      document.getElementById("dismiss-modal").click();
     },
 
-    methods: {
-      addSharedUser() {
-        if (this.new_shared_user != "") {
-          this.new_shared_users.push(this.new_shared_user);
-          this.new_shared_user = "";
-        }
-      },
-      propagateChanges() {
-        this.$emit("update-project-visibility", {
-          public: this.new_is_public,
-          shared: this.new_shared_users,
-        });
-        document.getElementById("dismiss-modal").click();
-      },
-      handleModalClick() {
-        document.getElementById("dismiss-modal").click();
-      },
-
-      getAvatarUrl(username) {
-        let hash = MD5(username).toString();
-        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
-      },
-      async updateSharedUsers() {
-        let actual_shared_users = Array.from(this.shared_users);
-        for (let user of this.new_shared_users) {
-          if (!this.shared_users.includes(user)) {
-            try {
-              await shareProject(this.id, user);
-              actual_shared_users.push(user);
-            } catch (err) {
-              alert("Error sharing project with " + user);
-              continue;
-            }
-          }
-        }
-        this.new_shared_users = actual_shared_users;
-      },
-      async submitChanges() {
-        if (this.new_is_public != this.is_public) {
-          try {
-            await changeProjectVisibility(this.id, this.new_is_public);
-            console.log("changed visibility");
-          } catch (err) {
-            console.log(err);
-            return;
-          }
-        }
-        if (!arrayEquals(this.new_shared_users, this.shared_users)) {
-          try {
-            await this.updateSharedUsers();
-            console.log("changed visibility");
-          } catch (err) {
-            console.log(err);
-            return;
-          }
-        }
-        this.propagateChanges();
-      },
+    getAvatarUrl(username) {
+      let hash = MD5(username).toString();
+      return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
     },
-  };
+    async updateSharedUsers() {
+      let actual_shared_users = Array.from(this.shared_users);
+      for (let user of this.new_shared_users) {
+        if (!this.shared_users.includes(user)) {
+          try {
+            await shareProject(this.id, user);
+            actual_shared_users.push(user);
+          } catch (err) {
+            alert("Error sharing project with " + user);
+            continue;
+          }
+        }
+      }
+      this.new_shared_users = actual_shared_users;
+    },
+    async submitChanges() {
+      if (this.new_is_public != this.is_public) {
+        try {
+          await changeProjectVisibility(this.id, this.new_is_public);
+          console.log("changed visibility");
+        } catch (err) {
+          console.log(err);
+          return;
+        }
+      }
+      if (!arrayEquals(this.new_shared_users, this.shared_users)) {
+        try {
+          await this.updateSharedUsers();
+          console.log("changed visibility");
+        } catch (err) {
+          console.log(err);
+          return;
+        }
+      }
+      this.propagateChanges();
+    },
+  },
+};
 </script>

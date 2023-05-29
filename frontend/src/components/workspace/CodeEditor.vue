@@ -7,19 +7,16 @@
       class="row justify-content-between"
       style="margin-left: 5px; margin-right: 10px"
     >
-      <div class="col text-start" style="padding: 5px">
-        <font-awesome-icon
-          icon="fa-regular fa-file"
-          style="padding-right: 5px"
-        />
-        {{ this.file.name }}
+      <div class="col text-start py-2">
+        <font-awesome-icon icon="fa-regular fa-file" class="px-2" />
+        <strong>{{ this.file.name }}</strong>
       </div>
       <div class="col text-end">
         <!-- {{ this.status }} -->
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
           id="save-button"
-          style="color: #ce1c1c; padding: 5px"
+          style="color: var(--bs-danger); padding: 5px"
           v-if="this.status === 'edited'"
           @click="this.startSaving()"
         />
@@ -29,7 +26,7 @@
           v-if="this.status === 'saved' && this.editPermit === true"
         />
         <span
-          style="color: #ce1c1c; padding: 5px"
+          style="color: var(--bs-danger); padding: 5px"
           v-if="this.editPermit === false"
           >No Write Permission
         </span>
@@ -51,113 +48,113 @@
   </div>
 </template>
 <style>
-  #save-button {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-  }
+#save-button {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
 
-  #save-button:hover {
-    border-color: #bbb;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-  }
+#save-button:hover {
+  border-color: #bbb;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
 </style>
 
 <script>
-  import { h } from "vue";
-  import MonacoEditor from "vue-monaco";
-  import { syncFile } from "@/api/file.js";
-  MonacoEditor.render = () => h("div");
-  export default {
-    name: "CodeEditor",
-    props: {
-      file: Object,
-      editorTheme: String,
-      editPermit: Boolean,
+import { h } from "vue";
+import MonacoEditor from "vue-monaco";
+import { syncFile } from "@/api/file.js";
+MonacoEditor.render = () => h("div");
+export default {
+  name: "CodeEditor",
+  props: {
+    file: Object,
+    editorTheme: String,
+    editPermit: Boolean,
+  },
+  methods: {
+    // eslint-disable-next-line no-unused-vars
+    onChange: function (newValue, e) {
+      if (newValue.isTrusted) return;
+      this.content = newValue;
+      this.status = "edited";
     },
-    methods: {
-      // eslint-disable-next-line no-unused-vars
-      onChange: function (newValue, e) {
-        if (newValue.isTrusted) return;
-        this.content = newValue;
-        this.status = "edited";
-      },
-      storeChanges: function () {
-        if (this.status == "edited") {
-          this.$emit("file-changed", this.file, this.content, false);
-        }
-      },
-      editorDidMount(editor) {
-        editor.onDidScrollChange((e) => {
-          console.log(e, this.file);
-        });
-        window.addEventListener("keydown", this.onKeyPress);
-      },
-      onKeyPress(e) {
-        console.log(e, this.file);
-        if (e.ctrlKey) {
-          e.preventDefault();
-        }
-        if (e.ctrlKey && e.key === "s") {
-          console.log("saving", this.content);
-          this.startSaving();
-        }
-      },
-      startSaving() {
-        this.status = "saving";
-      },
-    },
-    watch: {
-      status: function (newStatus) {
-        if (newStatus === "saving") {
-          if (this.editPermit === false) {
-            this.status = "No Permission";
-            return;
-          }
-          syncFile(this.file.id, this.content)
-            .then((response) => {
-              console.log(response);
-              this.status = "saved";
-              this.$emit("file-changed", this.file, this.content, true);
-            })
-            .catch((error) => {
-              console.log(error);
-              this.status = "error";
-            });
-        }
-      },
-    },
-    data() {
-      return {
-        options: null,
-        code: "const  noop = () => {}", // Not sure if this is needed
-        status: "saved",
-        content: "",
-      };
-    },
-
-    async mounted() {
-      console.log("loading editor for", this.file);
-      if (this.file === null) {
-        return;
+    storeChanges: function () {
+      if (this.status == "edited") {
+        this.$emit("file-changed", this.file, this.content, false);
       }
+    },
+    editorDidMount(editor) {
+      editor.onDidScrollChange((e) => {
+        console.log(e, this.file);
+      });
+      window.addEventListener("keydown", this.onKeyPress);
+    },
+    onKeyPress(e) {
+      console.log(e, this.file);
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.key === "s") {
+        console.log("saving", this.content);
+        this.startSaving();
+      }
+    },
+    startSaving() {
+      this.status = "saving";
+    },
+  },
+  watch: {
+    status: function (newStatus) {
+      if (newStatus === "saving") {
+        if (this.editPermit === false) {
+          this.status = "No Permission";
+          return;
+        }
+        syncFile(this.file.id, this.content)
+          .then((response) => {
+            console.log(response);
+            this.status = "saved";
+            this.$emit("file-changed", this.file, this.content, true);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.status = "error";
+          });
+      }
+    },
+  },
+  data() {
+    return {
+      options: null,
+      code: "const  noop = () => {}", // Not sure if this is needed
+      status: "saved",
+      content: "",
+    };
+  },
 
-      this.options = {
-        language: this.file.language.toLowerCase(),
-        value: this.file.content,
-        theme: this.editorTheme,
-        readOnly: !this.editPermit,
-      };
-      this.content = this.file.content;
-      this.status = this.file.saved ? "saved" : "edited";
-    },
-    async unmounted() {
-      window.removeEventListener("keydown", this.onKeyPress);
-      console.log("unmounting editor", this.file);
-    },
-    components: {
-      MonacoEditor,
-    },
-  };
+  async mounted() {
+    console.log("loading editor for", this.file);
+    if (this.file === null) {
+      return;
+    }
+
+    this.options = {
+      language: this.file.language.toLowerCase(),
+      value: this.file.content,
+      theme: this.editorTheme,
+      readOnly: !this.editPermit,
+    };
+    this.content = this.file.content;
+    this.status = this.file.saved ? "saved" : "edited";
+  },
+  async unmounted() {
+    window.removeEventListener("keydown", this.onKeyPress);
+    console.log("unmounting editor", this.file);
+  },
+  components: {
+    MonacoEditor,
+  },
+};
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container-fluid text-center"
+    class="container-fluid text-center mt-2"
     style="padding-left: 20px; padding-right: 20px"
   >
     <div class="row">
@@ -59,87 +59,87 @@
 </template>
 
 <script>
-  import { retrieveProjectInfo } from "@/components/workspace/utils.js";
-  import { getFile } from "@/api/file.js";
-  import CodeEditor from "@/components/workspace/CodeEditor.vue";
-  import TopBar from "@/components/workspace/TopBar.vue";
-  import BotBar from "@/components/workspace/BotBar.vue";
-  import SideBar from "@/components/workspace/SideBar.vue";
+import { retrieveProjectInfo } from "@/components/workspace/utils.js";
+import { getFile } from "@/api/file.js";
+import CodeEditor from "@/components/workspace/CodeEditor.vue";
+import TopBar from "@/components/workspace/TopBar.vue";
+import BotBar from "@/components/workspace/BotBar.vue";
+import SideBar from "@/components/workspace/SideBar.vue";
 
-  export default {
-    name: "Workspace",
+export default {
+  name: "Workspace",
 
-    components: {
-      CodeEditor,
-      TopBar,
-      BotBar,
-      SideBar,
-    },
-    data() {
-      return {
-        file_ids: [],
-        description: "",
-        id: "",
-        is_public: false,
-        name: "",
-        shared_users: [],
-        user: "",
-        files: [],
-        currentFile: null,
-        reloadFile: false,
-        reloadFiles: false,
-        editorTheme: "vs-dark",
-        editPermit: false,
-      };
-    },
-    methods: {
-      refreshProject() {
-        retrieveProjectInfo(this.$route.params.id, this);
-      },
-      changeFile(file) {
-        this.$refs.editor.storeChanges();
-        this.currentFile = file;
-        this.reloadFile = !this.reloadFile;
-      },
-      updateFile(file, content, saved) {
-        file.content = content;
-        file.saved = saved;
-      },
-      changeTheme(theme) {
-        if (theme == this.editorTheme) return;
-        this.editorTheme = theme;
-        this.reloadFile = !this.reloadFile;
-      },
-      updateProjectVisibility(is_public, shared_users) {
-        this.is_public = is_public;
-        this.shared_users = shared_users;
-      },
-      setEditPermit() {
-        console.log(this.user, "AJASHHASHA");
-        this.editPermit =
-          this.user == localStorage.getItem("username") ||
-          this.shared_users.includes(localStorage.getItem("username"));
-      },
-      async getFiles() {
-        this.files = [];
-        for (let file_id of this.file_ids) {
-          console.log(file_id);
-          console.log("aaa    ");
-          let f = await getFile(file_id);
-          // .then((response) => {
-          //   this.files.push(response); // Race condition?
-          // })
-          // .catch((error) => {
-          //   console.log(error);
-          // });
-          f.file.saved = true;
-          this.files.push(f.file);
-        }
-        this.reloadFiles = !this.reloadFiles;
-      },
-    },
-    async beforeCreate() {
+  components: {
+    CodeEditor,
+    TopBar,
+    BotBar,
+    SideBar,
+  },
+  data() {
+    return {
+      file_ids: [],
+      description: "",
+      id: "",
+      is_public: false,
+      name: "",
+      shared_users: [],
+      user: "",
+      files: [],
+      currentFile: null,
+      reloadFile: false,
+      reloadFiles: false,
+      editorTheme: "vs-dark",
+      editPermit: false,
+    };
+  },
+  methods: {
+    refreshProject() {
       retrieveProjectInfo(this.$route.params.id, this);
     },
-  };
+    changeFile(file) {
+      this.$refs.editor.storeChanges();
+      this.currentFile = file;
+      this.reloadFile = !this.reloadFile;
+    },
+    updateFile(file, content, saved) {
+      file.content = content;
+      file.saved = saved;
+    },
+    changeTheme(theme) {
+      if (theme == this.editorTheme) return;
+      this.editorTheme = theme;
+      this.reloadFile = !this.reloadFile;
+    },
+    updateProjectVisibility(is_public, shared_users) {
+      this.is_public = is_public;
+      this.shared_users = shared_users;
+    },
+    setEditPermit() {
+      console.log(this.user, "AJASHHASHA");
+      this.editPermit =
+        this.user == localStorage.getItem("username") ||
+        this.shared_users.includes(localStorage.getItem("username"));
+    },
+    async getFiles() {
+      this.files = [];
+      for (let file_id of this.file_ids) {
+        console.log(file_id);
+        console.log("aaa    ");
+        let f = await getFile(file_id);
+        // .then((response) => {
+        //   this.files.push(response); // Race condition?
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
+        f.file.saved = true;
+        this.files.push(f.file);
+      }
+      this.reloadFiles = !this.reloadFiles;
+    },
+  },
+  async beforeCreate() {
+    retrieveProjectInfo(this.$route.params.id, this);
+  },
+};
 </script>
