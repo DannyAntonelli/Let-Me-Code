@@ -52,7 +52,7 @@
                 class="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckChecked"
-                v-model="new_is_public"
+                v-model="isPublic"
                 checked
               />
               <label class="form-check-label" for="flexSwitchCheckChecked">
