@@ -80,6 +80,7 @@
     />
 
     <h3 class="mt-5"><strong>Projects</strong></h3>
+    <h4 v-if="projects.length == 0" class="text-muted mt-3">No projects yet</h4>
   </div>
 
   <div class="row m-4">
