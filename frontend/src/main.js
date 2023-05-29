@@ -34,6 +34,7 @@ import {
   faUserMinus,
   faTrash,
   faEye,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -100,7 +101,8 @@ library.add(
   faJava,
   faGolang,
   faRust,
-  faEye
+  faEye,
+  faEyeSlash
 );
 const app = createApp(App);
 app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

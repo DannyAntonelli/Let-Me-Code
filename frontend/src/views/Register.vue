@@ -86,7 +86,7 @@
         required
       />
       <font-awesome-icon
-        icon="fa-solid fa-eye"
+        :icon="`fa-solid fa-eye${showPassword ? '-slash' : ''}`"
         class="col-1 mt-2"
         style="cursor: pointer"
         @click="showPassword = !showPassword"
@@ -104,7 +104,7 @@
         required
       />
       <font-awesome-icon
-        icon="fa-solid fa-eye"
+        :icon="`fa-solid fa-eye${showRepeatedPassword ? '-slash' : ''}`"
         class="col-1 mt-2"
         style="cursor: pointer"
         @click="showRepeatedPassword = !showRepeatedPassword"
