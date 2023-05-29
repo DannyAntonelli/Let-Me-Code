@@ -18,66 +18,62 @@
 </template>
 
 <script>
-  export default {
-    name: "ContextMenu",
+export default {
+  name: "ContextMenu",
 
-    props: {
-      items: {
-        type: Array,
-        required: true,
-      },
-      position: {
-        type: Object,
-        required: true,
-      },
-      visible: {
-        type: Boolean,
-        required: true,
-      },
-      param: {
-        type: Object,
-      },
+  props: {
+    items: {
+      type: Array,
+      required: true,
     },
-    methods: {
-      handleItemClick(action) {
-        if (typeof action === "function") {
-          action(this.param);
-        }
-      },
+    position: {
+      type: Object,
+      required: true,
     },
-    async mounted() {
-      // on dismiss
-      let contextMenu = document.getElementById("side-bar-context-menu");
-      document.addEventListener("click", (e) => {
-        if (!contextMenu.contains(e.target)) {
-          this.$emit("close-context");
-        }
-      });
+    visible: {
+      type: Boolean,
+      required: true,
     },
-  };
+    param: {
+      type: Object,
+    },
+  },
+  methods: {
+    handleItemClick(action) {
+      if (typeof action === "function") {
+        action(this.param);
+      }
+    },
+  },
+  async mounted() {
+    // on dismiss
+    let contextMenu = document.getElementById("side-bar-context-menu");
+    document.addEventListener("click", (e) => {
+      if (!contextMenu.contains(e.target)) {
+        this.$emit("close-context");
+      }
+    });
+  },
+};
 </script>
 
 <style scoped>
-  .context-menu {
-    position: absolute;
-    z-index: 100;
-    background-color: white;
-    border: 1px solid #ccc;
-    width: 120px;
-  }
+.context-menu {
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 120px;
+}
 
-  .context-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .context-menu li {
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-
-  .context-menu li:hover {
-    background-color: #eee;
-  }
+.context-menu li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
 </style>

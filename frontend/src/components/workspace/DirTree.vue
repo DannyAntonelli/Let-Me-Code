@@ -117,7 +117,6 @@
   text-align: start;
 }
 .file {
-  /* color: #666; */
   text-align: start;
 }
 .open-file {

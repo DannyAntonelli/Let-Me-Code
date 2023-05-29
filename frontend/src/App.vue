@@ -46,6 +46,7 @@ export default {
 <style>
 :root {
   --workspace-blue: #369;
+  --footer-blue: #7c4dff;
 }
 
 .hidden {

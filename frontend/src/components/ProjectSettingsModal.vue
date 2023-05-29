@@ -57,7 +57,6 @@
               >
                 <font-awesome-icon
                   icon="fa-regular fa-circle-question"
-                  tyle="color: #ce1c1c;"
                   class="p-1"
                 />
               </button>
@@ -75,7 +74,6 @@
                 >
                   <font-awesome-icon
                     icon="fa-regular fa-circle-question"
-                    tyle="color: #ce1c1c;"
                     class="py-1"
                   />
                 </button>
@@ -128,10 +126,6 @@
                       type="button"
                       class="btn btn-primary"
                       @click="addSharedUser"
-                      style="
-                        background-color: var(--bs-purple);
-                        border-color: var(--bs-purple);
-                      "
                     >
                       <font-awesome-icon icon="fa-solid fa-plus" />
                     </button>
@@ -256,3 +250,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+a {
+  color: inherit;
+  text-decoration: none;
+}
+</style>

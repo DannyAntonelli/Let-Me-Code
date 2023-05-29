@@ -5,10 +5,7 @@
         <div class="row mt-3">
           <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4">
             <h6 class="text-uppercase fw-bold">Let Me Code</h6>
-            <hr
-              class="mb-4 mt-0 d-inline-block mx-auto"
-              style="width: 60px; background-color: #7c4dff; height: 2px"
-            />
+            <hr class="mb-4 mt-0 d-inline-block mx-auto" />
             <p>
               Let Me Code is a project developed by Danny Antonelli and Valerio
               Massimo Camaiani for the Web Technologies course at the Sapienza
@@ -19,10 +16,7 @@
 
           <div class="col-12 col-sm-6 col-md-4 mx-auto mb-4">
             <h6 class="text-uppercase fw-bold">Our team</h6>
-            <hr
-              class="mb-4 mt-0 d-inline-block mx-auto"
-              style="width: 60px; background-color: #7c4dff; height: 2px"
-            />
+            <hr class="mb-4 mt-0 d-inline-block mx-auto" />
             <p>
               Danny Antonelli
               <a href="https://github.com/DannyAntonelli">
@@ -51,10 +45,7 @@
 
           <div class="col-12 col-sm-6 col-md-4 mx-auto mb-md-0 mb-4">
             <h6 class="text-uppercase fw-bold">Contact us</h6>
-            <hr
-              class="mb-4 mt-0 d-inline-block mx-auto"
-              style="width: 60px; background-color: #7c4dff; height: 2px"
-            />
+            <hr class="mb-4 mt-0 d-inline-block mx-auto" />
             <p>
               <font-awesome-icon icon="fa-solid fa-location-dot" />
               Rome, Viale dello Scalo S. Lorenzo, 82
@@ -76,5 +67,11 @@
 <style scoped>
 a {
   color: var(--bs-purple);
+}
+
+hr {
+  width: 60px;
+  height: 2px;
+  background-color: var(--bs-purple);
 }
 </style>

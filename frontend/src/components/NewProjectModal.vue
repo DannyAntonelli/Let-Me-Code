@@ -73,7 +73,6 @@
               >
                 <font-awesome-icon
                   icon="fa-regular fa-circle-question"
-                  tyle="color: #ce1c1c;"
                   class="p-1"
                 />
               </button>
