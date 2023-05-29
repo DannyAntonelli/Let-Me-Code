@@ -78,24 +78,36 @@
     <div class="m-3 row">
       <font-awesome-icon icon="fa-solid fa-lock" class="col-1 mt-2" size="lg" />
       <input
-        type="password"
+        :type="showPassword ? 'text' : 'password'"
         id="register-password"
         class="form-control col"
         v-model="password"
         placeholder="Password*"
         required
       />
+      <font-awesome-icon
+        icon="fa-solid fa-eye"
+        class="col-1 mt-2"
+        style="cursor: pointer"
+        @click="showPassword = !showPassword"
+      />
     </div>
 
     <div class="m-3 mb-4 row">
       <font-awesome-icon icon="fa-solid fa-lock" class="col-1 mt-2" size="lg" />
       <input
-        type="password"
+        :type="showRepeatedPassword ? 'text' : 'password'"
         id="register-password"
         class="form-control col"
         v-model="repeatedPassword"
         placeholder="Confirm Password*"
         required
+      />
+      <font-awesome-icon
+        icon="fa-solid fa-eye"
+        class="col-1 mt-2"
+        style="cursor: pointer"
+        @click="showRepeatedPassword = !showRepeatedPassword"
       />
     </div>
 
@@ -145,6 +157,8 @@ export default {
       password: "",
       repeatedPassword: "",
       errorMessage: "",
+      showPassword: false,
+      showRepeatedPassword: false,
     };
   },
 

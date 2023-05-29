@@ -33,12 +33,18 @@
     <div class="m-3 mb-4 row">
       <font-awesome-icon icon="fa-solid fa-lock" class="col-1 mt-2" size="lg" />
       <input
-        type="password"
+        :type="showPassword ? 'text' : 'password'"
         id="login-password"
         class="form-control col"
         v-model="password"
         placeholder="Password"
         required
+      />
+      <font-awesome-icon
+        icon="fa-solid fa-eye"
+        class="col-1 mt-2"
+        style="cursor: pointer"
+        @click="showPassword = !showPassword"
       />
     </div>
 
@@ -68,6 +74,7 @@ export default {
       username: "",
       password: "",
       errorMessage: "",
+      showPassword: false,
     };
   },
 
