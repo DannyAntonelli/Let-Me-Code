@@ -27,6 +27,9 @@ class GetProject(APIView):
                     user.username for user in project.shared_users.all()
                 ],
                 "is_favorite": request.user in project.favorite_users.all(),
+                "languages": list(
+                    {file.language.lower() for file in project.files.all()}
+                ),
             }
         )
 
