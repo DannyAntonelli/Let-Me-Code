@@ -1,7 +1,22 @@
 <template>
+  <div class="text-center mt-5" v-if="!id">
+    <h2>
+      <strong
+        >Oops there's no project with id "{{ this.$route.params.id }}"</strong
+      >
+    </h2>
+    <h3>
+      Maybe you were looking for
+      <a style="color: var(--bs-purple)" href="https://youtu.be/dQw4w9WgXcQ"
+        >this</a
+      >
+    </h3>
+  </div>
+
   <div
     class="container-fluid text-center mt-2"
     style="padding-left: 20px; padding-right: 20px"
+    v-if="this.id"
   >
     <div class="row">
       <div class="col-md-2">
@@ -75,6 +90,7 @@ export default {
     BotBar,
     SideBar,
   },
+
   data() {
     return {
       file_ids: [],
@@ -92,6 +108,7 @@ export default {
       editPermit: false,
     };
   },
+
   methods: {
     refreshProject() {
       retrieveProjectInfo(this.$route.params.id, this);
@@ -138,6 +155,7 @@ export default {
       this.reloadFiles = !this.reloadFiles;
     },
   },
+
   async beforeCreate() {
     retrieveProjectInfo(this.$route.params.id, this);
   },

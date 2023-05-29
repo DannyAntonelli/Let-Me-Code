@@ -73,7 +73,7 @@
   margin: 0;
   padding: 0 1em;
   line-height: 2em;
-  color: #369;
+  color: var(--workspace-blue);
   font-weight: 700;
   position: relative;
 }
@@ -99,13 +99,13 @@
 }
 .tree li a {
   text-decoration: none;
-  color: #369;
+  color: var(--workspace-blue);
 }
 .tree li button,
 .tree li button:active,
 .tree li button:focus {
   text-decoration: none;
-  color: #369;
+  color: var(--workspace-blue);
   border: none;
   background: transparent;
   margin: 0px 0px 0px 0px;

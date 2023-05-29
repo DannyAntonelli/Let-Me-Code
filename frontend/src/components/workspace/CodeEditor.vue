@@ -12,21 +12,20 @@
         <strong>{{ this.file.name }}</strong>
       </div>
       <div class="col text-end">
-        <!-- {{ this.status }} -->
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
           id="save-button"
-          style="color: var(--bs-danger); padding: 5px"
+          style="color: var(--workspace-blue); padding: 5px; cursor: pointer"
           v-if="this.status === 'edited'"
           @click="this.startSaving()"
         />
         <font-awesome-icon
           icon="fa-regular fa-floppy-disk"
-          style="color: #1cce1c; padding: 5px; border: 1px solid #cccccc00"
+          style="padding: 5px"
           v-if="this.status === 'saved' && this.editPermit === true"
         />
         <span
-          style="color: var(--bs-danger); padding: 5px"
+          style="color: var(--workspace-blue); padding: 5px"
           v-if="this.editPermit === false"
           >No Write Permission
         </span>
@@ -47,19 +46,6 @@
     </div>
   </div>
 </template>
-<style>
-#save-button {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-#save-button:hover {
-  border-color: #bbb;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-}
-</style>
 
 <script>
 import { h } from "vue";

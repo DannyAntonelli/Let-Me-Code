@@ -44,6 +44,10 @@ export default {
 </script>
 
 <style>
+:root {
+  --workspace-blue: #369;
+}
+
 .hidden {
   opacity: 0;
   filter: blur(5px);
