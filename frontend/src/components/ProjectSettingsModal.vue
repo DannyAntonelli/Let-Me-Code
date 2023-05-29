@@ -125,6 +125,10 @@
                     <button
                       type="button"
                       class="btn btn-primary"
+                      style="
+                        background-color: var(--bs-purple);
+                        border-color: var(--bs-purple);
+                      "
                       @click="addSharedUser"
                     >
                       <font-awesome-icon icon="fa-solid fa-plus" />
