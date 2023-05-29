@@ -79,6 +79,10 @@
             class="btn btn-success"
             data-dismiss="modal"
             @click="editProfile"
+            style="
+              background-color: var(--bs-purple);
+              border-color: var(--bs-purple);
+            "
           >
             Save Profile
           </button>
