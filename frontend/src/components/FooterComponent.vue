@@ -20,10 +20,7 @@
             <p>
               Danny Antonelli
               <a href="https://github.com/DannyAntonelli">
-                <font-awesome-icon
-                  icon="fab fa-github"
-                  style="padding-right: 5px"
-                />
+                <font-awesome-icon icon="fab fa-github" class="pe-1" />
               </a>
               <a href="https://linkedin.com/in/danny-antonelli">
                 <font-awesome-icon icon="fab fa-linkedin-in" />
@@ -32,10 +29,7 @@
             <p>
               Valerio Massimo Camaiani
               <a href="https://github.com/VMCvastry">
-                <font-awesome-icon
-                  icon="fab fa-github"
-                  style="padding-right: 5px"
-                />
+                <font-awesome-icon icon="fab fa-github" class="pe-1" />
               </a>
               <a href="https://linkedin.com/in/vmcvastry">
                 <font-awesome-icon icon="fab fa-linkedin-in" />

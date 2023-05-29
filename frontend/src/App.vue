@@ -66,4 +66,8 @@ export default {
   background-color: var(--bs-purple);
   border-color: var(--bs-purple);
 }
+
+.rickroll-link {
+  color: var(--bs-purple);
+}
 </style>

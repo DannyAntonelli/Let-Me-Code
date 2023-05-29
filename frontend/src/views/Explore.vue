@@ -1,10 +1,6 @@
 <template>
   <div class="d-flex justify-content-center align-items-center mt-5 mb-2">
-    <form
-      class="input-group mb-3 p-2"
-      @submit.prevent="search"
-      style="width: 30rem"
-    >
+    <form class="input-group mb-3 p-2" @submit.prevent="search">
       <span class="input-group-text">
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
       </span>
@@ -126,3 +122,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.input-group {
+  width: 30rem;
+}
+</style>

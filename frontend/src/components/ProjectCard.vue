@@ -1,7 +1,7 @@
 <template>
   <div class="card hidden">
     <div class="card-body">
-      <h5 class="card-title" style="font-size: large">
+      <h5 class="card-title">
         <router-link :to="projectUrl" class="m-1">
           <font-awesome-icon icon="fa-solid fa-code" size="xs" />
           <strong class="m-2">
@@ -15,20 +15,17 @@
         <font-awesome-icon
           v-if="project.is_favorite"
           icon="fa-solid fa-star"
-          style="color: gold; cursor: pointer"
           class="star-favorite"
           @click="toggleFavorite"
         />
         <font-awesome-icon
           v-else
           icon="fa-regular fa-star"
-          style="cursor: pointer"
           class="star-not-favorite"
           @click="toggleFavorite"
         />
         <font-awesome-icon
           icon="fa-solid fa-trash"
-          style="cursor: pointer"
           class="trash-icon"
           @click="deleteProject"
           v-if="canDelete"
@@ -116,8 +113,17 @@ a {
   color: inherit;
 }
 
-.star-favorite:hover {
+.card-title {
+  font-size: large;
+}
+
+.star-favorite {
   color: gold;
+  cursor: pointer;
+}
+
+.star-not-favorite {
+  cursor: pointer;
 }
 
 .star-not-favorite:hover {
@@ -126,6 +132,7 @@ a {
 
 .trash-icon {
   margin-left: 0.3rem;
+  cursor: pointer;
 }
 
 .trash-icon:hover {

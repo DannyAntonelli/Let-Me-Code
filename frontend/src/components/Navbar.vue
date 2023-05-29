@@ -61,7 +61,7 @@
               <font-awesome-icon
                 icon="fa-solid fa-circle-half-stroke"
                 class="ms-2"
-                style="margin-top: 0.9rem; cursor: pointer"
+                id="toggle-theme"
               />
             </a>
           </li>
@@ -112,3 +112,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#toggle-theme {
+  margin-top: 0.9rem;
+  cursor: pointer;
+}
+</style>

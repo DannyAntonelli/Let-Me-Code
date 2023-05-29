@@ -7,9 +7,7 @@
     </h2>
     <h3>
       Maybe you were looking for
-      <a style="color: var(--bs-purple)" href="https://youtu.be/dQw4w9WgXcQ"
-        >this</a
-      >
+      <a class="rickroll-link" href="https://youtu.be/dQw4w9WgXcQ">this</a>
     </h3>
   </div>
 

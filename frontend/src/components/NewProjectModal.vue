@@ -43,12 +43,11 @@
                 class="form-control"
                 id="new-project-description"
                 placeholder="Description"
-                style="height: 20vh"
                 v-model="description"
               ></textarea>
             </div>
 
-            <div class="form-check form-switch" style="text-align: left">
+            <div class="form-check form-switch">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -56,17 +55,13 @@
                 v-model="new_is_public"
                 checked
               />
-              <label
-                class="form-check-label"
-                for="flexSwitchCheckChecked"
-                style="padding-right: 3px"
-              >
+              <label class="form-check-label" for="flexSwitchCheckChecked">
                 Public
               </label>
               <button
                 type="button"
                 class="btn"
-                style="padding: 0"
+                id="public-project-tooltip"
                 data-toggle="tooltip"
                 data-placement="right"
                 title="Make this project visible to everyone. (Read Only)"
@@ -129,3 +124,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#new-project-description {
+  height: 20vh;
+}
+
+#public-project-tooltip {
+  padding: 0;
+}
+
+.form-switch {
+  text-align: left;
+}
+
+.form-check-label {
+  padding-right: 3px;
+}
+</style>
