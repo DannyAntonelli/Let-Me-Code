@@ -47,11 +47,13 @@ const routes = [
   {
     path: "/following",
     name: "Following",
+    meta: { requiresAuth: true },
     component: Following,
   },
   {
     path: "/favorites",
     name: "Favorites",
+    meta: { requiresAuth: true },
     component: Favorites,
   },
   {
