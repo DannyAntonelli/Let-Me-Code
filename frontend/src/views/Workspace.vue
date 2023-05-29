@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mt-5" v-if="!id">
+  <div class="text-center mt-5" v-if="projectNotFound">
     <h2>
       <strong
         >Oops there's no project with id "{{ this.$route.params.id }}"</strong
@@ -7,9 +7,7 @@
     </h2>
     <h3>
       Maybe you were looking for
-      <a style="color: var(--bs-purple)" href="https://youtu.be/dQw4w9WgXcQ"
-        >this</a
-      >
+      <a class="rickroll-link" href="https://youtu.be/dQw4w9WgXcQ">this</a>
     </h3>
   </div>
 
@@ -106,6 +104,7 @@ export default {
       reloadFiles: false,
       editorTheme: "vs-dark",
       editPermit: false,
+      projectNotFound: false,
     };
   },
 

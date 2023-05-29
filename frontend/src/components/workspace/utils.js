@@ -14,6 +14,7 @@ export function retrieveProjectInfo(id, context) {
       context.getFiles();
     })
     .catch((error) => {
+      context.projectNotFound = true;
       console.log(error);
     });
 }

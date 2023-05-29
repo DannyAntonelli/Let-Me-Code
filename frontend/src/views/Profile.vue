@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mt-5" v-if="!username">
+  <div class="text-center mt-5" v-if="userNotFound">
     <h2>
       <strong
         >Oops there's no user called "{{ this.$route.params.username }}"</strong
@@ -228,6 +228,7 @@ export default {
       isFollowing: false,
       followersUsernames: [],
       followingUsernames: [],
+      userNotFound: false,
     };
   },
 
@@ -261,6 +262,7 @@ export default {
         }
       })
       .catch((error) => {
+        this.userNotFound = true;
         console.log(error);
       });
   },
