@@ -8,7 +8,7 @@
       style="margin-left: 5px; margin-right: 10px"
     >
       <div class="col text-start py-2">
-        <font-awesome-icon icon="fa-regular fa-file" class="px-2" />
+        <font-awesome-icon :icon="fileIcon" class="px-2" />
         <strong>{{ this.file.name }}</strong>
       </div>
       <div class="col text-end">
@@ -132,6 +132,31 @@ export default {
       status: "saved",
       content: "",
     };
+  },
+
+  computed: {
+    fileIcon() {
+      switch (this.file.language.toLowerCase()) {
+        case "python":
+          return "fa-brands fa-python";
+        case "javascript":
+          return "fa-brands fa-js-square";
+        case "css":
+          return "fa-brands fa-css3";
+        case "html":
+          return "fa-brands fa-html5";
+        case "rust":
+          return "fa-brands fa-rust";
+        case "go":
+          return "fa-brands fa-golang";
+        case "php":
+          return "fa-brands fa-php";
+        case "java":
+          return "fa-brands fa-java";
+        default:
+          return "fa-regular fa-file";
+      }
+    },
   },
 
   async mounted() {
