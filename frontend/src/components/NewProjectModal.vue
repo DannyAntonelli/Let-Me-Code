@@ -88,6 +88,10 @@
             class="btn btn-success"
             data-dismiss="modal"
             @click="submitProject"
+            style="
+              background-color: var(--bs-purple);
+              border-color: var(--bs-purple);
+            "
           >
             Create project
           </button>
