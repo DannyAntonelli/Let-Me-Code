@@ -96,7 +96,7 @@
                         @click="handleModalClick"
                         :key="username"
                         :to="`/profile/${username}`"
-                        style="text-decoration: none"
+                        style="text-decoration: none; color: inherit"
                       >
                         <h5 class="card-title" style="font-size: large">
                           <img
@@ -128,6 +128,10 @@
                       type="button"
                       class="btn btn-primary"
                       @click="addSharedUser"
+                      style="
+                        background-color: var(--bs-purple);
+                        border-color: var(--bs-purple);
+                      "
                     >
                       <font-awesome-icon icon="fa-solid fa-plus" />
                     </button>
@@ -151,6 +155,10 @@
             class="btn btn-success"
             data-dismiss="modal"
             @click="submitChanges"
+            style="
+              background-color: var(--bs-purple);
+              border-color: var(--bs-purple);
+            "
           >
             Save Changes
           </button>
