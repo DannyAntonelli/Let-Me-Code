@@ -191,8 +191,4 @@ export default {
 a {
   color: var(--bs-purple);
 }
-
-.form-check-input[type="checkbox"]:checked {
-  background-color: var(--bs-purple);
-}
 </style>

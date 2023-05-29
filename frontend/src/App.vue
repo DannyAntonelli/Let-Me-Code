@@ -56,4 +56,9 @@ export default {
   filter: blur(0);
   transform: translateX(0);
 }
+
+.form-check-input[type="checkbox"]:checked {
+  background-color: var(--bs-purple);
+  border-color: var(--bs-purple);
+}
 </style>

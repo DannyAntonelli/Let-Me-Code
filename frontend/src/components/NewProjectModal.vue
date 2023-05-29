@@ -48,16 +48,35 @@
               ></textarea>
             </div>
 
-            <div class="form-check form-switch">
+            <div class="form-check form-switch" style="text-align: left">
               <input
                 class="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckChecked"
-                v-model="isPublic"
+                v-model="new_is_public"
+                checked
               />
-              <label class="form-check-label" for="flexSwitchCheckChecked"
-                >Public</label
+              <label
+                class="form-check-label"
+                for="flexSwitchCheckChecked"
+                style="padding-right: 3px"
               >
+                Public
+              </label>
+              <button
+                type="button"
+                class="btn"
+                style="padding: 0"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Make this project visible to everyone. (Read Only)"
+              >
+                <font-awesome-icon
+                  icon="fa-regular fa-circle-question"
+                  tyle="color: #ce1c1c;"
+                  class="p-1"
+                />
+              </button>
             </div>
           </form>
         </div>
